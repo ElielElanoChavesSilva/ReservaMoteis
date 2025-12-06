@@ -1,12 +1,26 @@
-﻿namespace ReservaMoteisDomain.Entities
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ReservaMoteisDomain.Entities
 {
+    [Table("Suite")]
     public class SuiteEntity
     {
+        [Key]
         public long Id { get; set; }
+        [Required]
+        [MaxLength(150)]
         public string Nome { get; set; } = string.Empty;
+        [MaxLength(500)]
         public string Description { get; set; } = string.Empty;
+        [Required]
         public decimal PricePerPeriod { get; set; }
+        [Required]
         public int MaxOccupancy { get; set; }
-        public long IdMotel { get; set; }
+        [Required]
+        public long MotelId { get; set; }
+
+        [ForeignKey(nameof(MotelId))]
+        public MotelEntity Motel { get; set; }
     }
 }

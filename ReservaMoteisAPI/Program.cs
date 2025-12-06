@@ -1,5 +1,10 @@
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<MainContext>(options =>
+{
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers();
