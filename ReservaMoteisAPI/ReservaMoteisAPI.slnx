@@ -1,3 +1,6 @@
 <Solution>
+  <Project Path="../ReservaMoteisApplication/ReservaMoteisApplication.csproj" Id="3b55c935-5af1-4304-9376-5fba4a46ef6f" />
+  <Project Path="../ReservaMoteisDomain/ReservaMoteisDomain.csproj" Id="8c15895b-cde1-47b3-bcbb-b14ecb038d46" />
+  <Project Path="../ReservaMoteisInfra/ReservaMoteisInfra.csproj" Id="b3bbc484-2a6c-4364-a624-db2b0131ddfd" />
   <Project Path="ReservaMoteisAPI.csproj" />
 </Solution>
