@@ -1,6 +1,6 @@
 ﻿namespace ReservaMoteisDomain.Interfaces.Base
 {
-    public interface ICrudRepository<TId, TEntity> : IReadRepository<TId, TEntity>
+    public interface ICrudRepository<TId, TEntity> : IReadRepository<TId, TEntity> where TEntity : class
     {
         Task<TId> Add(TEntity entity);
         Task Update(TEntity entity);

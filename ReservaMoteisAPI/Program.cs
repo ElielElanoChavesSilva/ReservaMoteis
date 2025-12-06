@@ -1,9 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+using ReservaMoteisInfra.Context;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<MainContext>(options =>
-{
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+    options.UseSqlite("Data Source=main.db"));
 
 // Add services to the container.
 
@@ -13,6 +14,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<MainContext>();
+    db.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

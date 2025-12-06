@@ -3,30 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8C15895B-CDE1-47B3-BCBB-B14ECB038D46}|..\\ReservaMoteisDomain\\ReservaMoteisDomain.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisdomain\\entities\\profileentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8C15895B-CDE1-47B3-BCBB-B14ECB038D46}|..\\ReservaMoteisDomain\\ReservaMoteisDomain.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisdomain\\entities\\motelentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8C15895B-CDE1-47B3-BCBB-B14ECB038D46}|..\\ReservaMoteisDomain\\ReservaMoteisDomain.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisdomain\\entities\\userentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8C15895B-CDE1-47B3-BCBB-B14ECB038D46}|..\\ReservaMoteisDomain\\ReservaMoteisDomain.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisdomain\\entities\\suiteentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8C15895B-CDE1-47B3-BCBB-B14ECB038D46}|..\\ReservaMoteisDomain\\ReservaMoteisDomain.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisdomain\\entities\\reserveentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B3BBC484-2A6C-4364-A624-DB2B0131DDFD}|..\\ReservaMoteisInfra\\ReservaMoteisInfra.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisinfra\\context\\maincontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{6F8BF73B-0BB7-7B82-7865-AA1CD1B71585}|ReservaMoteisAPI.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6F8BF73B-0BB7-7B82-7865-AA1CD1B71585}|ReservaMoteisAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6F8BF73B-0BB7-7B82-7865-AA1CD1B71585}|ReservaMoteisAPI.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisapi\\servicecollection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6F8BF73B-0BB7-7B82-7865-AA1CD1B71585}|ReservaMoteisAPI.csproj|solutionrelative:servicecollection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -57,105 +35,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ProfileEntity.cs",
-              "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisDomain\\Entities\\ProfileEntity.cs",
-              "RelativeDocumentMoniker": "..\\ReservaMoteisDomain\\Entities\\ProfileEntity.cs",
-              "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisDomain\\Entities\\ProfileEntity.cs",
-              "RelativeToolTip": "..\\ReservaMoteisDomain\\Entities\\ProfileEntity.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-06T03:33:03.267Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ServiceCollection.cs",
-              "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisAPI\\ServiceCollection.cs",
-              "RelativeDocumentMoniker": "ServiceCollection.cs",
-              "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisAPI\\ServiceCollection.cs",
-              "RelativeToolTip": "ServiceCollection.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-06T03:24:59.154Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisAPI\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisAPI\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-06T03:17:56.772Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "MainContext.cs",
-              "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisInfra\\Context\\MainContext.cs",
-              "RelativeDocumentMoniker": "..\\ReservaMoteisInfra\\Context\\MainContext.cs",
-              "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisInfra\\Context\\MainContext.cs",
-              "RelativeToolTip": "..\\ReservaMoteisInfra\\Context\\MainContext.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAgwBYAAAA9AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-06T02:37:42.249Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ReserveEntity.cs",
-              "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisDomain\\Entities\\ReserveEntity.cs",
-              "RelativeDocumentMoniker": "..\\ReservaMoteisDomain\\Entities\\ReserveEntity.cs",
-              "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisDomain\\Entities\\ReserveEntity.cs",
-              "RelativeToolTip": "..\\ReservaMoteisDomain\\Entities\\ReserveEntity.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAYwBMAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-06T02:33:38.092Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "UserEntity.cs",
-              "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisDomain\\Entities\\UserEntity.cs",
-              "RelativeDocumentMoniker": "..\\ReservaMoteisDomain\\Entities\\UserEntity.cs",
-              "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisDomain\\Entities\\UserEntity.cs",
-              "RelativeToolTip": "..\\ReservaMoteisDomain\\Entities\\UserEntity.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAA1wBIAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-06T02:31:21.892Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "SuiteEntity.cs",
-              "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisDomain\\Entities\\SuiteEntity.cs",
-              "RelativeDocumentMoniker": "..\\ReservaMoteisDomain\\Entities\\SuiteEntity.cs",
-              "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisDomain\\Entities\\SuiteEntity.cs",
-              "RelativeToolTip": "..\\ReservaMoteisDomain\\Entities\\SuiteEntity.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAQwBYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-06T02:27:15.976Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MotelEntity.cs",
-              "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisDomain\\Entities\\MotelEntity.cs",
-              "RelativeDocumentMoniker": "..\\ReservaMoteisDomain\\Entities\\MotelEntity.cs",
-              "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisDomain\\Entities\\MotelEntity.cs",
-              "RelativeToolTip": "..\\ReservaMoteisDomain\\Entities\\MotelEntity.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-06T02:13:59.298Z",
+              "WhenOpened": "2025-12-06T13:58:03.589Z",
               "EditorCaption": ""
             }
           ]
