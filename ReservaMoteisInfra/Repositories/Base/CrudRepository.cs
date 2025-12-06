@@ -1,6 +1,22 @@
-﻿namespace ReservaMoteisInfra.Repositories.Base
+﻿using ReservaMoteisDomain.Interfaces.Base;
+
+namespace ReservaMoteisInfra.Repositories.Base
 {
-    public class CrudRepository
+    public class CrudRepository<TId, TEntity> : ReadRepository<TId, TEntity>, ICrudRepository<TId, TEntity> where TEntity : class
     {
+        public Task<TId> Add(TEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Update(TEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Delete(TId id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

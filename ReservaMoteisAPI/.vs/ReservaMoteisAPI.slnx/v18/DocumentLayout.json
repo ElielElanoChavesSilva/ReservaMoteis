@@ -3,13 +3,13 @@
   "WorkspaceRootPath": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisAPI\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{B3BBC484-2A6C-4364-A624-DB2B0131DDFD}|..\\ReservaMoteisInfra\\ReservaMoteisInfra.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisinfra\\repositories\\base\\crudrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B3BBC484-2A6C-4364-A624-DB2B0131DDFD}|..\\ReservaMoteisInfra\\ReservaMoteisInfra.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisinfra\\repositories\\base\\readrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8C15895B-CDE1-47B3-BCBB-B14ECB038D46}|..\\ReservaMoteisDomain\\ReservaMoteisDomain.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisdomain\\entities\\suiteentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8C15895B-CDE1-47B3-BCBB-B14ECB038D46}|..\\ReservaMoteisDomain\\ReservaMoteisDomain.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisdomain\\entities\\reserveentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B3BBC484-2A6C-4364-A624-DB2B0131DDFD}|..\\ReservaMoteisInfra\\ReservaMoteisInfra.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisinfra\\context\\maincontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8C15895B-CDE1-47B3-BCBB-B14ECB038D46}|..\\ReservaMoteisDomain\\ReservaMoteisDomain.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisdomain\\entities\\motelentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -18,13 +18,10 @@
       "AbsoluteMoniker": "D:0:0:{8C15895B-CDE1-47B3-BCBB-B14ECB038D46}|..\\ReservaMoteisDomain\\ReservaMoteisDomain.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisdomain\\entities\\userentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B3BBC484-2A6C-4364-A624-DB2B0131DDFD}|..\\ReservaMoteisInfra\\ReservaMoteisInfra.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisinfra\\repositories\\base\\crudrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8C15895B-CDE1-47B3-BCBB-B14ECB038D46}|..\\ReservaMoteisDomain\\ReservaMoteisDomain.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisdomain\\entities\\suiteentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8C15895B-CDE1-47B3-BCBB-B14ECB038D46}|..\\ReservaMoteisDomain\\ReservaMoteisDomain.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisdomain\\entities\\profileentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B3BBC484-2A6C-4364-A624-DB2B0131DDFD}|..\\ReservaMoteisInfra\\ReservaMoteisInfra.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisinfra\\context\\maincontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8C15895B-CDE1-47B3-BCBB-B14ECB038D46}|..\\ReservaMoteisDomain\\ReservaMoteisDomain.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisdomain\\entities\\reserveentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +31,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -54,46 +51,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "CrudRepository.cs",
               "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisInfra\\Repositories\\Base\\CrudRepository.cs",
               "RelativeDocumentMoniker": "..\\ReservaMoteisInfra\\Repositories\\Base\\CrudRepository.cs",
               "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisInfra\\Repositories\\Base\\CrudRepository.cs",
               "RelativeToolTip": "..\\ReservaMoteisInfra\\Repositories\\Base\\CrudRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-06T02:42:34.028Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "ReadRepository.cs",
               "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisInfra\\Repositories\\Base\\ReadRepository.cs",
               "RelativeDocumentMoniker": "..\\ReservaMoteisInfra\\Repositories\\Base\\ReadRepository.cs",
               "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisInfra\\Repositories\\Base\\ReadRepository.cs",
               "RelativeToolTip": "..\\ReservaMoteisInfra\\Repositories\\Base\\ReadRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-06T02:41:54.291Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ProfileEntity.cs",
-              "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisDomain\\Entities\\ProfileEntity.cs",
-              "RelativeDocumentMoniker": "..\\ReservaMoteisDomain\\Entities\\ProfileEntity.cs",
-              "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisDomain\\Entities\\ProfileEntity.cs",
-              "RelativeToolTip": "..\\ReservaMoteisDomain\\Entities\\ProfileEntity.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-06T02:38:19.163Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 2,
               "Title": "MainContext.cs",
               "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisInfra\\Context\\MainContext.cs",
               "RelativeDocumentMoniker": "..\\ReservaMoteisInfra\\Context\\MainContext.cs",
@@ -106,7 +90,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "ReserveEntity.cs",
               "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisDomain\\Entities\\ReserveEntity.cs",
               "RelativeDocumentMoniker": "..\\ReservaMoteisDomain\\Entities\\ReserveEntity.cs",
@@ -114,8 +98,7 @@
               "RelativeToolTip": "..\\ReservaMoteisDomain\\Entities\\ReserveEntity.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-06T02:33:38.092Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-06T02:33:38.092Z"
             },
             {
               "$type": "Document",
@@ -132,7 +115,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "SuiteEntity.cs",
               "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisDomain\\Entities\\SuiteEntity.cs",
               "RelativeDocumentMoniker": "..\\ReservaMoteisDomain\\Entities\\SuiteEntity.cs",
@@ -140,8 +123,7 @@
               "RelativeToolTip": "..\\ReservaMoteisDomain\\Entities\\SuiteEntity.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-06T02:27:15.976Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-06T02:27:15.976Z"
             },
             {
               "$type": "Document",
@@ -151,7 +133,7 @@
               "RelativeDocumentMoniker": "..\\ReservaMoteisDomain\\Entities\\MotelEntity.cs",
               "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisDomain\\Entities\\MotelEntity.cs",
               "RelativeToolTip": "..\\ReservaMoteisDomain\\Entities\\MotelEntity.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-06T02:13:59.298Z",
               "EditorCaption": ""
