@@ -1,8 +1,7 @@
-namespace BookMotelsApplication.DTOs;
+namespace BookMotelsApplication.DTOs.Reserve;
 
 public class ReserveDTO
 {
-    public long Id { get; set; }
     public Guid UserId { get; set; }
     public long SuiteId { get; set; }
     public DateTime CheckIn { get; set; }

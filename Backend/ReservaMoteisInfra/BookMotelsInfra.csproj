@@ -18,6 +18,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+	<ItemGroup>
+		<ProjectCapability Include="EFCore" />
+	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ReservaMoteisDomain\BookMotelsDomain.csproj" />

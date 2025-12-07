@@ -5,9 +5,11 @@ namespace BookMotelsApplication.Mappers
 {
     public static class UserMapper
     {
-        public static UserDTO ToDTO(this UserEntity entity)
+
+        #region | ToDTO |
+        public static GetUserDTO ToDTO(this UserEntity entity)
         {
-            return new UserDTO
+            return new GetUserDTO
             {
                 Id = entity.Id,
                 Name = entity.Name,
@@ -16,8 +18,14 @@ namespace BookMotelsApplication.Mappers
             };
         }
 
+        public static IEnumerable<GetUserDTO> ToDTO(this IEnumerable<UserEntity> entities)
+        {
+            return entities.Select(e => e.ToDTO());
+        }
+        #endregion
 
-        public static UserEntity ToEntity(this UserDTO dto)
+        #region | ToEntity |
+        public static UserEntity ToEntity(this GetUserDTO dto)
         {
             return new UserEntity
             {
@@ -28,7 +36,7 @@ namespace BookMotelsApplication.Mappers
             };
         }
 
-        public static UserEntity ToEntity(this CreateUserDTO dto)
+        public static UserEntity ToEntity(this UserDTO dto)
         {
             return new UserEntity
             {
@@ -39,14 +47,11 @@ namespace BookMotelsApplication.Mappers
             };
         }
 
-        public static IEnumerable<UserDTO> ToDTO(this IEnumerable<UserEntity> entities)
-        {
-            return entities.Select(e => e.ToDTO());
-        }
-
-        public static IEnumerable<UserEntity> ToEntity(this IEnumerable<UserDTO> dtos)
+        public static IEnumerable<UserEntity> ToEntity(this IEnumerable<GetUserDTO> dtos)
         {
             return dtos.Select(d => d.ToEntity());
         }
+
+        #endregion
     }
 }

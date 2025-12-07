@@ -1,4 +1,4 @@
-using BookMotelsApplication.DTOs;
+using BookMotelsApplication.DTOs.Motel;
 using BookMotelsApplication.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,14 +16,14 @@ namespace BookMotelsAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MotelDTO>>> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<GetMotelDTO>>> FindAllAsync()
         {
             var motels = await _motelService.FindAllAsync();
             return Ok(motels);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<MotelDTO>> FindByIdAsync(long id)
+        public async Task<ActionResult<GetMotelDTO>> FindById(long id)
         {
             var motel = await _motelService.FindByIdAsync(id);
 
@@ -31,14 +31,14 @@ namespace BookMotelsAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<MotelDTO>> AddAsync(MotelDTO motelDto)
+        public async Task<ActionResult<GetMotelDTO>> AddAsync(MotelDTO motelDto)
         {
             var newMotel = await _motelService.AddAsync(motelDto);
-            return CreatedAtAction(nameof(FindByIdAsync), new { id = newMotel.Id }, newMotel);
+            return CreatedAtAction(nameof(FindById), new { id = newMotel.Id }, newMotel);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(long id, MotelDTO motelDto)
+        public async Task<IActionResult> UpdateAsync(long id, GetMotelDTO motelDto)
         {
             await _motelService.UpdateAsync(id, motelDto);
 

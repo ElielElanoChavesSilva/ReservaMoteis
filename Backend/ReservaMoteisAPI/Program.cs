@@ -1,4 +1,5 @@
 using BookMotelsAPI;
+using BookMotelsDomain.Entities;
 using BookMotelsInfra.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +22,15 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<MainContext>();
     db.Database.Migrate();
+
+    if (!db.Profiles.Any())
+    {
+        db.Profiles.AddRange(
+            new ProfileEntity { Id = 1, Name = "Admin" },
+            new ProfileEntity { Id = 2, Name = "User" }
+        );
+        db.SaveChanges();
+    }
 }
 
 if (app.Environment.IsDevelopment())

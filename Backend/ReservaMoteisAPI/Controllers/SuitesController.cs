@@ -1,4 +1,4 @@
-using BookMotelsApplication.DTOs;
+using BookMotelsApplication.DTOs.Suite;
 using BookMotelsApplication.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,14 +16,14 @@ namespace BookMotelsAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SuiteDTO>>> FindAllAsync()
+        public async Task<ActionResult<IEnumerable<GetSuiteDTO>>> FindAllAsync()
         {
             var suites = await _suiteService.FindAllAsync();
             return Ok(suites);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<SuiteDTO>> FindByIdAsync(long id)
+        public async Task<ActionResult<GetSuiteDTO>> FindById(long id)
         {
             var suite = await _suiteService.FindByIdAsync(id);
 
@@ -31,20 +31,16 @@ namespace BookMotelsAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<SuiteDTO>> AddAsync(SuiteDTO suiteDto)
+        public async Task<ActionResult<GetSuiteDTO>> AddAsync(SuiteDTO suiteDto)
         {
             var newSuite = await _suiteService.AddAsync(suiteDto);
-            return CreatedAtAction(nameof(FindByIdAsync), new { id = newSuite.Id }, newSuite);
+            return CreatedAtAction(nameof(FindById), new { id = newSuite.Id }, newSuite);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(long id, SuiteDTO suiteDto)
         {
-            var updatedSuite = await _suiteService.UpdateAsync(id, suiteDto);
-            if (updatedSuite == null)
-            {
-                return NotFound();
-            }
+            await _suiteService.UpdateAsync(id, suiteDto);
             return NoContent();
         }
 

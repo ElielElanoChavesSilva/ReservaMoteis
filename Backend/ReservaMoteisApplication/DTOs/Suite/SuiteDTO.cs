@@ -1,8 +1,7 @@
-namespace BookMotelsApplication.DTOs;
+namespace BookMotelsApplication.DTOs.Suite;
 
 public class SuiteDTO
 {
-    public long Id { get; set; }
     public string Nome { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public decimal PricePerPeriod { get; set; }

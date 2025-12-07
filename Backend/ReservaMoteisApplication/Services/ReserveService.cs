@@ -1,4 +1,4 @@
-using BookMotelsApplication.DTOs;
+using BookMotelsApplication.DTOs.Reserve;
 using BookMotelsApplication.Mappers;
 using BookMotelsDomain.Interfaces;
 
@@ -13,13 +13,13 @@ namespace BookMotelsApplication.Services
             _reserveRepository = reserveRepository;
         }
 
-        public async Task<IEnumerable<ReserveDTO>> FindAllAsync()
+        public async Task<IEnumerable<GetReserveDTO>> FindAllAsync()
         {
             var reserves = await _reserveRepository.FindAll();
             return reserves.ToDTO();
         }
 
-        public async Task<ReserveDTO> FindByIdAsync(long id)
+        public async Task<GetReserveDTO> FindByIdAsync(long id)
         {
             var reserve = await _reserveRepository.FindById(id) ??
                           throw new Exception($"Reserva de Id: {id} não encontrada");
@@ -27,14 +27,14 @@ namespace BookMotelsApplication.Services
             return reserve.ToDTO();
         }
 
-        public async Task<ReserveDTO> AddAsync(ReserveDTO reserveDto)
+        public async Task<GetReserveDTO> AddAsync(ReserveDTO reserveDto)
         {
             var entity = await _reserveRepository.Add(reserveDto.ToEntity());
 
             return entity.ToDTO();
         }
 
-        public async Task<ReserveDTO> UpdateAsync(long id, ReserveDTO reserveDto)
+        public async Task UpdateAsync(long id, ReserveDTO reserveDto)
         {
             var existingReserve = await _reserveRepository.FindById(id) ??
                                   throw new Exception($"Reserva de Id: {id} não encontrada");
@@ -45,8 +45,7 @@ namespace BookMotelsApplication.Services
             existingReserve.CheckOut = reserveDto.CheckOut;
             existingReserve.IsReserve = reserveDto.IsReserve;
 
-            existingReserve = await _reserveRepository.Update(existingReserve);
-            return existingReserve.ToDTO();
+            await _reserveRepository.Update(existingReserve);
         }
 
         public async Task DeleteAsync(long id)

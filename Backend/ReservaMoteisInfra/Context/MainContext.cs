@@ -21,6 +21,11 @@ namespace BookMotelsInfra.Context
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(MainContext).Assembly);
+
+            modelBuilder.Entity<ProfileEntity>().HasData(
+                new ProfileEntity { Id = 1, Name = "Admin" },
+                new ProfileEntity { Id = 2, Name = "User" }
+            );
         }
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace ReservaMoteisInfra.Migrations
+namespace BookMotelsInfra.Migrations
 {
     [DbContext(typeof(MainContext))]
     partial class MainContextModelSnapshot : ModelSnapshot
@@ -17,7 +17,7 @@ namespace ReservaMoteisInfra.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.36");
 
-            modelBuilder.Entity("ReservaMoteisDomain.Entities.MotelEntity", b =>
+            modelBuilder.Entity("BookMotelsDomain.Entities.MotelEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -48,7 +48,7 @@ namespace ReservaMoteisInfra.Migrations
                     b.ToTable("Motel");
                 });
 
-            modelBuilder.Entity("ReservaMoteisDomain.Entities.ProfileEntity", b =>
+            modelBuilder.Entity("BookMotelsDomain.Entities.ProfileEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -62,9 +62,21 @@ namespace ReservaMoteisInfra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Profile");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "User"
+                        });
                 });
 
-            modelBuilder.Entity("ReservaMoteisDomain.Entities.ReserveEntity", b =>
+            modelBuilder.Entity("BookMotelsDomain.Entities.ReserveEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,7 +106,7 @@ namespace ReservaMoteisInfra.Migrations
                     b.ToTable("Reserve");
                 });
 
-            modelBuilder.Entity("ReservaMoteisDomain.Entities.SuiteEntity", b =>
+            modelBuilder.Entity("BookMotelsDomain.Entities.SuiteEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -126,10 +138,9 @@ namespace ReservaMoteisInfra.Migrations
                     b.ToTable("Suite");
                 });
 
-            modelBuilder.Entity("ReservaMoteisDomain.Entities.UserEntity", b =>
+            modelBuilder.Entity("BookMotelsDomain.Entities.UserEntity", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
@@ -157,15 +168,15 @@ namespace ReservaMoteisInfra.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("ReservaMoteisDomain.Entities.ReserveEntity", b =>
+            modelBuilder.Entity("BookMotelsDomain.Entities.ReserveEntity", b =>
                 {
-                    b.HasOne("ReservaMoteisDomain.Entities.SuiteEntity", "Suite")
+                    b.HasOne("BookMotelsDomain.Entities.SuiteEntity", "Suite")
                         .WithMany()
                         .HasForeignKey("SuiteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ReservaMoteisDomain.Entities.UserEntity", "User")
+                    b.HasOne("BookMotelsDomain.Entities.UserEntity", "User")
                         .WithMany("Reserves")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -176,9 +187,9 @@ namespace ReservaMoteisInfra.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ReservaMoteisDomain.Entities.SuiteEntity", b =>
+            modelBuilder.Entity("BookMotelsDomain.Entities.SuiteEntity", b =>
                 {
-                    b.HasOne("ReservaMoteisDomain.Entities.MotelEntity", "Motel")
+                    b.HasOne("BookMotelsDomain.Entities.MotelEntity", "Motel")
                         .WithMany("Suites")
                         .HasForeignKey("MotelId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -187,9 +198,9 @@ namespace ReservaMoteisInfra.Migrations
                     b.Navigation("Motel");
                 });
 
-            modelBuilder.Entity("ReservaMoteisDomain.Entities.UserEntity", b =>
+            modelBuilder.Entity("BookMotelsDomain.Entities.UserEntity", b =>
                 {
-                    b.HasOne("ReservaMoteisDomain.Entities.ProfileEntity", "Profile")
+                    b.HasOne("BookMotelsDomain.Entities.ProfileEntity", "Profile")
                         .WithMany()
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -198,12 +209,12 @@ namespace ReservaMoteisInfra.Migrations
                     b.Navigation("Profile");
                 });
 
-            modelBuilder.Entity("ReservaMoteisDomain.Entities.MotelEntity", b =>
+            modelBuilder.Entity("BookMotelsDomain.Entities.MotelEntity", b =>
                 {
                     b.Navigation("Suites");
                 });
 
-            modelBuilder.Entity("ReservaMoteisDomain.Entities.UserEntity", b =>
+            modelBuilder.Entity("BookMotelsDomain.Entities.UserEntity", b =>
                 {
                     b.Navigation("Reserves");
                 });

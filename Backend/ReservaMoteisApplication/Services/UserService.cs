@@ -11,13 +11,13 @@ public class UserService
         _userRepository = userRepository;
     }
 
-    public async Task<IEnumerable<UserDTO>> FindAllAsync()
+    public async Task<IEnumerable<GetUserDTO>> FindAllAsync()
     {
         var users = await _userRepository.FindAll();
         return users.ToDTO();
     }
 
-    public async Task<UserDTO> FindByIdAsync(Guid id)
+    public async Task<GetUserDTO> FindByIdAsync(Guid id)
     {
         var user = await _userRepository.FindById(id) ??
                    throw new Exception($"Usuário não encontrado");
@@ -25,7 +25,7 @@ public class UserService
         return user.ToDTO();
     }
 
-    public async Task<UserDTO> AddAsync(CreateUserDTO userDto)
+    public async Task<GetUserDTO> AddAsync(UserDTO userDto)
     {
         var user = userDto.ToEntity();
         user.Id = Guid.NewGuid();
@@ -35,7 +35,7 @@ public class UserService
         return entity.ToDTO();
     }
 
-    public async Task<UserDTO> UpdateAsync(Guid id, UserDTO userDto)
+    public async Task<GetUserDTO> UpdateAsync(Guid id, GetUserDTO userDto)
     {
         var existingUser = await _userRepository.FindById(id) ??
                            throw new Exception("Usuário não encontrado");

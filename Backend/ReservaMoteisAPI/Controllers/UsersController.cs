@@ -15,14 +15,14 @@ namespace BookMotelsAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAll()
+        public async Task<ActionResult<IEnumerable<GetUserDTO>>> FindAllAsync()
         {
             var users = await _userService.FindAllAsync();
             return Ok(users);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserDTO>> FindByIdAsync(Guid id)
+        public async Task<ActionResult<GetUserDTO>> FindById(Guid id)
         {
             var user = await _userService.FindByIdAsync(id);
 
@@ -30,14 +30,14 @@ namespace BookMotelsAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<UserDTO>> AddAsync(CreateUserDTO userDto)
+        public async Task<ActionResult<GetUserDTO>> AddAsync(UserDTO userDto)
         {
             var newUser = await _userService.AddAsync(userDto);
-            return CreatedAtAction(nameof(FindByIdAsync), new { id = newUser.Id }, newUser);
+            return CreatedAtAction(nameof(FindById), new { id = newUser.Id }, newUser);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, UserDTO userDto)
+        public async Task<IActionResult> UpdateAsync(Guid id, GetUserDTO userDto)
         {
             var updatedUser = await _userService.UpdateAsync(id, userDto);
 

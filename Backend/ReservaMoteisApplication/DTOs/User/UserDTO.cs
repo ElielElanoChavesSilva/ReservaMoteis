@@ -1,9 +1,10 @@
-namespace BookMotelsApplication.DTOs.User;
-
-public class UserDTO
+﻿namespace BookMotelsApplication.DTOs.User
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public string Email { get; set; } = string.Empty;
-    public int ProfileId { get; set; }
+    public class UserDTO
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public int ProfileId { get; set; }
+        public string Password { get; set; } = string.Empty;
+    }
 }

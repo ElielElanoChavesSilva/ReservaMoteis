@@ -19,6 +19,6 @@ namespace BookMotelsDomain.Entities
         public string Phone { get; set; } = string.Empty;
         [MaxLength(500)]
         public string Description { get; set; } = string.Empty;
-        public ICollection<SuiteEntity> Suites { get; set; } = new List<SuiteEntity>();
+        public ICollection<SuiteEntity>? Suites { get; set; } = new List<SuiteEntity>();
     }
 }

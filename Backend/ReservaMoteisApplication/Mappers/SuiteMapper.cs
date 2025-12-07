@@ -1,15 +1,21 @@
-using BookMotelsApplication.DTOs;
+using BookMotelsApplication.DTOs.Suite;
 using BookMotelsDomain.Entities;
 
 namespace BookMotelsApplication.Mappers
 {
     public static class SuiteMapper
     {
-        public static SuiteDTO ToDTO(this SuiteEntity entity)
+        #region | ToDTO |
+        public static IEnumerable<GetSuiteDTO> ToDTO(this IEnumerable<SuiteEntity> entities)
         {
-            return new SuiteDTO
+            return entities.Select(e => e.ToDTO());
+        }
+
+
+        public static GetSuiteDTO ToDTO(this SuiteEntity entity)
+        {
+            return new GetSuiteDTO
             {
-                Id = entity.Id,
                 Nome = entity.Nome,
                 Description = entity.Description,
                 PricePerPeriod = entity.PricePerPeriod,
@@ -17,12 +23,18 @@ namespace BookMotelsApplication.Mappers
                 MotelId = entity.MotelId
             };
         }
+        #endregion
+
+        #region | ToEntity |
+        public static IEnumerable<SuiteEntity> ToEntity(this IEnumerable<SuiteDTO> dtos)
+        {
+            return dtos.Select(d => d.ToEntity());
+        }
 
         public static SuiteEntity ToEntity(this SuiteDTO dto)
         {
             return new SuiteEntity
             {
-                Id = dto.Id,
                 Nome = dto.Nome,
                 Description = dto.Description,
                 PricePerPeriod = dto.PricePerPeriod,
@@ -30,15 +42,7 @@ namespace BookMotelsApplication.Mappers
                 MotelId = dto.MotelId
             };
         }
+        #endregion
 
-        public static IEnumerable<SuiteDTO> ToDTO(this IEnumerable<SuiteEntity> entities)
-        {
-            return entities.Select(e => e.ToDTO());
-        }
-
-        public static IEnumerable<SuiteEntity> ToEntity(this IEnumerable<SuiteDTO> dtos)
-        {
-            return dtos.Select(d => d.ToEntity());
-        }
     }
 }

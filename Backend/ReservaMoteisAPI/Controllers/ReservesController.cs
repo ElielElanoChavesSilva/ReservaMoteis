@@ -1,4 +1,4 @@
-using BookMotelsApplication.DTOs;
+using BookMotelsApplication.DTOs.Reserve;
 using BookMotelsApplication.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,14 +16,14 @@ namespace BookMotelsAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ReserveDTO>>> FindAllAsync()
+        public async Task<ActionResult<IEnumerable<GetReserveDTO>>> FindAllAsync()
         {
             var reserves = await _reserveService.FindAllAsync();
             return Ok(reserves);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ReserveDTO>> GetById(long id)
+        public async Task<ActionResult<GetReserveDTO>> FindById(long id)
         {
             var reserve = await _reserveService.FindByIdAsync(id);
 
@@ -34,7 +34,7 @@ namespace BookMotelsAPI.Controllers
         public async Task<ActionResult<ReserveDTO>> AddAsync(ReserveDTO reserveDto)
         {
             var newReserve = await _reserveService.AddAsync(reserveDto);
-            return CreatedAtAction(nameof(GetById), new { id = newReserve.Id }, newReserve);
+            return CreatedAtAction(nameof(FindById), new { id = newReserve.Id }, newReserve);
         }
 
         [HttpPut("{id}")]

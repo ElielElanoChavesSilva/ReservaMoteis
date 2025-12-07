@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ReservaMoteisInfra.Migrations
+namespace BookMotelsInfra.Migrations
 {
     public partial class InitialCreate : Migration
     {
@@ -110,6 +110,16 @@ namespace ReservaMoteisInfra.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Profile",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 1, "Admin" });
+
+            migrationBuilder.InsertData(
+                table: "Profile",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 2, "User" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reserve_SuiteId",
