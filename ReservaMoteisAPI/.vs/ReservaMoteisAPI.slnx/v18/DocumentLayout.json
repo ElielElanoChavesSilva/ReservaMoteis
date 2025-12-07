@@ -3,8 +3,34 @@
   "WorkspaceRootPath": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisAPI\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{B3BBC484-2A6C-4364-A624-DB2B0131DDFD}|..\\ReservaMoteisInfra\\ReservaMoteisInfra.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisinfra\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6F8BF73B-0BB7-7B82-7865-AA1CD1B71585}|ReservaMoteisAPI.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisapi\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6F8BF73B-0BB7-7B82-7865-AA1CD1B71585}|ReservaMoteisAPI.csproj|solutionrelative:weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{6F8BF73B-0BB7-7B82-7865-AA1CD1B71585}|ReservaMoteisAPI.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6F8BF73B-0BB7-7B82-7865-AA1CD1B71585}|ReservaMoteisAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6F8BF73B-0BB7-7B82-7865-AA1CD1B71585}|ReservaMoteisAPI.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisapi\\servicecollection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6F8BF73B-0BB7-7B82-7865-AA1CD1B71585}|ReservaMoteisAPI.csproj|solutionrelative:servicecollection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3BBC484-2A6C-4364-A624-DB2B0131DDFD}|..\\ReservaMoteisInfra\\ReservaMoteisInfra.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisinfra\\repositories\\base\\crudrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3BBC484-2A6C-4364-A624-DB2B0131DDFD}|..\\ReservaMoteisInfra\\ReservaMoteisInfra.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisinfra\\repositories\\suiterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3BBC484-2A6C-4364-A624-DB2B0131DDFD}|..\\ReservaMoteisInfra\\ReservaMoteisInfra.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisinfra\\repositories\\reserverepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3BBC484-2A6C-4364-A624-DB2B0131DDFD}|..\\ReservaMoteisInfra\\ReservaMoteisInfra.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisinfra\\repositories\\profilerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3BBC484-2A6C-4364-A624-DB2B0131DDFD}|..\\ReservaMoteisInfra\\ReservaMoteisInfra.csproj|c:\\users\\eliel.silva\\source\\repos\\reservamoteis\\reservamoteisinfra\\repositories\\motelrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,7 +40,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,15 +60,119 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisAPI\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisAPI\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-06T13:58:03.589Z",
+              "WhenOpened": "2025-12-07T00:27:19.446Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ServiceCollection.cs",
+              "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisAPI\\ServiceCollection.cs",
+              "RelativeDocumentMoniker": "ServiceCollection.cs",
+              "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisAPI\\ServiceCollection.cs",
+              "RelativeToolTip": "ServiceCollection.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-07T00:25:10.616Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "WeatherForecast.cs",
+              "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisAPI\\WeatherForecast.cs",
+              "RelativeDocumentMoniker": "WeatherForecast.cs",
+              "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisAPI\\WeatherForecast.cs",
+              "RelativeToolTip": "WeatherForecast.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-07T00:25:09.442Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisInfra\\Repositories\\UserRepository.cs",
+              "RelativeDocumentMoniker": "..\\ReservaMoteisInfra\\Repositories\\UserRepository.cs",
+              "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisInfra\\Repositories\\UserRepository.cs",
+              "RelativeToolTip": "..\\ReservaMoteisInfra\\Repositories\\UserRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-07T00:24:25.205Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SuiteRepository.cs",
+              "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisInfra\\Repositories\\SuiteRepository.cs",
+              "RelativeDocumentMoniker": "..\\ReservaMoteisInfra\\Repositories\\SuiteRepository.cs",
+              "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisInfra\\Repositories\\SuiteRepository.cs",
+              "RelativeToolTip": "..\\ReservaMoteisInfra\\Repositories\\SuiteRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-07T00:24:06.922Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ReserveRepository.cs",
+              "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisInfra\\Repositories\\ReserveRepository.cs",
+              "RelativeDocumentMoniker": "..\\ReservaMoteisInfra\\Repositories\\ReserveRepository.cs",
+              "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisInfra\\Repositories\\ReserveRepository.cs",
+              "RelativeToolTip": "..\\ReservaMoteisInfra\\Repositories\\ReserveRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-07T00:23:31.122Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ProfileRepository.cs",
+              "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisInfra\\Repositories\\ProfileRepository.cs",
+              "RelativeDocumentMoniker": "..\\ReservaMoteisInfra\\Repositories\\ProfileRepository.cs",
+              "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisInfra\\Repositories\\ProfileRepository.cs",
+              "RelativeToolTip": "..\\ReservaMoteisInfra\\Repositories\\ProfileRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-07T00:21:23.96Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CrudRepository.cs",
+              "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisInfra\\Repositories\\Base\\CrudRepository.cs",
+              "RelativeDocumentMoniker": "..\\ReservaMoteisInfra\\Repositories\\Base\\CrudRepository.cs",
+              "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisInfra\\Repositories\\Base\\CrudRepository.cs",
+              "RelativeToolTip": "..\\ReservaMoteisInfra\\Repositories\\Base\\CrudRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-07T00:21:07.632Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "MotelRepository.cs",
+              "DocumentMoniker": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisInfra\\Repositories\\MotelRepository.cs",
+              "RelativeDocumentMoniker": "..\\ReservaMoteisInfra\\Repositories\\MotelRepository.cs",
+              "ToolTip": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\ReservaMoteisInfra\\Repositories\\MotelRepository.cs",
+              "RelativeToolTip": "..\\ReservaMoteisInfra\\Repositories\\MotelRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAABWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-07T00:20:49.343Z",
               "EditorCaption": ""
             }
           ]

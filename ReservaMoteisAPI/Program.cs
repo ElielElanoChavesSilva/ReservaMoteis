@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using ReservaMoteisAPI;
 using ReservaMoteisInfra.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,9 +8,9 @@ builder.Services.AddDbContext<MainContext>(options =>
     options.UseSqlite("Data Source=main.db"));
 
 // Add services to the container.
+builder.Services.ConfigureRepositories();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -21,7 +22,6 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 }
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -29,9 +29,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
