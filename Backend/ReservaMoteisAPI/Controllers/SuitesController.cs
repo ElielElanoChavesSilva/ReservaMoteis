@@ -1,12 +1,11 @@
 using BookMotelsApplication.DTOs.Suite;
 using BookMotelsApplication.Interfaces;
-using BookMotelsApplication.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookMotelsAPI.Controllers
 {
     [ApiController]
-    [Route("api/suites")]
+    [Route("api/[controller]")]
     public class SuitesController : ControllerBase
     {
         private readonly ISuiteService _suiteService;

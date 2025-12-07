@@ -11,7 +11,7 @@ builder.Services.AddDbContext<MainContext>(options =>
 // Add services to the container.
 builder.Services.ConfigureRepositories();
 builder.Services.ConfigureServices();
-
+builder.Services.ConfigureAuthentication();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

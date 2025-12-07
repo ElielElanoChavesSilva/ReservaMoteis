@@ -1,6 +1,5 @@
 using BookMotelsApplication.DTOs.Motel;
 using BookMotelsApplication.Interfaces;
-using BookMotelsApplication.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookMotelsAPI.Controllers

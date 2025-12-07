@@ -30,12 +30,6 @@ namespace BookMotelsAPI.Controllers
             return Ok(user);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<GetUserDTO>> AddAsync(UserDTO userDto)
-        {
-            var newUser = await _userService.AddAsync(userDto);
-            return CreatedAtAction(nameof(FindById), new { id = newUser.Id }, newUser);
-        }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(Guid id, GetUserDTO userDto)

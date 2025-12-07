@@ -1,4 +1,5 @@
 using BookMotelsApplication.DTOs.User;
+using BookMotelsApplication.Interfaces;
 using BookMotelsApplication.Mappers;
 using BookMotelsDomain.Interfaces;
 
