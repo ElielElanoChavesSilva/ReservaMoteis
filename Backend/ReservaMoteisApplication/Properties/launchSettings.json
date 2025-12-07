@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "BookMotelsAPI": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\eliel.silva\\source\\repos\\ReservaMoteis\\Backend\\ReservaMoteisAPI",
+      "nativeDebugging": true
+    }
+  }
+}
