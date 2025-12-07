@@ -1,6 +1,6 @@
-﻿using ReservaMoteisDomain.Interfaces.Base;
+﻿using BookMotelsDomain.Interfaces.Base;
 
-namespace ReservaMoteisInfra.Repositories.Base
+namespace BookMotelsInfra.Repositories.Base
 {
     public class CrudRepository<TId, TEntity> : ReadRepository<TId, TEntity>, ICrudRepository<TId, TEntity> where TEntity : class
     {

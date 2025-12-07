@@ -1,6 +1,6 @@
-﻿using ReservaMoteisDomain.Interfaces.Base;
+﻿using BookMotelsDomain.Interfaces.Base;
 
-namespace ReservaMoteisInfra.Repositories.Base
+namespace BookMotelsInfra.Repositories.Base
 {
     public abstract class ReadRepository<TId, TEntity> : IReadRepository<TId, TEntity> where TEntity : class
     {

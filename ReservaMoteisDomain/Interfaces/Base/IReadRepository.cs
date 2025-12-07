@@ -1,4 +1,4 @@
-﻿namespace ReservaMoteisDomain.Interfaces.Base
+﻿namespace BookMotelsDomain.Interfaces.Base
 {
     public interface IReadRepository<TId, TEntity> where TEntity : class
     {

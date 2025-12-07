@@ -1,6 +1,6 @@
+using BookMotelsAPI;
+using BookMotelsInfra.Context;
 using Microsoft.EntityFrameworkCore;
-using ReservaMoteisAPI;
-using ReservaMoteisInfra.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 

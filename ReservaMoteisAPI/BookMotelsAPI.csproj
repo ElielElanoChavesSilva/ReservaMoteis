@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ReservaMoteisInfra\ReservaMoteisInfra.csproj" />
+    <ProjectReference Include="..\ReservaMoteisInfra\BookMotelsInfra.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ReservaMoteisDomain.Entities;
+﻿using BookMotelsDomain.Entities;
+using Microsoft.EntityFrameworkCore;
 
-namespace ReservaMoteisInfra.Context
+namespace BookMotelsInfra.Context
 {
     public class MainContext : DbContext
     {

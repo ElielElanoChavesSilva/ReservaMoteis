@@ -1,6 +1,7 @@
+using BookMotelsAPI;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ReservaMoteisAPI.Controllers
+namespace BookMotelsAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]

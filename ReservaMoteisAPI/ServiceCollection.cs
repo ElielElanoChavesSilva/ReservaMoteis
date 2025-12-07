@@ -1,7 +1,7 @@
-﻿using ReservaMoteisDomain.Interfaces;
-using ReservaMoteisInfra.Repositories;
+﻿using BookMotelsDomain.Interfaces;
+using BookMotelsInfra.Repositories;
 
-namespace ReservaMoteisAPI
+namespace BookMotelsAPI
 {
     public static class ServiceCollection
     {
