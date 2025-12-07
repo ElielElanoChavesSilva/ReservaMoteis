@@ -1,4 +1,5 @@
 using BookMotelsApplication.DTOs.Motel;
+using BookMotelsApplication.Interfaces;
 using BookMotelsApplication.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +9,9 @@ namespace BookMotelsAPI.Controllers
     [Route("api/[controller]")]
     public class MotelsController : ControllerBase
     {
-        private readonly MotelService _motelService;
+        private readonly IMotelService _motelService;
 
-        public MotelsController(MotelService motelService)
+        public MotelsController(IMotelService motelService)
         {
             _motelService = motelService;
         }

@@ -1,4 +1,5 @@
-﻿using BookMotelsApplication.Services;
+﻿using BookMotelsApplication.Interfaces;
+using BookMotelsApplication.Services;
 using BookMotelsDomain.Interfaces;
 using BookMotelsInfra.Repositories;
 
@@ -19,10 +20,10 @@ namespace BookMotelsAPI
 
         public static void ConfigureServices(this IServiceCollection services)
         {
-            services.AddScoped<UserService>();
-            services.AddScoped<MotelService>();
-            services.AddScoped<SuiteService>();
-            services.AddScoped<ReserveService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IMotelService, MotelService>();
+            services.AddScoped<ISuiteService, SuiteService>();
+            services.AddScoped<IReserveService, ReserveService>();
         }
     }
 }

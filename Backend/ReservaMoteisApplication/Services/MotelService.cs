@@ -1,10 +1,11 @@
 using BookMotelsApplication.DTOs.Motel;
+using BookMotelsApplication.Interfaces;
 using BookMotelsApplication.Mappers;
 using BookMotelsDomain.Interfaces;
 
 namespace BookMotelsApplication.Services
 {
-    public class MotelService
+    public class MotelService : IMotelService
     {
         private readonly IMotelRepository _motelRepository;
 
@@ -22,7 +23,7 @@ namespace BookMotelsApplication.Services
         public async Task<GetMotelDTO> FindByIdAsync(long id)
         {
             var motel = await _motelRepository.FindById(id) ??
-                        throw new Exception($"Motel de Id: {id} não encontrado");
+                        throw new Exception($"Motel de Id: {id} nï¿½o encontrado");
 
             return motel.ToDTO();
         }
@@ -37,7 +38,7 @@ namespace BookMotelsApplication.Services
         public async Task UpdateAsync(long id, GetMotelDTO motelDto)
         {
             var existingMotel = await _motelRepository.FindById(id) ??
-                                throw new Exception($"Motel de Id: {id} não encontrado");
+                                throw new Exception($"Motel de Id: {id} nï¿½o encontrado");
 
             existingMotel.Nome = motelDto.Nome;
             existingMotel.Address = motelDto.Address;
@@ -50,7 +51,7 @@ namespace BookMotelsApplication.Services
         public async Task DeleteAsync(long id)
         {
             var entity = await _motelRepository.FindById(id) ??
-                                throw new Exception($"Motel de Id: {id} não encontrado");
+                                throw new Exception($"Motel de Id: {id} nï¿½o encontrado");
 
             await _motelRepository.Delete(entity);
         }

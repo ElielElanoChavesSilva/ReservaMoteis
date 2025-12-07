@@ -5,5 +5,6 @@ namespace BookMotelsDomain.Interfaces
 {
     public interface IUserRepository : ICrudRepository<Guid, UserEntity>
     {
+        Task<UserEntity?> GetByEmailAsync(string email);
     }
 }

@@ -1,10 +1,11 @@
 using BookMotelsApplication.DTOs.Suite;
+using BookMotelsApplication.Interfaces;
 using BookMotelsApplication.Mappers;
 using BookMotelsDomain.Interfaces;
 
 namespace BookMotelsApplication.Services
 {
-    public class SuiteService
+    public class SuiteService : ISuiteService
     {
         private readonly ISuiteRepository _suiteRepository;
 
@@ -22,7 +23,7 @@ namespace BookMotelsApplication.Services
         public async Task<GetSuiteDTO> FindByIdAsync(long id)
         {
             var suite = await _suiteRepository.FindById(id) ??
-                        throw new Exception($"Suíte de Id: {id} não encontrada");
+                        throw new Exception($"Suï¿½te de Id: {id} nï¿½o encontrada");
 
             return suite.ToDTO();
         }
@@ -37,7 +38,7 @@ namespace BookMotelsApplication.Services
         public async Task UpdateAsync(long id, SuiteDTO suiteDto)
         {
             var existingSuite = await _suiteRepository.FindById(id) ??
-                                throw new Exception($"Suíte de Id: {id} não encontrada");
+                                throw new Exception($"Suï¿½te de Id: {id} nï¿½o encontrada");
 
             existingSuite.Nome = suiteDto.Nome;
             existingSuite.Description = suiteDto.Description;
@@ -51,7 +52,7 @@ namespace BookMotelsApplication.Services
         public async Task DeleteAsync(long id)
         {
             var entity = await _suiteRepository.FindById(id) ??
-                                throw new Exception($"Suíte de Id: {id} não encontrada");
+                                throw new Exception($"Suï¿½te de Id: {id} nï¿½o encontrada");
 
             await _suiteRepository.Delete(entity);
         }

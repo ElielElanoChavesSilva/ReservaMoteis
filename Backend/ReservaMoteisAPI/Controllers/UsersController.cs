@@ -1,4 +1,5 @@
 using BookMotelsApplication.DTOs.User;
+using BookMotelsApplication.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookMotelsAPI.Controllers
@@ -7,9 +8,9 @@ namespace BookMotelsAPI.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
 
-        public UsersController(UserService userService)
+        public UsersController(IUserService userService)
         {
             _userService = userService;
         }

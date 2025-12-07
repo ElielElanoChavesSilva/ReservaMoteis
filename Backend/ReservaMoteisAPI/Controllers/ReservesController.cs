@@ -1,4 +1,5 @@
 using BookMotelsApplication.DTOs.Reserve;
+using BookMotelsApplication.Interfaces;
 using BookMotelsApplication.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +9,9 @@ namespace BookMotelsAPI.Controllers
     [Route("api/reserves")]
     public class ReservesController : ControllerBase
     {
-        private readonly ReserveService _reserveService;
+        private readonly IReserveService _reserveService;
 
-        public ReservesController(ReserveService reserveService)
+        public ReservesController(IReserveService reserveService)
         {
             _reserveService = reserveService;
         }

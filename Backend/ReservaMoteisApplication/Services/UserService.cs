@@ -2,7 +2,7 @@ using BookMotelsApplication.DTOs.User;
 using BookMotelsApplication.Mappers;
 using BookMotelsDomain.Interfaces;
 
-public class UserService
+public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
 
@@ -20,7 +20,7 @@ public class UserService
     public async Task<GetUserDTO> FindByIdAsync(Guid id)
     {
         var user = await _userRepository.FindById(id) ??
-                   throw new Exception($"Usuário não encontrado");
+                   throw new Exception($"Usuï¿½rio nï¿½o encontrado");
 
         return user.ToDTO();
     }
@@ -38,7 +38,7 @@ public class UserService
     public async Task<GetUserDTO> UpdateAsync(Guid id, GetUserDTO userDto)
     {
         var existingUser = await _userRepository.FindById(id) ??
-                           throw new Exception("Usuário não encontrado");
+                           throw new Exception("Usuï¿½rio nï¿½o encontrado");
 
         existingUser.Name = userDto.Name;
         existingUser.Email = userDto.Email;
@@ -51,7 +51,7 @@ public class UserService
     public async Task DeleteAsync(Guid id)
     {
         var entity = await _userRepository.FindById(id) ??
-                           throw new Exception("Usuário não encontrado");
+                           throw new Exception("Usuï¿½rio nï¿½o encontrado");
 
         await _userRepository.Delete(entity);
     }

@@ -1,0 +1,12 @@
+using BookMotelsApplication.DTOs.Reserve;
+
+namespace BookMotelsApplication.Interfaces;
+
+public interface IReserveService
+{
+    Task<IEnumerable<GetReserveDTO>> FindAllAsync();
+    Task<GetReserveDTO> FindByIdAsync(long id);
+    Task<GetReserveDTO> AddAsync(ReserveDTO reserveDto);
+    Task UpdateAsync(long id, ReserveDTO reserveDto);
+    Task DeleteAsync(long id);
+}
