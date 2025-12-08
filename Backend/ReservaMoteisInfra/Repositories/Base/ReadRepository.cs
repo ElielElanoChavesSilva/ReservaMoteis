@@ -13,12 +13,12 @@ namespace BookMotelsInfra.Repositories.Base
             _context = context;
         }
 
-        public async Task<IEnumerable<TEntity>> FindAll()
+        public virtual async Task<IEnumerable<TEntity>> FindAll()
         {
             return await _context.Set<TEntity>().ToListAsync();
         }
 
-        public async Task<TEntity?> FindById(TId id)
+        public virtual async Task<TEntity?> FindById(TId id)
         {
             return await _context.Set<TEntity>().FindAsync(id);
         }

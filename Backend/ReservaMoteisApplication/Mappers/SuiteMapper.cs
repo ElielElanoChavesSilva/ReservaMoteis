@@ -40,10 +40,8 @@ namespace BookMotelsApplication.Mappers
                 Description = dto.Description,
                 PricePerPeriod = dto.PricePerPeriod,
                 MaxOccupancy = dto.MaxOccupancy,
-                MotelId = dto.MotelId
             };
         }
         #endregion
-
     }
 }

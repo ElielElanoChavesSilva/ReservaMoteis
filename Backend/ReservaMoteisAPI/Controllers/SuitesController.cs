@@ -8,7 +8,7 @@ namespace BookMotelsAPI.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class SuitesController : ControllerBase
+    public class SuitesController : ApiController
     {
         private readonly ISuiteService _suiteService;
 
@@ -33,13 +33,6 @@ namespace BookMotelsAPI.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public async Task<ActionResult<GetSuiteDTO>> AddAsync(SuiteDTO suiteDto)
-        {
-            var newSuite = await _suiteService.AddAsync(suiteDto);
-            return CreatedAtAction(nameof(FindById), new { id = newSuite.Id }, newSuite);
-        }
-
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(long id, SuiteDTO suiteDto)
         {
@@ -47,19 +40,12 @@ namespace BookMotelsAPI.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(long id)
         {
             await _suiteService.DeleteAsync(id);
             return NoContent();
-        }
-
-        [HttpGet("available/{motelId}")]
-        public async Task<ActionResult<IEnumerable<GetSuiteDTO>>> FindAllAvailable(long motelId, [FromQuery] string? name,
-            [FromQuery] DateTime? checkin, [FromQuery] DateTime? checkout)
-        {
-            var suites = await _suiteService.FindAllAvailable(motelId, name, checkin, checkout);
-            return Ok(suites);
         }
     }
 }

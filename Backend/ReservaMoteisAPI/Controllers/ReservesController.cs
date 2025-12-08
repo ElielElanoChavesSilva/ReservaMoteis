@@ -8,7 +8,7 @@ namespace BookMotelsAPI.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class ReservesController : ControllerBase
+    public class ReservesController : ApiController
     {
         private readonly IReserveService _reserveService;
 
@@ -17,10 +17,18 @@ namespace BookMotelsAPI.Controllers
             _reserveService = reserveService;
         }
 
-        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        [HttpGet("list")]
         public async Task<ActionResult<IEnumerable<GetReserveDTO>>> FindAllAsync()
         {
             var reserves = await _reserveService.FindAllAsync();
+            return Ok(reserves);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<GetReserveDTO>>> FindAllByUserAsync()
+        {
+            var reserves = await _reserveService.FindAllByUserAsync(LoggedUserId);
             return Ok(reserves);
         }
 

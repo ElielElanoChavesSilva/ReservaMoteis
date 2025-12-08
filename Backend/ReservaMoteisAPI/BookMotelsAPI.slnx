@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="../BookMotelsTest/BookMotelsTest.csproj" Id="aafa6ae3-c280-4c33-8cb1-1e7e46cf6247" />
   <Project Path="../ReservaMoteisApplication/BookMotelsApplication.csproj" Id="3b55c935-5af1-4304-9376-5fba4a46ef6f" />
   <Project Path="../ReservaMoteisDomain/BookMotelsDomain.csproj" Id="8c15895b-cde1-47b3-bcbb-b14ecb038d46" />
   <Project Path="../ReservaMoteisInfra/BookMotelsInfra.csproj" Id="b3bbc484-2a6c-4364-a624-db2b0131ddfd" />

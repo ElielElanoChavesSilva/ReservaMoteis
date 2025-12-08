@@ -10,6 +10,7 @@ namespace BookMotelsApplication.Mappers
         {
             return new GetReserveDTO
             {
+                Id = entity.Id,
                 UserId = entity.UserId,
                 SuiteId = entity.SuiteId,
                 CheckIn = entity.CheckIn,

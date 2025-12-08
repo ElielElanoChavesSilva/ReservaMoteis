@@ -21,6 +21,12 @@ namespace BookMotelsApplication.Services
             return reserves.ToDTO();
         }
 
+        public async Task<IEnumerable<GetReserveDTO>> FindAllByUserAsync(Guid userId)
+        {
+            var reserves = await _reserveRepository.FindAllByUserAsync(userId);
+            return reserves.ToDTO();
+        }
+
         public async Task<GetReserveDTO> FindByIdAsync(long id)
         {
             var reserve = await _reserveRepository.FindById(id) ??

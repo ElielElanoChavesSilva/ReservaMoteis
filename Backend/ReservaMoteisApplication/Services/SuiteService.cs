@@ -44,9 +44,11 @@ namespace BookMotelsApplication.Services
             return suite.ToDTO();
         }
 
-        public async Task<GetSuiteDTO> AddAsync(SuiteDTO suiteDto)
+        public async Task<GetSuiteDTO> AddAsync(long motelId, SuiteDTO suiteDto)
         {
-            SuiteEntity entity = await _suiteRepository.Add(suiteDto.ToEntity());
+            SuiteEntity entity = suiteDto.ToEntity();
+            entity.MotelId = motelId;
+            entity = await _suiteRepository.Add(entity);
 
             return entity.ToDTO();
         }
@@ -60,7 +62,6 @@ namespace BookMotelsApplication.Services
             existingSuite.Description = suiteDto.Description;
             existingSuite.PricePerPeriod = suiteDto.PricePerPeriod;
             existingSuite.MaxOccupancy = suiteDto.MaxOccupancy;
-            existingSuite.MotelId = suiteDto.MotelId;
 
             await _suiteRepository.Update(existingSuite);
         }

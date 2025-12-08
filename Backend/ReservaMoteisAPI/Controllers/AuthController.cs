@@ -7,7 +7,7 @@ namespace BookMotelsAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthController : ControllerBase
+    public class AuthController : ApiController
     {
         private readonly IAuthenticationService _authService;
         private readonly IUserService _userService;
@@ -26,11 +26,10 @@ namespace BookMotelsAPI.Controllers
             var result = await _authService.AuthenticateAsync(loginDto);
 
             if (result is null)
-                return Unauthorized("Invalid credentials");
+                return Unauthorized("Credenciais inválidas");
 
             return Ok(result);
         }
-
 
         [HttpPost("sign-up")]
         public async Task<ActionResult<GetUserDTO>> AddAsync(UserDTO userDto)

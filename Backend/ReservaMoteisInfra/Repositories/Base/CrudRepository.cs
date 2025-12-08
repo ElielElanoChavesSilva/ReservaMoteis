@@ -16,7 +16,7 @@ namespace BookMotelsInfra.Repositories.Base
             return entity != null;
         }
 
-        public async Task<TEntity> Add(TEntity entity)
+        public virtual async Task<TEntity> Add(TEntity entity)
         {
             _context.Set<TEntity>().Add(entity);
             await _context.SaveChangesAsync();
@@ -24,7 +24,7 @@ namespace BookMotelsInfra.Repositories.Base
             return entity;
         }
 
-        public async Task<TEntity> Update(TEntity entity)
+        public virtual async Task<TEntity> Update(TEntity entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -32,7 +32,7 @@ namespace BookMotelsInfra.Repositories.Base
             return entity;
         }
 
-        public async Task Delete(TEntity entity)
+        public virtual async Task Delete(TEntity entity)
         {
             _context.Set<TEntity>().Remove(entity);
             await _context.SaveChangesAsync();

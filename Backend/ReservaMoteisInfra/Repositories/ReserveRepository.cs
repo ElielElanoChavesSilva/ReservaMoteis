@@ -18,5 +18,11 @@ namespace BookMotelsInfra.Repositories
                 .AnyAsync(r => r.SuiteId == suiteId &&
                                r.CheckIn < checkOut && r.CheckOut > checkIn);
         }
+
+        public async Task<IEnumerable<ReserveEntity>> FindAllByUserAsync(Guid userId)
+        {
+            return await _context.Reserves
+                .Where(r => r.UserId == userId).ToListAsync();
+        }
     }
 }

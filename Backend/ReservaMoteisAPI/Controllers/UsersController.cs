@@ -8,7 +8,7 @@ namespace BookMotelsAPI.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    public class UsersController : ApiController
     {
         private readonly IUserService _userService;
 
@@ -17,6 +17,7 @@ namespace BookMotelsAPI.Controllers
             _userService = userService;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetUserDTO>>> FindAllAsync()
         {
@@ -41,12 +42,12 @@ namespace BookMotelsAPI.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             await _userService.DeleteAsync(id);
             return NoContent();
         }
-
     }
 }

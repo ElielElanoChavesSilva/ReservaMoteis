@@ -1,4 +1,5 @@
 using BookMotelsApplication.DTOs.Motel;
+using BookMotelsApplication.DTOs.Suite;
 using BookMotelsApplication.Interfaces;
 using BookMotelsDomain.DTOs;
 using Microsoft.AspNetCore.Authorization;
@@ -9,13 +10,17 @@ namespace BookMotelsAPI.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class MotelsController : ControllerBase
+    public class MotelsController : ApiController
     {
         private readonly IMotelService _motelService;
+        private readonly ISuiteService _suiteService;
 
-        public MotelsController(IMotelService motelService)
+        public MotelsController(
+            IMotelService motelService,
+            ISuiteService suiteService)
         {
             _motelService = motelService;
+            _suiteService = suiteService;
         }
 
         [HttpGet]
@@ -25,10 +30,10 @@ namespace BookMotelsAPI.Controllers
             return Ok(motels);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<GetMotelDTO>> FindById(long id)
+        [HttpGet("{motelId}")]
+        public async Task<ActionResult<GetMotelDTO>> FindById(long motelId)
         {
-            var motel = await _motelService.FindByIdAsync(id);
+            var motel = await _motelService.FindByIdAsync(motelId);
 
             return Ok(motel);
         }
@@ -51,20 +56,37 @@ namespace BookMotelsAPI.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(long id, GetMotelDTO motelDto)
+        [HttpPut("{motelId}")]
+        public async Task<IActionResult> UpdateAsync(long motelId, GetMotelDTO motelDto)
         {
-            await _motelService.UpdateAsync(id, motelDto);
+            await _motelService.UpdateAsync(motelId, motelDto);
 
             return NoContent();
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(long id)
+        [HttpDelete("{motelId}")]
+        public async Task<IActionResult> DeleteAsync(long motelId)
         {
-            await _motelService.DeleteAsync(id);
+            await _motelService.DeleteAsync(motelId);
             return NoContent();
         }
+
+        [HttpGet("{motelId}/suites/available")]
+        public async Task<ActionResult<IEnumerable<GetSuiteDTO>>> FindAllAvailable(long motelId, [FromQuery] string? name,
+            [FromQuery] DateTime? checkin, [FromQuery] DateTime? checkout)
+        {
+            var suites = await _suiteService.FindAllAvailable(motelId, name, checkin, checkout);
+            return Ok(suites);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("{motelId}/suites")]
+        public async Task<ActionResult<GetSuiteDTO>> AddAsync(long motelId, SuiteDTO suiteDto)
+        {
+            var newSuite = await _suiteService.AddAsync(motelId, suiteDto);
+            return CreatedAtAction(nameof(FindById), new { id = newSuite.Id }, newSuite);
+        }
+
     }
 }
