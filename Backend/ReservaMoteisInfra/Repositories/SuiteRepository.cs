@@ -15,7 +15,7 @@ namespace BookMotelsInfra.Repositories
         public async Task<IEnumerable<SuiteEntity>> FindAllAvailable(long motelId, string? name, DateTime? checkIn, DateTime? checkOut)
         {
             var query = _context.Suites
-                .Where(s => s.MotelId == motelId && s.IsAvailable)
+                .Where(s => s.MotelId == motelId)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(name))

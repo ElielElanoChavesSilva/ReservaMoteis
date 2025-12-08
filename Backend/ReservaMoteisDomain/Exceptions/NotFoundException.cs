@@ -1,5 +1,3 @@
-using System;
-
 namespace BookMotelsDomain.Exceptions
 {
     public class NotFoundException : DomainException

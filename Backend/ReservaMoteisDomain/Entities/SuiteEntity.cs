@@ -17,7 +17,6 @@ namespace BookMotelsDomain.Entities
         public decimal PricePerPeriod { get; set; }
         [Required]
         public int MaxOccupancy { get; set; }
-        [Required] public bool IsAvailable { get; set; }
         [Required]
         public long MotelId { get; set; }
 

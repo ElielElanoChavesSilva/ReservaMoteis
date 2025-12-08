@@ -16,7 +16,7 @@ namespace BookMotelsInfra.Repositories
         {
             return await _context.Reserves
                 .AnyAsync(r => r.SuiteId == suiteId &&
-                               r.CheckIn < checkOut && r.CheckOut > checkIn);
+                               r.CheckIn <= checkOut && r.CheckOut >= checkIn);
         }
 
         public async Task<IEnumerable<ReserveEntity>> FindAllByUserAsync(Guid userId)

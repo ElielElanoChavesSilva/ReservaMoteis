@@ -48,7 +48,6 @@ namespace BookMotelsInfra.Migrations
                     Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false),
                     PricePerPeriod = table.Column<decimal>(type: "TEXT", nullable: false),
                     MaxOccupancy = table.Column<int>(type: "INTEGER", nullable: false),
-                    IsAvailable = table.Column<bool>(type: "INTEGER", nullable: false),
                     MotelId = table.Column<long>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>

@@ -39,16 +39,12 @@ namespace BookMotelsAPI.Middleware
                     statusCode = HttpStatusCode.NotFound;
                     message = exception.Message;
                     break;
-                case ValidationException:
-                    statusCode = HttpStatusCode.BadRequest;
-                    message = exception.Message;
-                    break;
-                case AuthenticationException:
-                    statusCode = HttpStatusCode.Unauthorized;
-                    message = exception.Message;
-                    break;
                 case ConflictException:
                     statusCode = HttpStatusCode.Conflict;
+                    message = exception.Message;
+                    break;
+                case BadRequestException:
+                    statusCode = HttpStatusCode.BadRequest;
                     message = exception.Message;
                     break;
                 case DomainException:

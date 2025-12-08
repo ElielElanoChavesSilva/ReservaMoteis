@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookMotelsInfra.Migrations
 {
     [DbContext(typeof(MainContext))]
-    [Migration("20251208015634_InitialCreate")]
+    [Migration("20251208202925_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -115,9 +115,6 @@ namespace BookMotelsInfra.Migrations
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("INTEGER");
 
                     b.Property<int>("MaxOccupancy")
                         .HasColumnType("INTEGER");

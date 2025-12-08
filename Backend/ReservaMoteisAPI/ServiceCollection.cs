@@ -5,6 +5,7 @@ using BookMotelsInfra.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using IAuthenticationService = BookMotelsApplication.Interfaces.IAuthenticationService;
 
 namespace BookMotelsAPI
 {

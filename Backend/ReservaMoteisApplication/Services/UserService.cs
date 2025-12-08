@@ -1,6 +1,7 @@
 using BookMotelsApplication.DTOs.User;
 using BookMotelsApplication.Interfaces;
 using BookMotelsApplication.Mappers;
+using BookMotelsDomain.Entities;
 using BookMotelsDomain.Exceptions;
 using BookMotelsDomain.Interfaces;
 
@@ -15,14 +16,14 @@ public class UserService : IUserService
 
     public async Task<IEnumerable<GetUserDTO>> FindAllAsync()
     {
-        var users = await _userRepository.FindAll();
+        IEnumerable<UserEntity> users = await _userRepository.FindAll();
         return users.ToDTO();
     }
 
     public async Task<GetUserDTO> FindByIdAsync(Guid id)
     {
-        var user = await _userRepository.FindById(id) ??
-                   throw new NotFoundException("Usuário não encontrado");
+        UserEntity user = await _userRepository.FindById(id) ??
+                          throw new NotFoundException("Usuário não encontrado");
 
         return user.ToDTO();
     }
@@ -33,18 +34,18 @@ public class UserService : IUserService
             throw new ConflictException("Este email já está cadastrado");
 
         userDto.Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
-        var user = userDto.ToEntity();
-        user.Id = Guid.NewGuid();
+        UserEntity entity = userDto.ToEntity();
+        entity.Id = Guid.NewGuid();
 
-        var entity = await _userRepository.Add(user);
+        entity = await _userRepository.Add(entity);
 
         return entity.ToDTO();
     }
 
     public async Task<GetUserDTO> UpdateAsync(Guid id, GetUserDTO userDto)
     {
-        var existingUser = await _userRepository.FindById(id) ??
-                           throw new Exception("Usuï¿½rio nï¿½o encontrado");
+        UserEntity existingUser = await _userRepository.FindById(id) ??
+                                  throw new Exception("Usuï¿½rio nï¿½o encontrado");
 
         existingUser.Name = userDto.Name;
         existingUser.Email = userDto.Email;
@@ -56,8 +57,8 @@ public class UserService : IUserService
 
     public async Task DeleteAsync(Guid id)
     {
-        var entity = await _userRepository.FindById(id) ??
-                           throw new Exception("Usuï¿½rio nï¿½o encontrado");
+        UserEntity entity = await _userRepository.FindById(id) ??
+                            throw new Exception("Usuï¿½rio nï¿½o encontrado");
 
         await _userRepository.Delete(entity);
     }

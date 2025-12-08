@@ -16,12 +16,12 @@ namespace BookMotelsApplication.Mappers
         {
             return new GetSuiteDTO
             {
+                Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
                 PricePerPeriod = entity.PricePerPeriod,
                 MaxOccupancy = entity.MaxOccupancy,
-                MotelId = entity.MotelId,
-                IsAvailable = entity.IsAvailable
+                MotelId = entity.MotelId
             };
         }
         #endregion

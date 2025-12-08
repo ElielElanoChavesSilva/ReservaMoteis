@@ -1,0 +1,341 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2025-12-08T20:00:00.000Z",
+  "__export_source": "gemini-cli",
+  "resources": [
+    {
+      "_id": "req_auth_login",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Auth/Login",
+      "url": "{{ _.baseUrl }}/api/Auth/sign-in",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"email\": \"\",\n\t\"password\": \"\"\n}"
+      }
+    },
+    {
+      "_id": "req_auth_signup",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Auth/Sign Up",
+      "url": "{{ _.baseUrl }}/api/Auth/sign-up",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"\",\n\t\"email\": \"\",\n\t\"password\": \"\"\n}"
+      }
+    },
+    {
+      "_id": "req_motels_get_all",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Motels/Get All",
+      "url": "{{ _.baseUrl }}/api/Motels",
+      "method": "GET",
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_motels_get_by_id",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Motels/Get By Id",
+      "url": "{{ _.baseUrl }}/api/Motels/1",
+      "method": "GET",
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_motels_billing_report",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Motels/Billing Report",
+      "url": "{{ _.baseUrl }}/api/Motels/billing-report?motelId=1&year=2025&month=12",
+      "method": "GET",
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_motels_create",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Motels/Create",
+      "url": "{{ _.baseUrl }}/api/Motels",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"\",\n\t\"address\": \"\"\n}"
+      },
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_motels_update",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Motels/Update",
+      "url": "{{ _.baseUrl }}/api/Motels/1",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"id\": 1,\n\t\"name\": \"\",\n\t\"address\": \"\"\n}"
+      },
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_motels_delete",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Motels/Delete",
+      "url": "{{ _.baseUrl }}/api/Motels/1",
+      "method": "DELETE",
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_motels_suites_available",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Motels/Suites Available",
+      "url": "{{ _.baseUrl }}/api/Motels/1/suites/available?name=&checkin=&checkout=",
+      "method": "GET",
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_motels_suites_create",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Motels/Create Suite",
+      "url": "{{ _.baseUrl }}/api/Motels/1/suites",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"\",\n\t\"price\": 0\n}"
+      },
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_reserves_list",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Reserves/List All",
+      "url": "{{ _.baseUrl }}/api/Reserves/list",
+      "method": "GET",
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_reserves_get_all_by_user",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Reserves/Get All By User",
+      "url": "{{ _.baseUrl }}/api/Reserves",
+      "method": "GET",
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_reserves_get_by_id",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Reserves/Get By Id",
+      "url": "{{ _.baseUrl }}/api/Reserves/1",
+      "method": "GET",
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_reserves_create",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Reserves/Create",
+      "url": "{{ _.baseUrl }}/api/Reserves",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"suiteId\": 1,\n\t\"checkinDate\": \"\",\n\t\"checkoutDate\": \"\"\n}"
+      },
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_reserves_update",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Reserves/Update",
+      "url": "{{ _.baseUrl }}/api/Reserves/1",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"suiteId\": 1,\n\t\"checkinDate\": \"\",\n\t\"checkoutDate\": \"\"\n}"
+      },
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_reserves_delete",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Reserves/Delete",
+      "url": "{{ _.baseUrl }}/api/Reserves/1",
+      "method": "DELETE",
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_suites_get_all",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Suites/Get All",
+      "url": "{{ _.baseUrl }}/api/Suites",
+      "method": "GET",
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_suites_get_by_id",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Suites/Get By Id",
+      "url": "{{ _.baseUrl }}/api/Suites/1",
+      "method": "GET",
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_suites_update",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Suites/Update",
+      "url": "{{ _.baseUrl }}/api/Suites/1",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"\",\n\t\"price\": 0\n}"
+      },
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_suites_delete",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Suites/Delete",
+      "url": "{{ _.baseUrl }}/api/Suites/1",
+      "method": "DELETE",
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_users_get_all",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Users/Get All",
+      "url": "{{ _.baseUrl }}/api/Users",
+      "method": "GET",
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_users_get_by_id",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Users/Get By Id",
+      "url": "{{ _.baseUrl }}/api/Users/00000000-0000-0000-0000-000000000000",
+      "method": "GET",
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_users_update",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Users/Update",
+      "url": "{{ _.baseUrl }}/api/Users/00000000-0000-0000-0000-000000000000",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"id\": \"00000000-0000-0000-0000-000000000000\",\n\t\"name\": \"\",\n\t\"email\": \"\"\n}"
+      },
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "req_users_delete",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "Users/Delete",
+      "url": "{{ _.baseUrl }}/api/Users/00000000-0000-0000-0000-000000000000",
+      "method": "DELETE",
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      }
+    },
+    {
+      "_id": "wrk_1",
+      "_type": "workspace",
+      "name": "BookMotelsAPI",
+      "description": "",
+      "scope": "collection"
+    },
+    {
+      "_id": "env_1",
+      "_type": "environment",
+      "parentId": "wrk_1",
+      "name": "Base Environment",
+      "data": {
+        "baseUrl": "http://localhost:5000",
+        "token": ""
+      }
+    }
+  ]
+}

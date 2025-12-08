@@ -46,6 +46,9 @@ namespace BookMotelsApplication.Services
 
         public async Task<GetSuiteDTO> AddAsync(long motelId, SuiteDTO suiteDto)
         {
+            if (!await _motelRepository.Exist(motelId))
+                throw new NotFoundException("Motel não encontrado");
+
             SuiteEntity entity = suiteDto.ToEntity();
             entity.MotelId = motelId;
             entity = await _suiteRepository.Add(entity);

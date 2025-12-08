@@ -23,9 +23,9 @@ namespace BookMotelsTest.Services
         public async Task AddAsync_ShouldAddReserve_WhenNoConflictExists()
         {
             // Arrange
+            Guid userId = Guid.NewGuid();
             var reserveDto = new ReserveDTO
             {
-                UserId = Guid.NewGuid(),
                 SuiteId = 1,
                 CheckIn = DateTime.Now.AddDays(1),
                 CheckOut = DateTime.Now.AddDays(3)
@@ -44,7 +44,7 @@ namespace BookMotelsTest.Services
                 });
 
             // Act
-            var result = await _reserveService.AddAsync(reserveDto);
+            var result = await _reserveService.AddAsync(userId, reserveDto);
 
             // Assert
             Assert.NotNull(result);
@@ -60,9 +60,9 @@ namespace BookMotelsTest.Services
         public async Task AddAsync_ShouldThrowConflictException_WhenConflictExists()
         {
             // Arrange
+            Guid userId = Guid.NewGuid();
             var reserveDto = new ReserveDTO
             {
-                UserId = Guid.NewGuid(),
                 SuiteId = 1,
                 CheckIn = DateTime.Now.AddDays(1),
                 CheckOut = DateTime.Now.AddDays(3)
@@ -75,7 +75,7 @@ namespace BookMotelsTest.Services
                 .ReturnsAsync(true);
 
             // Act & Assert
-            await Assert.ThrowsAsync<ConflictException>(() => _reserveService.AddAsync(reserveDto));
+            await Assert.ThrowsAsync<ConflictException>(() => _reserveService.AddAsync(userId, reserveDto));
             _mockReserveRepository.Verify(repo => repo.HasConflictingReservation(
                 reserveDto.SuiteId,
                 reserveDto.CheckIn,

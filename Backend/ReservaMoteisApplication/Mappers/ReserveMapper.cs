@@ -30,7 +30,6 @@ namespace BookMotelsApplication.Mappers
         {
             return new ReserveEntity
             {
-                UserId = dto.UserId,
                 SuiteId = dto.SuiteId,
                 CheckIn = dto.CheckIn,
                 CheckOut = dto.CheckOut,

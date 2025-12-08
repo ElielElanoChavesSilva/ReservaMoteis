@@ -43,7 +43,7 @@ namespace BookMotelsAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<ReserveDTO>> AddAsync(ReserveDTO reserveDto)
         {
-            var newReserve = await _reserveService.AddAsync(reserveDto);
+            var newReserve = await _reserveService.AddAsync(LoggedUserId, reserveDto);
             return CreatedAtAction(nameof(FindById), new { id = newReserve.Id }, newReserve);
         }
 

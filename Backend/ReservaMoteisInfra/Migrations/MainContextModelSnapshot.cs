@@ -114,9 +114,6 @@ namespace BookMotelsInfra.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("MaxOccupancy")
                         .HasColumnType("INTEGER");
 

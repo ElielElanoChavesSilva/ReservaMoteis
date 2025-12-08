@@ -1,6 +1,7 @@
 using BookMotelsApplication.DTOs.Reserve;
 using BookMotelsApplication.Interfaces;
 using BookMotelsApplication.Mappers;
+using BookMotelsDomain.Entities;
 using BookMotelsDomain.Exceptions;
 using BookMotelsDomain.Interfaces;
 
@@ -17,35 +18,40 @@ namespace BookMotelsApplication.Services
 
         public async Task<IEnumerable<GetReserveDTO>> FindAllAsync()
         {
-            var reserves = await _reserveRepository.FindAll();
+            IEnumerable<ReserveEntity> reserves = await _reserveRepository.FindAll();
             return reserves.ToDTO();
         }
 
         public async Task<IEnumerable<GetReserveDTO>> FindAllByUserAsync(Guid userId)
         {
-            var reserves = await _reserveRepository.FindAllByUserAsync(userId);
+            IEnumerable<ReserveEntity> reserves = await _reserveRepository.FindAllByUserAsync(userId);
             return reserves.ToDTO();
         }
 
         public async Task<GetReserveDTO> FindByIdAsync(long id)
         {
-            var reserve = await _reserveRepository.FindById(id) ??
+            ReserveEntity reserve = await _reserveRepository.FindById(id) ??
                           throw new NotFoundException($"Reserva de Id: {id} nï¿½o encontrada");
 
             return reserve.ToDTO();
         }
 
-        public async Task<GetReserveDTO> AddAsync(ReserveDTO reserveDto)
+        public async Task<GetReserveDTO> AddAsync(Guid userId, ReserveDTO reserveDto)
         {
-            var hasConflict = await _reserveRepository.HasConflictingReservation(
+            if (reserveDto.CheckOut <= reserveDto.CheckIn)
+                throw new BadRequestException("O check-out deve ser maior que o check-in.");
+
+            bool hasConflict = await _reserveRepository.HasConflictingReservation(
                 reserveDto.SuiteId,
                 reserveDto.CheckIn,
                 reserveDto.CheckOut);
 
             if (hasConflict)
-                throw new ConflictException("A suÃ­te jÃ¡ estÃ¡ reservada para este perÃ­odo.");
+                throw new ConflictException("A suíte já está reservada no período informado.");
 
-            var entity = await _reserveRepository.Add(reserveDto.ToEntity());
+            ReserveEntity entity = reserveDto.ToEntity();
+            entity.UserId = userId;
+            entity = await _reserveRepository.Add(entity);
 
             return entity.ToDTO();
         }
@@ -53,9 +59,8 @@ namespace BookMotelsApplication.Services
         public async Task UpdateAsync(long id, ReserveDTO reserveDto)
         {
             var existingReserve = await _reserveRepository.FindById(id) ??
-                                  throw new NotFoundException($"Reserva de Id: {id} nï¿½o encontrada");
+                                  throw new NotFoundException($"Reserva de Id: {id} não encontrada");
 
-            existingReserve.UserId = reserveDto.UserId;
             existingReserve.SuiteId = reserveDto.SuiteId;
             existingReserve.CheckIn = reserveDto.CheckIn;
             existingReserve.CheckOut = reserveDto.CheckOut;
@@ -66,7 +71,7 @@ namespace BookMotelsApplication.Services
         public async Task DeleteAsync(long id)
         {
             var entity = await _reserveRepository.FindById(id) ??
-                                  throw new NotFoundException($"Reserva de Id: {id} nï¿½o encontrada");
+                                  throw new NotFoundException($"Reserva de Id: {id} não encontrada");
 
             await _reserveRepository.Delete(entity);
         }

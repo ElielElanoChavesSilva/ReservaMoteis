@@ -52,7 +52,7 @@ namespace BookMotelsAPI.Controllers
         public async Task<ActionResult<GetMotelDTO>> AddAsync(MotelDTO motelDto)
         {
             var newMotel = await _motelService.AddAsync(motelDto);
-            return CreatedAtAction(nameof(FindById), new { id = newMotel.Id }, newMotel);
+            return CreatedAtAction(nameof(FindById), new { motelId = newMotel.Id }, newMotel);
         }
 
         [Authorize(Roles = "Admin")]
@@ -85,8 +85,7 @@ namespace BookMotelsAPI.Controllers
         public async Task<ActionResult<GetSuiteDTO>> AddAsync(long motelId, SuiteDTO suiteDto)
         {
             var newSuite = await _suiteService.AddAsync(motelId, suiteDto);
-            return CreatedAtAction(nameof(FindById), new { id = newSuite.Id }, newSuite);
+            return Created($"api/Suites/{newSuite.Id}", newSuite.Id);
         }
-
     }
 }
