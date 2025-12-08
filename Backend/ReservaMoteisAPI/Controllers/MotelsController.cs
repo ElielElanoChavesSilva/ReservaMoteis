@@ -1,5 +1,6 @@
 using BookMotelsApplication.DTOs.Motel;
 using BookMotelsApplication.Interfaces;
+using BookMotelsDomain.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,6 +31,15 @@ namespace BookMotelsAPI.Controllers
             var motel = await _motelService.FindByIdAsync(id);
 
             return Ok(motel);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("billing-report")]
+        public async Task<ActionResult<IEnumerable<BillingReportDTO>>> FindBillingReport([FromQuery] long? motelId,
+            [FromQuery] int? year, [FromQuery] int? month)
+        {
+            var report = await _motelService.FindBillingReportAsync(motelId, year, month);
+            return Ok(report);
         }
 
         [Authorize(Roles = "Admin")]

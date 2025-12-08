@@ -6,9 +6,9 @@ namespace BookMotelsInfra.Repositories.Base
 {
     public class ReadRepository<TId, TEntity> : IReadRepository<TId, TEntity> where TEntity : class
     {
-        public readonly MainContext _context;
+        protected readonly MainContext _context;
 
-        public ReadRepository(MainContext context)
+        protected ReadRepository(MainContext context)
         {
             _context = context;
         }

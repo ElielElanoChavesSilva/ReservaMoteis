@@ -6,8 +6,7 @@ namespace BookMotelsInfra.Repositories.Base
 {
     public class CrudRepository<TId, TEntity> : ReadRepository<TId, TEntity>, ICrudRepository<TId, TEntity> where TEntity : class
     {
-
-        public CrudRepository(MainContext context) : base(context)
+        protected CrudRepository(MainContext context) : base(context)
         {
         }
 

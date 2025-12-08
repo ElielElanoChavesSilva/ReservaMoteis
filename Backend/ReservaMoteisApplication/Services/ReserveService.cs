@@ -31,6 +31,14 @@ namespace BookMotelsApplication.Services
 
         public async Task<GetReserveDTO> AddAsync(ReserveDTO reserveDto)
         {
+            var hasConflict = await _reserveRepository.HasConflictingReservation(
+                reserveDto.SuiteId,
+                reserveDto.CheckIn,
+                reserveDto.CheckOut);
+
+            if (hasConflict)
+                throw new ConflictException("A suíte já está reservada para este período.");
+
             var entity = await _reserveRepository.Add(reserveDto.ToEntity());
 
             return entity.ToDTO();

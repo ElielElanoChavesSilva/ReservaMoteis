@@ -1,6 +1,7 @@
 using BookMotelsApplication.DTOs.Motel;
 using BookMotelsApplication.Interfaces;
 using BookMotelsApplication.Mappers;
+using BookMotelsDomain.DTOs;
 using BookMotelsDomain.Exceptions;
 using BookMotelsDomain.Interfaces;
 
@@ -24,7 +25,7 @@ namespace BookMotelsApplication.Services
         public async Task<GetMotelDTO> FindByIdAsync(long id)
         {
             var motel = await _motelRepository.FindById(id) ??
-                        throw new NotFoundException("Motel n„o encontrado");
+                        throw new NotFoundException("Motel n√£o encontrado");
 
             return motel.ToDTO();
         }
@@ -39,7 +40,7 @@ namespace BookMotelsApplication.Services
         public async Task UpdateAsync(long id, GetMotelDTO motelDto)
         {
             var existingMotel = await _motelRepository.FindById(id) ??
-                                throw new NotFoundException("Motel n„o encontrado");
+                                throw new NotFoundException("Motel n√£o encontrado");
 
             existingMotel.Name = motelDto.Name;
             existingMotel.Address = motelDto.Address;
@@ -52,9 +53,18 @@ namespace BookMotelsApplication.Services
         public async Task DeleteAsync(long id)
         {
             var entity = await _motelRepository.FindById(id) ??
-                                throw new NotFoundException("Motel n„o encontrado");
+                                throw new NotFoundException("Motel n√£o encontrado");
 
             await _motelRepository.Delete(entity);
+        }
+
+        public async Task<IEnumerable<BillingReportDTO>> FindBillingReportAsync(long? motelId, int? year, int? month)
+        {
+            if (motelId is not null)
+                if (!await _motelRepository.Exist(motelId.GetValueOrDefault()))
+                    throw new NotFoundException("Motel n„o encontrado");
+
+            return await _motelRepository.FindBillingReport(motelId, year, month);
         }
     }
 }
