@@ -10,13 +10,14 @@ namespace BookMotelsDomain.Entities
         public long Id { get; set; }
         [Required]
         [MaxLength(150)]
-        public string Nome { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
         [MaxLength(500)]
         public string Description { get; set; } = string.Empty;
         [Required]
         public decimal PricePerPeriod { get; set; }
         [Required]
         public int MaxOccupancy { get; set; }
+        [Required] public bool IsAvailable { get; set; }
         [Required]
         public long MotelId { get; set; }
 

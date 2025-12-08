@@ -10,7 +10,7 @@ namespace BookMotelsDomain.Entities
         public long Id { get; set; }
         [Required]
         [MaxLength(150)]
-        public string Nome { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
         [Required]
         [MaxLength(250)]
         public string Address { get; set; } = string.Empty;

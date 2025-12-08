@@ -16,8 +16,6 @@ namespace BookMotelsDomain.Entities
         public DateTime CheckIn { get; set; }
         [Required]
         public DateTime CheckOut { get; set; }
-        [Required]
-        public bool IsReserve { get; set; }
 
         [ForeignKey(nameof(UserId))]
         public UserEntity User { get; set; }

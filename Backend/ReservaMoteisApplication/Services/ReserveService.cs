@@ -44,7 +44,6 @@ namespace BookMotelsApplication.Services
             existingReserve.SuiteId = reserveDto.SuiteId;
             existingReserve.CheckIn = reserveDto.CheckIn;
             existingReserve.CheckOut = reserveDto.CheckOut;
-            existingReserve.IsReserve = reserveDto.IsReserve;
 
             await _reserveRepository.Update(existingReserve);
         }

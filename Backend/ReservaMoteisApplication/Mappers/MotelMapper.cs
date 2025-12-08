@@ -10,7 +10,7 @@ namespace BookMotelsApplication.Mappers
             return new GetMotelDTO
             {
                 Id = entity.Id,
-                Nome = entity.Nome,
+                Name = entity.Name,
                 Address = entity.Address,
                 Phone = entity.Phone,
                 Description = entity.Description,
@@ -22,7 +22,7 @@ namespace BookMotelsApplication.Mappers
         {
             return new MotelEntity
             {
-                Nome = dto.Nome,
+                Name = dto.Name,
                 Address = dto.Address,
                 Phone = dto.Phone,
                 Description = dto.Description,

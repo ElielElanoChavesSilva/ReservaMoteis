@@ -32,6 +32,7 @@ namespace BookMotelsAPI.Controllers
             return Ok(suite);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<GetSuiteDTO>> AddAsync(SuiteDTO suiteDto)
         {
@@ -51,6 +52,14 @@ namespace BookMotelsAPI.Controllers
         {
             await _suiteService.DeleteAsync(id);
             return NoContent();
+        }
+
+        [HttpGet("available/{motelId}")]
+        public async Task<ActionResult<IEnumerable<GetSuiteDTO>>> FindAllAvailable(long motelId, [FromQuery] string? name,
+            [FromQuery] DateTime? checkin, [FromQuery] DateTime? checkout)
+        {
+            var suites = await _suiteService.FindAllAvailable(motelId, name, checkin, checkout);
+            return Ok(suites);
         }
     }
 }

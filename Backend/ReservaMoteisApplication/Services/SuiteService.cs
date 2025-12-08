@@ -1,6 +1,7 @@
 using BookMotelsApplication.DTOs.Suite;
 using BookMotelsApplication.Interfaces;
 using BookMotelsApplication.Mappers;
+using BookMotelsDomain.Entities;
 using BookMotelsDomain.Interfaces;
 
 namespace BookMotelsApplication.Services
@@ -8,39 +9,53 @@ namespace BookMotelsApplication.Services
     public class SuiteService : ISuiteService
     {
         private readonly ISuiteRepository _suiteRepository;
+        private readonly IMotelRepository _motelRepository;
 
-        public SuiteService(ISuiteRepository suiteRepository)
+        public SuiteService(
+            IMotelRepository motelRepository,
+            ISuiteRepository suiteRepository)
         {
+            _motelRepository = motelRepository;
             _suiteRepository = suiteRepository;
         }
 
         public async Task<IEnumerable<GetSuiteDTO>> FindAllAsync()
         {
-            var suites = await _suiteRepository.FindAll();
+            IEnumerable<SuiteEntity> suites = await _suiteRepository.FindAll();
+            return suites.ToDTO();
+        }
+
+        public async Task<IEnumerable<GetSuiteDTO>> FindAllAvailable(long modelId, string? name, DateTime? chekin, DateTime? chekout)
+        {
+            if (!await _motelRepository.Exist(modelId))
+                throw new Exception("Motel não encontrado");
+
+            IEnumerable<SuiteEntity> suites = await _suiteRepository.FindAllAvailable(modelId, name, chekin, chekout);
+
             return suites.ToDTO();
         }
 
         public async Task<GetSuiteDTO> FindByIdAsync(long id)
         {
-            var suite = await _suiteRepository.FindById(id) ??
-                        throw new Exception($"Suï¿½te de Id: {id} nï¿½o encontrada");
+            SuiteEntity suite = await _suiteRepository.FindById(id) ??
+                                throw new Exception($"Suíte de Id: {id} não encontrada");
 
             return suite.ToDTO();
         }
 
         public async Task<GetSuiteDTO> AddAsync(SuiteDTO suiteDto)
         {
-            var entity = await _suiteRepository.Add(suiteDto.ToEntity());
+            SuiteEntity entity = await _suiteRepository.Add(suiteDto.ToEntity());
 
             return entity.ToDTO();
         }
 
         public async Task UpdateAsync(long id, SuiteDTO suiteDto)
         {
-            var existingSuite = await _suiteRepository.FindById(id) ??
-                                throw new Exception($"Suï¿½te de Id: {id} nï¿½o encontrada");
+            SuiteEntity existingSuite = await _suiteRepository.FindById(id) ??
+                                        throw new Exception($"Suíte de Id: {id} nï¿½o encontrada");
 
-            existingSuite.Nome = suiteDto.Nome;
+            existingSuite.Name = suiteDto.Name;
             existingSuite.Description = suiteDto.Description;
             existingSuite.PricePerPeriod = suiteDto.PricePerPeriod;
             existingSuite.MaxOccupancy = suiteDto.MaxOccupancy;
@@ -51,8 +66,8 @@ namespace BookMotelsApplication.Services
 
         public async Task DeleteAsync(long id)
         {
-            var entity = await _suiteRepository.FindById(id) ??
-                                throw new Exception($"Suï¿½te de Id: {id} nï¿½o encontrada");
+            SuiteEntity entity = await _suiteRepository.FindById(id) ??
+                                 throw new Exception($"Suíte de Id: {id} nï¿½o encontrada");
 
             await _suiteRepository.Delete(entity);
         }

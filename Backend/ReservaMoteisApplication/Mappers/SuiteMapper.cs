@@ -16,11 +16,12 @@ namespace BookMotelsApplication.Mappers
         {
             return new GetSuiteDTO
             {
-                Nome = entity.Nome,
+                Name = entity.Name,
                 Description = entity.Description,
                 PricePerPeriod = entity.PricePerPeriod,
                 MaxOccupancy = entity.MaxOccupancy,
-                MotelId = entity.MotelId
+                MotelId = entity.MotelId,
+                IsAvailable = entity.IsAvailable
             };
         }
         #endregion
@@ -35,7 +36,7 @@ namespace BookMotelsApplication.Mappers
         {
             return new SuiteEntity
             {
-                Nome = dto.Nome,
+                Name = dto.Name,
                 Description = dto.Description,
                 PricePerPeriod = dto.PricePerPeriod,
                 MaxOccupancy = dto.MaxOccupancy,

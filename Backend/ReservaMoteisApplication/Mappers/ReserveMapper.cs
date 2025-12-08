@@ -14,7 +14,6 @@ namespace BookMotelsApplication.Mappers
                 SuiteId = entity.SuiteId,
                 CheckIn = entity.CheckIn,
                 CheckOut = entity.CheckOut,
-                IsReserve = entity.IsReserve
             };
         }
 
@@ -34,7 +33,6 @@ namespace BookMotelsApplication.Mappers
                 SuiteId = dto.SuiteId,
                 CheckIn = dto.CheckIn,
                 CheckOut = dto.CheckOut,
-                IsReserve = dto.IsReserve
             };
         }
 
