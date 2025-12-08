@@ -1,9 +1,11 @@
 using BookMotelsApplication.DTOs.Suite;
 using BookMotelsApplication.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookMotelsAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class SuitesController : ControllerBase

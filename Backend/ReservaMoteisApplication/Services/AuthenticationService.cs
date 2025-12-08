@@ -1,10 +1,7 @@
-﻿using BookMotelsAPI.Configuration;
-using BookMotelsApplication.DTOs.Auth;
+﻿using BookMotelsApplication.DTOs.Auth;
 using BookMotelsApplication.Interfaces;
 using BookMotelsDomain.Entities;
 using BookMotelsDomain.Interfaces;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -15,25 +12,21 @@ namespace BookMotelsApplication.Services
     public class AuthenticationService : IAuthenticationService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IConfiguration _config;
-        private readonly IOptions<IJwtConfiguration> _options;
+        private readonly IJwtConfiguration _jwtConfiguration;
 
         public AuthenticationService(
             IUserRepository userRepository,
-            IConfiguration config,
-            IOptions<IJwtConfiguration> options)
+            IJwtConfiguration jwtConfiguration)
 
         {
-            _options = options;
+            _jwtConfiguration = jwtConfiguration;
             _userRepository = userRepository;
-            _config = config;
         }
 
         public async Task<AuthResponseDTO?> AuthenticateAsync(LoginDTO login)
         {
-            var user = await _userRepository.GetByEmailAsync(login.Email);
-            if (user is null)
-                return null;
+            var user = await _userRepository.GetByEmailAsync(login.Email) ??
+                        throw new Exception("Usuário não encontrado");
 
             bool validPassword = BCrypt.Net.BCrypt.Verify(login.Password, user.Password);
             if (!validPassword) return null;
@@ -44,7 +37,7 @@ namespace BookMotelsApplication.Services
         private AuthResponseDTO GenerateToken(UserEntity user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_options.Value.Key);
+            var key = Encoding.ASCII.GetBytes(_jwtConfiguration.Key);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -55,7 +48,7 @@ namespace BookMotelsApplication.Services
                     new Claim(ClaimTypes.Email, user.Email),
                     new Claim(ClaimTypes.Role, user.Profile.Name)
                 }),
-                Expires = DateTime.UtcNow.AddHours(2),
+                Expires = DateTime.UtcNow.AddMinutes(_jwtConfiguration.TokenExpirationInMinutes),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key),
                     SecurityAlgorithms.HmacSha256Signature

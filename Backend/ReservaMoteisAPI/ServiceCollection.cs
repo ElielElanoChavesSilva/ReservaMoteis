@@ -1,5 +1,4 @@
-﻿using BookMotelsAPI.Configuration;
-using BookMotelsApplication.Interfaces;
+﻿using BookMotelsApplication.Interfaces;
 using BookMotelsApplication.Services;
 using BookMotelsDomain.Interfaces;
 using BookMotelsInfra.Repositories;
@@ -31,9 +30,16 @@ namespace BookMotelsAPI
         }
 
 
-        public static void ConfigureAuthentication(this IServiceCollection services)
+        public static void ConfigureAuthentication(this IServiceCollection services, IConfiguration config)
         {
-            var jwtConfiguration = services.BuildServiceProvider().GetRequiredService<IJwtConfiguration>();
+            string secret = config["JwtConfiguration:Key"];
+
+            if (string.IsNullOrWhiteSpace(secret))
+                throw new Exception("JWT Secret is missing in configuration.");
+
+            var key = Encoding.ASCII.GetBytes(secret);
+
+
             services.AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -41,11 +47,11 @@ namespace BookMotelsAPI
                 })
                 .AddJwtBearer(options =>
                 {
-                    var key = Encoding.ASCII.GetBytes(jwtConfiguration.Key);
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuer = false,
                         ValidateAudience = false,
+                        ValidateIssuer = false,
+                        ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(key),
                         ClockSkew = TimeSpan.Zero
@@ -53,5 +59,43 @@ namespace BookMotelsAPI
                 });
         }
 
+        public static void ConfigureSwagger(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+             {
+                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                 {
+                     Title = "Reserva Motéis API",
+                     Version = "v1"
+                 });
+
+                 var securitySchema = new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                 {
+                     Description = "Insira o token JWT usando: Bearer {seu token}",
+                     Name = "Authorization",
+                     In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+                     Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+                     Scheme = "bearer",
+                     BearerFormat = "JWT"
+                 };
+
+                 c.AddSecurityDefinition("Bearer", securitySchema);
+
+                 c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+                 {
+                    {
+                        new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                        {
+                            Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                            {
+                                Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                 });
+             });
+        }
     }
 }

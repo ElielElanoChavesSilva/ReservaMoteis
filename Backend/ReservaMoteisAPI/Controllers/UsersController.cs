@@ -1,9 +1,11 @@
 using BookMotelsApplication.DTOs.User;
 using BookMotelsApplication.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookMotelsAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
@@ -34,7 +36,7 @@ namespace BookMotelsAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(Guid id, GetUserDTO userDto)
         {
-            var updatedUser = await _userService.UpdateAsync(id, userDto);
+            await _userService.UpdateAsync(id, userDto);
 
             return NoContent();
         }

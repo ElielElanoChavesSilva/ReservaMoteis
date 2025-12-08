@@ -1,6 +1,6 @@
 ﻿using BookMotelsApplication.DTOs.Auth;
 using BookMotelsApplication.DTOs.User;
-using BookMotelsApplication.Services;
+using BookMotelsApplication.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookMotelsAPI.Controllers
@@ -9,12 +9,12 @@ namespace BookMotelsAPI.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly AuthenticationService _authService;
-        private readonly UserService _userService;
+        private readonly IAuthenticationService _authService;
+        private readonly IUserService _userService;
 
         public AuthController(
-            UserService userService,
-        AuthenticationService authService)
+            IUserService userService,
+        IAuthenticationService authService)
         {
             _userService = userService;
             _authService = authService;
@@ -33,7 +33,6 @@ namespace BookMotelsAPI.Controllers
 
 
         [HttpPost("sign-up")]
-        [HttpPost]
         public async Task<ActionResult<GetUserDTO>> AddAsync(UserDTO userDto)
         {
             var newUser = await _userService.AddAsync(userDto);

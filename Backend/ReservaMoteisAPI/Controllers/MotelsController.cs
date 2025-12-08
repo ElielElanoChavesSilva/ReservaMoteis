@@ -1,9 +1,11 @@
 using BookMotelsApplication.DTOs.Motel;
 using BookMotelsApplication.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookMotelsAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class MotelsController : ControllerBase
@@ -30,6 +32,7 @@ namespace BookMotelsAPI.Controllers
             return Ok(motel);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<GetMotelDTO>> AddAsync(MotelDTO motelDto)
         {
@@ -37,6 +40,7 @@ namespace BookMotelsAPI.Controllers
             return CreatedAtAction(nameof(FindById), new { id = newMotel.Id }, newMotel);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(long id, GetMotelDTO motelDto)
         {
@@ -45,6 +49,7 @@ namespace BookMotelsAPI.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(long id)
         {

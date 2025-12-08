@@ -28,6 +28,10 @@ public class UserService : IUserService
 
     public async Task<GetUserDTO> AddAsync(UserDTO userDto)
     {
+        if (await _userRepository.GetByEmailAsync(userDto.Email) is not null)
+            throw new Exception("Este email já está cadastrado");
+
+        userDto.Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
         var user = userDto.ToEntity();
         user.Id = Guid.NewGuid();
 

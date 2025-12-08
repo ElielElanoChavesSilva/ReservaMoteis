@@ -1,4 +1,6 @@
-﻿namespace BookMotelsAPI.Configuration
+﻿using BookMotelsApplication.Interfaces;
+
+namespace BookMotelsAPI.Configuration
 {
     public class JwtConfiguration : IJwtConfiguration
     {
