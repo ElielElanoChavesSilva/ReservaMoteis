@@ -2,6 +2,7 @@ using BookMotelsApplication.DTOs.Suite;
 using BookMotelsApplication.Interfaces;
 using BookMotelsApplication.Mappers;
 using BookMotelsDomain.Entities;
+using BookMotelsDomain.Exceptions;
 using BookMotelsDomain.Interfaces;
 
 namespace BookMotelsApplication.Services
@@ -28,7 +29,7 @@ namespace BookMotelsApplication.Services
         public async Task<IEnumerable<GetSuiteDTO>> FindAllAvailable(long modelId, string? name, DateTime? chekin, DateTime? chekout)
         {
             if (!await _motelRepository.Exist(modelId))
-                throw new Exception("Motel não encontrado");
+                throw new NotFoundException("Suíte não encontrada");
 
             IEnumerable<SuiteEntity> suites = await _suiteRepository.FindAllAvailable(modelId, name, chekin, chekout);
 
@@ -38,7 +39,7 @@ namespace BookMotelsApplication.Services
         public async Task<GetSuiteDTO> FindByIdAsync(long id)
         {
             SuiteEntity suite = await _suiteRepository.FindById(id) ??
-                                throw new Exception($"Suíte de Id: {id} não encontrada");
+                                throw new NotFoundException("Suíte não encontrada");
 
             return suite.ToDTO();
         }
@@ -53,7 +54,7 @@ namespace BookMotelsApplication.Services
         public async Task UpdateAsync(long id, SuiteDTO suiteDto)
         {
             SuiteEntity existingSuite = await _suiteRepository.FindById(id) ??
-                                        throw new Exception($"Suíte de Id: {id} nï¿½o encontrada");
+                                        throw new NotFoundException("Suíte não encontrada");
 
             existingSuite.Name = suiteDto.Name;
             existingSuite.Description = suiteDto.Description;
@@ -67,7 +68,7 @@ namespace BookMotelsApplication.Services
         public async Task DeleteAsync(long id)
         {
             SuiteEntity entity = await _suiteRepository.FindById(id) ??
-                                 throw new Exception($"Suíte de Id: {id} nï¿½o encontrada");
+                                 throw new NotFoundException("Suíte não encontrada");
 
             await _suiteRepository.Delete(entity);
         }

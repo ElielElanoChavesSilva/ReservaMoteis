@@ -33,7 +33,7 @@ namespace BookMotelsInfra.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("TEXT");
@@ -88,9 +88,6 @@ namespace BookMotelsInfra.Migrations
                     b.Property<DateTime>("CheckOut")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsReserve")
-                        .HasColumnType("INTEGER");
-
                     b.Property<long>("SuiteId")
                         .HasColumnType("INTEGER");
 
@@ -117,13 +114,16 @@ namespace BookMotelsInfra.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("MaxOccupancy")
                         .HasColumnType("INTEGER");
 
                     b.Property<long>("MotelId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("TEXT");
@@ -145,7 +145,7 @@ namespace BookMotelsInfra.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(200)
+                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -155,7 +155,7 @@ namespace BookMotelsInfra.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(200)
+                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("ProfileId")

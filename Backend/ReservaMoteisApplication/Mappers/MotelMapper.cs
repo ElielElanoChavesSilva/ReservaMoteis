@@ -26,7 +26,6 @@ namespace BookMotelsApplication.Mappers
                 Address = dto.Address,
                 Phone = dto.Phone,
                 Description = dto.Description,
-                Suites = dto.Suites?.Select(s => s.ToEntity()).ToList()
             };
         }
 

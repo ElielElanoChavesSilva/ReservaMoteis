@@ -1,5 +1,6 @@
 using BookMotelsAPI;
 using BookMotelsAPI.Configuration;
+using BookMotelsAPI.Middleware;
 using BookMotelsApplication.Interfaces;
 using BookMotelsDomain.Entities;
 using BookMotelsInfra.Context;
@@ -52,6 +53,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

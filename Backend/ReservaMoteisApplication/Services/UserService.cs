@@ -1,6 +1,7 @@
 using BookMotelsApplication.DTOs.User;
 using BookMotelsApplication.Interfaces;
 using BookMotelsApplication.Mappers;
+using BookMotelsDomain.Exceptions;
 using BookMotelsDomain.Interfaces;
 
 public class UserService : IUserService
@@ -21,7 +22,7 @@ public class UserService : IUserService
     public async Task<GetUserDTO> FindByIdAsync(Guid id)
     {
         var user = await _userRepository.FindById(id) ??
-                   throw new Exception($"Usuï¿½rio nï¿½o encontrado");
+                   throw new NotFoundException("Usuário não encontrado");
 
         return user.ToDTO();
     }
@@ -29,7 +30,7 @@ public class UserService : IUserService
     public async Task<GetUserDTO> AddAsync(UserDTO userDto)
     {
         if (await _userRepository.GetByEmailAsync(userDto.Email) is not null)
-            throw new Exception("Este email já está cadastrado");
+            throw new ConflictException("Este email já está cadastrado");
 
         userDto.Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
         var user = userDto.ToEntity();

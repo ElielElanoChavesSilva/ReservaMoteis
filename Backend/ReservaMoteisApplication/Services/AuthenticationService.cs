@@ -1,6 +1,7 @@
 ﻿using BookMotelsApplication.DTOs.Auth;
 using BookMotelsApplication.Interfaces;
 using BookMotelsDomain.Entities;
+using BookMotelsDomain.Exceptions;
 using BookMotelsDomain.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -26,7 +27,7 @@ namespace BookMotelsApplication.Services
         public async Task<AuthResponseDTO?> AuthenticateAsync(LoginDTO login)
         {
             var user = await _userRepository.GetByEmailAsync(login.Email) ??
-                        throw new Exception("Usuário não encontrado");
+                        throw new NotFoundException("Usuário não encontrado");
 
             bool validPassword = BCrypt.Net.BCrypt.Verify(login.Password, user.Password);
             if (!validPassword) return null;

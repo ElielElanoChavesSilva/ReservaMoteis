@@ -15,7 +15,7 @@ namespace BookMotelsInfra.Migrations
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
                     Address = table.Column<string>(type: "TEXT", maxLength: 250, nullable: false),
                     Phone = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
                     Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false)
@@ -44,10 +44,11 @@ namespace BookMotelsInfra.Migrations
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
                     Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false),
                     PricePerPeriod = table.Column<decimal>(type: "TEXT", nullable: false),
                     MaxOccupancy = table.Column<int>(type: "INTEGER", nullable: false),
+                    IsAvailable = table.Column<bool>(type: "INTEGER", nullable: false),
                     MotelId = table.Column<long>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -67,8 +68,8 @@ namespace BookMotelsInfra.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
-                    Email = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
-                    Password = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    Password = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                     ProfileId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -91,8 +92,7 @@ namespace BookMotelsInfra.Migrations
                     UserId = table.Column<Guid>(type: "TEXT", nullable: false),
                     SuiteId = table.Column<long>(type: "INTEGER", nullable: false),
                     CheckIn = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CheckOut = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    IsReserve = table.Column<bool>(type: "INTEGER", nullable: false)
+                    CheckOut = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
