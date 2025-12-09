@@ -4,17 +4,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MotelService } from '../motel';
 import { Motel } from '../../../models/motel.model';
 import { CommonModule } from '@angular/common';
+import { Suite } from '../../../models/suite.model';
+import { SuiteListComponent } from '../../suite/suite-list/suite-list.component';
+import { SuiteFormComponent } from '../../suite/suite-form/suite-form.component';
 
 @Component({
   selector: 'app-motel-form',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, SuiteListComponent, SuiteFormComponent],
   templateUrl: './motel-form.html',
   styleUrl: './motel-form.css'
 })
 export class MotelFormComponent implements OnInit {
   motel: Motel = {};
   isEditMode: boolean = false;
+  showSuiteForm: boolean = false;
+  suiteToEdit: Suite | null = null;
 
   constructor(
     private motelService: MotelService,
@@ -46,5 +51,20 @@ export class MotelFormComponent implements OnInit {
 
   goBack(): void {
     this.router.navigate(['/motels']);
+  }
+
+  openAddSuiteForm(): void {
+    this.suiteToEdit = null; // Explicitly set to null for new suite
+    this.showSuiteForm = true;
+  }
+
+  editSuite(suite: Suite): void {
+    this.suiteToEdit = { ...suite };
+    this.showSuiteForm = true;
+  }
+
+  onSuiteFormClosed(): void {
+    this.showSuiteForm = false;
+    this.suiteToEdit = null;
   }
 }

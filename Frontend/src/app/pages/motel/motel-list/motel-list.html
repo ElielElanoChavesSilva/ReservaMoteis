@@ -16,28 +16,76 @@
           <th>Endereço</th>
           <th>Telefone</th>
           <th>Ações</th>
+          <th>Suítes Disponíveis</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let motel of motels">
-          <td>{{ motel.name }}</td>
-          <td>{{ motel.address }}</td>
-          <td>{{ motel.phone }}</td>
-          <td>
-            <button
-              class="btn btn-sm btn-info me-2"
-              [routerLink]="['/motel/edit', motel.id]"
-            >
-              Editar
-            </button>
-            <button
-              class="btn btn-sm btn-danger"
-              (click)="deleteMotel(motel.id)"
-            >
-              Excluir
-            </button>
-          </td>
-        </tr>
+        <ng-container *ngFor="let motel of motels">
+          <tr>
+            <td>{{ motel.name }}</td>
+            <td>{{ motel.address }}</td>
+            <td>{{ motel.phone }}</td>
+            <td>
+              <button
+                class="btn btn-sm btn-info me-2"
+                [routerLink]="['/motel/edit', motel.id]"
+              >
+                Editar
+              </button>
+              <button
+                class="btn btn-sm btn-danger"
+                (click)="deleteMotel(motel.id)"
+              >
+                Excluir
+              </button>
+            </td>
+            <td>
+              <button
+                class="btn btn-sm btn-secondary"
+                (click)="toggleAvailableSuites(motel.id!)"
+              >
+                {{ selectedMotelId === motel.id && showAvailableSuites ? 'Esconder Suítes' : 'Mostrar Suítes' }}
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="selectedMotelId === motel.id && showAvailableSuites">
+            <td colspan="5">
+              <div *ngIf="availableSuites.length > 0" class="mt-3">
+                <h5>Suítes Disponíveis:</h5>
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>Descrição</th>
+                      <th>Preço por Período</th>
+                      <th>Ocupação Máxima</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let suite of availableSuites">
+                      <td>{{ suite.name }}</td>
+                      <td>{{ suite.description }}</td>
+                      <td>{{ suite.pricePerPeriod | currency }}</td>
+                      <td>{{ suite.maxOccupancy }}</td>
+                      <td>
+                        <button
+                          class="btn btn-sm btn-success"
+                          [routerLink]="['/reserve/new']"
+                          [queryParams]="{ suiteId: suite.id, motelId: motel.id }"
+                        >
+                          Reservar
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div *ngIf="availableSuites.length === 0" class="alert alert-warning mt-3">
+                Nenhuma suíte disponível para este motel.
+              </div>
+            </td>
+          </tr>
+        </ng-container>
       </tbody>
     </table>
   </div>

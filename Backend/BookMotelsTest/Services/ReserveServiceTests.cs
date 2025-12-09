@@ -12,24 +12,302 @@ namespace BookMotelsTest.Services
     public class ReserveServiceTests
     {
         private readonly Mock<IReserveRepository> _mockReserveRepository;
+        private readonly Mock<ISuiteRepository> _mockSuiteRepository;
+        private readonly Mock<IMotelRepository> _mockMotelRepository;
         private readonly ReserveService _reserveService;
-        private readonly Mock<ISuiteRepository> _suiteRepository;
-        private readonly Mock<IMotelRepository> _motelRepository;
 
         public ReserveServiceTests()
         {
             _mockReserveRepository = new Mock<IReserveRepository>();
-            _suiteRepository = new Mock<ISuiteRepository>();
-            _motelRepository = new Mock<IMotelRepository>();
+            _mockSuiteRepository = new Mock<ISuiteRepository>();
+            _mockMotelRepository = new Mock<IMotelRepository>();
             _reserveService = new ReserveService(
-                _suiteRepository.Object,
-                _motelRepository.Object,
+                _mockSuiteRepository.Object,
+                _mockMotelRepository.Object,
                 _mockReserveRepository.Object);
+        }
+
+        [Fact]
+        public async Task FindAllAsync_ReturnsAllReserves()
+        {
+            // Arrange
+            var reserves = new List<ReserveEntity>
+            {
+                new ReserveEntity { Id = 1, UserId = Guid.NewGuid(), SuiteId = 1, CheckIn = DateTime.Now, CheckOut = DateTime.Now.AddDays(1) },
+                new ReserveEntity { Id = 2, UserId = Guid.NewGuid(), SuiteId = 2, CheckIn = DateTime.Now, CheckOut = DateTime.Now.AddDays(2) }
+            };
+            _mockReserveRepository.Setup(r => r.FindAll()).ReturnsAsync(reserves);
+
+            // Act
+            var result = await _reserveService.FindAllAsync();
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(2, result.Count());
+            _mockReserveRepository.Verify(r => r.FindAll(), Times.Once);
+        }
+
+        [Fact]
+        public async Task FindAllAsync_ReturnsEmptyList_WhenNoReserves()
+        {
+            // Arrange
+            _mockReserveRepository.Setup(r => r.FindAll()).ReturnsAsync(new List<ReserveEntity>());
+
+            // Act
+            var result = await _reserveService.FindAllAsync();
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Empty(result);
+            _mockReserveRepository.Verify(r => r.FindAll(), Times.Once);
+        }
+
+        [Fact]
+        public async Task FindAllByUserAsync_ReturnsReservesForUser()
+        {
+            // Arrange
+            Guid userId = Guid.NewGuid();
+            var reserves = new List<ReserveEntity>
+            {
+                new ReserveEntity { Id = 1, UserId = userId, SuiteId = 1, CheckIn = DateTime.Now, CheckOut = DateTime.Now.AddDays(1) },
+                new ReserveEntity { Id = 2, UserId = userId, SuiteId = 2, CheckIn = DateTime.Now, CheckOut = DateTime.Now.AddDays(2) }
+            };
+            _mockReserveRepository.Setup(r => r.FindAllByUserAsync(userId)).ReturnsAsync(reserves);
+
+            // Act
+            var result = await _reserveService.FindAllByUserAsync(userId);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(2, result.Count());
+            Assert.True(result.All(r => r.UserId == userId));
+            _mockReserveRepository.Verify(r => r.FindAllByUserAsync(userId), Times.Once);
+        }
+
+        [Fact]
+        public async Task FindAllByUserAsync_ReturnsEmptyList_WhenNoReservesForUser()
+        {
+            // Arrange
+            Guid userId = Guid.NewGuid();
+            _mockReserveRepository.Setup(r => r.FindAllByUserAsync(userId)).ReturnsAsync(new List<ReserveEntity>());
+
+            // Act
+            var result = await _reserveService.FindAllByUserAsync(userId);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Empty(result);
+            _mockReserveRepository.Verify(r => r.FindAllByUserAsync(userId), Times.Once);
+        }
+
+        [Fact]
+        public async Task FindByIdAsync_ReserveFound_ReturnsReserveDTO()
+        {
+            // Arrange
+            long reserveId = 1;
+            var reserveEntity = new ReserveEntity { Id = reserveId, UserId = Guid.NewGuid(), SuiteId = 1, CheckIn = DateTime.Now, CheckOut = DateTime.Now.AddDays(1) };
+            _mockReserveRepository.Setup(r => r.FindById(reserveId)).ReturnsAsync(reserveEntity);
+
+            // Act
+            var result = await _reserveService.FindByIdAsync(reserveId);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(reserveId, result.Id);
+            _mockReserveRepository.Verify(r => r.FindById(reserveId), Times.Once);
+        }
+
+        [Fact]
+        public async Task FindByIdAsync_ReserveNotFound_ThrowsNotFoundException()
+        {
+            // Arrange
+            long reserveId = 99;
+            _mockReserveRepository.Setup(r => r.FindById(reserveId)).ReturnsAsync((ReserveEntity)null!);
+
+            // Act & Assert
+            await Assert.ThrowsAsync<NotFoundException>(() => _reserveService.FindByIdAsync(reserveId));
+            _mockReserveRepository.Verify(r => r.FindById(reserveId), Times.Once);
+        }
+
+        [Fact]
+        public async Task AddAsync_ShouldAddReserve_WhenNoConflictAndValidDates()
+        {
+            // Arrange
+            Guid userId = Guid.NewGuid();
+            var suiteId = 1L;
+            var checkIn = DateTime.UtcNow.Date.AddDays(1);
+            var checkOut = DateTime.UtcNow.Date.AddDays(3);
+            var reserveDto = new ReserveDTO
+            {
+                SuiteId = suiteId,
+                CheckIn = checkIn,
+                CheckOut = checkOut
+            };
+            var suiteEntity = new SuiteEntity { Id = suiteId, PricePerPeriod = 100m };
+
+            _mockReserveRepository.Setup(repo => repo.HasConflictingReservation(suiteId, checkIn, checkOut))
+                .ReturnsAsync(false);
+            _mockSuiteRepository.Setup(s => s.FindById(suiteId)).ReturnsAsync(suiteEntity);
+            _mockReserveRepository.Setup(repo => repo.Add(It.IsAny<ReserveEntity>()))
+                .ReturnsAsync((ReserveEntity entity) =>
+                {
+                    entity.Id = 1;
+                    return entity;
+                });
+
+            // Act
+            var result = await _reserveService.AddAsync(userId, reserveDto);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(1, result.Id);
+            Assert.Equal(userId, result.UserId);
+            Assert.Equal(suiteId, result.SuiteId);
+
+            _mockReserveRepository.Verify(repo => repo.HasConflictingReservation(suiteId, checkIn, checkOut), Times.Once);
+            _mockSuiteRepository.Verify(s => s.FindById(suiteId), Times.Once);
+            _mockReserveRepository.Verify(repo => repo.Add(It.IsAny<ReserveEntity>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task AddAsync_ShouldThrowConflictException_WhenConflictExists()
+        {
+            // Arrange
+            Guid userId = Guid.NewGuid();
+            var reserveDto = new ReserveDTO
+            {
+                SuiteId = 1,
+                CheckIn = DateTime.Now.AddDays(1),
+                CheckOut = DateTime.Now.AddDays(3)
+            };
+
+            _mockReserveRepository.Setup(repo => repo.HasConflictingReservation(
+                reserveDto.SuiteId,
+                reserveDto.CheckIn,
+                reserveDto.CheckOut))
+                .ReturnsAsync(true);
+            _mockSuiteRepository.Setup(s => s.FindById(reserveDto.SuiteId)).ReturnsAsync(new SuiteEntity { Id = reserveDto.SuiteId, PricePerPeriod = 100m });
+
+            // Act & Assert
+            await Assert.ThrowsAsync<ConflictException>(() => _reserveService.AddAsync(userId, reserveDto));
+            _mockReserveRepository.Verify(repo => repo.HasConflictingReservation(
+                reserveDto.SuiteId,
+                reserveDto.CheckIn,
+                reserveDto.CheckOut), Times.Once);
+            _mockReserveRepository.Verify(repo => repo.Add(It.IsAny<ReserveEntity>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task AddAsync_ShouldThrowBadRequestException_WhenCheckOutBeforeCheckIn()
+        {
+            // Arrange
+            Guid userId = Guid.NewGuid();
+            var reserveDto = new ReserveDTO
+            {
+                SuiteId = 1,
+                CheckIn = DateTime.Now.AddDays(3),
+                CheckOut = DateTime.Now.AddDays(1)
+            };
+
+            // Act & Assert
+            await Assert.ThrowsAsync<BadRequestException>(() => _reserveService.AddAsync(userId, reserveDto));
+            _mockReserveRepository.Verify(repo => repo.HasConflictingReservation(
+                It.IsAny<long>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()), Times.Never);
+            _mockReserveRepository.Verify(repo => repo.Add(It.IsAny<ReserveEntity>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task AddAsync_ShouldThrowNotFoundException_WhenSuiteNotFound()
+        {
+            // Arrange
+            Guid userId = Guid.NewGuid();
+            var reserveDto = new ReserveDTO
+            {
+                SuiteId = 99,
+                CheckIn = DateTime.Now.AddDays(1),
+                CheckOut = DateTime.Now.AddDays(3)
+            };
+            _mockSuiteRepository.Setup(s => s.FindById(reserveDto.SuiteId)).ReturnsAsync((SuiteEntity)null!);
+
+            // Act & Assert
+            await Assert.ThrowsAsync<NotFoundException>(() => _reserveService.AddAsync(userId, reserveDto));
+            _mockSuiteRepository.Verify(s => s.FindById(reserveDto.SuiteId), Times.Once);
+            _mockReserveRepository.Verify(repo => repo.HasConflictingReservation(
+                It.IsAny<long>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()), Times.Never);
+            _mockReserveRepository.Verify(repo => repo.Add(It.IsAny<ReserveEntity>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task UpdateAsync_ReserveNotFound_ThrowsNotFoundException()
+        {
+            // Arrange
+            long reserveId = 99;
+            var reserveDto = new ReserveDTO { SuiteId = 1, CheckIn = DateTime.Now, CheckOut = DateTime.Now.AddDays(1) };
+            _mockReserveRepository.Setup(r => r.FindById(reserveId)).ReturnsAsync((ReserveEntity)null!);
+
+            // Act & Assert
+            await Assert.ThrowsAsync<NotFoundException>(() => _reserveService.UpdateAsync(reserveId, reserveDto));
+            _mockReserveRepository.Verify(r => r.FindById(reserveId), Times.Once);
+            _mockReserveRepository.Verify(r => r.Update(It.IsAny<ReserveEntity>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task UpdateAsync_SuccessfulUpdate()
+        {
+            // Arrange
+            long reserveId = 1;
+            var reserveDto = new ReserveDTO { SuiteId = 2, CheckIn = DateTime.Now.AddDays(5), CheckOut = DateTime.Now.AddDays(7) };
+            var existingReserve = new ReserveEntity { Id = reserveId, UserId = Guid.NewGuid(), SuiteId = 1, CheckIn = DateTime.Now, CheckOut = DateTime.Now.AddDays(1) };
+
+            _mockReserveRepository.Setup(r => r.FindById(reserveId)).ReturnsAsync(existingReserve);
+            _mockReserveRepository.Setup(r => r.Update(It.IsAny<ReserveEntity>())).ReturnsAsync(existingReserve);
+
+            // Act
+            await _reserveService.UpdateAsync(reserveId, reserveDto);
+
+            // Assert
+            _mockReserveRepository.Verify(r => r.FindById(reserveId), Times.Once);
+            _mockReserveRepository.Verify(r => r.Update(It.Is<ReserveEntity>(rsv =>
+                rsv.Id == reserveId &&
+                rsv.SuiteId == reserveDto.SuiteId &&
+                rsv.CheckIn == reserveDto.CheckIn &&
+                rsv.CheckOut == reserveDto.CheckOut
+            )), Times.Once);
+        }
+
+        [Fact]
+        public async Task DeleteAsync_ReserveNotFound_ThrowsNotFoundException()
+        {
+            // Arrange
+            long reserveId = 99;
+            _mockReserveRepository.Setup(r => r.FindById(reserveId)).ReturnsAsync((ReserveEntity)null!);
+
+            // Act & Assert
+            await Assert.ThrowsAsync<NotFoundException>(() => _reserveService.DeleteAsync(reserveId));
+            _mockReserveRepository.Verify(r => r.FindById(reserveId), Times.Once);
+            _mockReserveRepository.Verify(r => r.Delete(It.IsAny<ReserveEntity>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task DeleteAsync_SuccessfulDelete()
+        {
+            // Arrange
+            long reserveId = 1;
+            var reserveEntity = new ReserveEntity { Id = reserveId, UserId = Guid.NewGuid(), SuiteId = 1, CheckIn = DateTime.Now, CheckOut = DateTime.Now.AddDays(1) };
+            _mockReserveRepository.Setup(r => r.FindById(reserveId)).ReturnsAsync(reserveEntity);
+            _mockReserveRepository.Setup(r => r.Delete(reserveEntity)).Returns(Task.CompletedTask);
+
+            // Act
+            await _reserveService.DeleteAsync(reserveId);
+
+            // Assert
+            _mockReserveRepository.Verify(r => r.FindById(reserveId), Times.Once);
+            _mockReserveRepository.Verify(r => r.Delete(reserveEntity), Times.Once);
         }
 
 
         [Fact]
-        public async Task GetBillingReportAsync_ShouldReturnFullReport_WhenNoParametersProvided()
+        public async Task FindBillingReportAsync_ShouldReturnFullReport_WhenNoParametersProvided()
         {
             // Arrange
             var expectedReport = new List<BillingReportDTO>
@@ -50,7 +328,7 @@ namespace BookMotelsTest.Services
         }
 
         [Fact]
-        public async Task GetBillingReportAsync_ShouldReturnFilteredReport_WhenYearAndMonthProvided()
+        public async Task FindBillingReportAsync_ShouldReturnFilteredReport_WhenYearAndMonthProvided()
         {
             // Arrange
             int year = 2024;
@@ -82,6 +360,7 @@ namespace BookMotelsTest.Services
             {
                 new () { MotelId = motelId, MotelName = "Motel A", Year = year, Month = month, TotalRevenue = 3000m }
             };
+            _mockMotelRepository.Setup(r => r.Exist(motelId)).ReturnsAsync(true);
             _mockReserveRepository.Setup(repo => repo.FindBillingReport(motelId, year, month)).ReturnsAsync(expectedReport);
 
             // Act
@@ -91,71 +370,21 @@ namespace BookMotelsTest.Services
             Assert.NotNull(result);
             Assert.Single(result);
             Assert.Equal(expectedReport, result);
+            _mockMotelRepository.Verify(r => r.Exist(motelId), Times.Once);
             _mockReserveRepository.Verify(repo => repo.FindBillingReport(motelId, year, month), Times.Once);
         }
 
         [Fact]
-        public async Task AddAsync_ShouldAddReserve_WhenNoConflictExists()
+        public async Task FindBillingReportAsync_MotelNotFound_ThrowsNotFoundException()
         {
             // Arrange
-            Guid userId = Guid.NewGuid();
-            var reserveDto = new ReserveDTO
-            {
-                SuiteId = 1,
-                CheckIn = DateTime.Now.AddDays(1),
-                CheckOut = DateTime.Now.AddDays(3)
-            };
-
-            _mockReserveRepository.Setup(repo => repo.HasConflictingReservation(
-                reserveDto.SuiteId,
-                reserveDto.CheckIn,
-                reserveDto.CheckOut))
-                .ReturnsAsync(false);
-            _mockReserveRepository.Setup(repo => repo.Add(It.IsAny<ReserveEntity>()))
-                .ReturnsAsync((ReserveEntity entity) =>
-                {
-                    entity.Id = 1;
-                    return entity;
-                });
-
-            // Act
-            var result = await _reserveService.AddAsync(userId, reserveDto);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.Equal(1, result.Id);
-            _mockReserveRepository.Verify(repo => repo.HasConflictingReservation(
-                reserveDto.SuiteId,
-                reserveDto.CheckIn,
-                reserveDto.CheckOut), Times.Once);
-            _mockReserveRepository.Verify(repo => repo.Add(It.IsAny<ReserveEntity>()), Times.Once);
-        }
-
-        [Fact]
-        public async Task AddAsync_ShouldThrowConflictException_WhenConflictExists()
-        {
-            // Arrange
-            Guid userId = Guid.NewGuid();
-            var reserveDto = new ReserveDTO
-            {
-                SuiteId = 1,
-                CheckIn = DateTime.Now.AddDays(1),
-                CheckOut = DateTime.Now.AddDays(3)
-            };
-
-            _mockReserveRepository.Setup(repo => repo.HasConflictingReservation(
-                reserveDto.SuiteId,
-                reserveDto.CheckIn,
-                reserveDto.CheckOut))
-                .ReturnsAsync(true);
+            long motelId = 99;
+            _mockMotelRepository.Setup(r => r.Exist(motelId)).ReturnsAsync(false);
 
             // Act & Assert
-            await Assert.ThrowsAsync<ConflictException>(() => _reserveService.AddAsync(userId, reserveDto));
-            _mockReserveRepository.Verify(repo => repo.HasConflictingReservation(
-                reserveDto.SuiteId,
-                reserveDto.CheckIn,
-                reserveDto.CheckOut), Times.Once);
-            _mockReserveRepository.Verify(repo => repo.Add(It.IsAny<ReserveEntity>()), Times.Never);
+            await Assert.ThrowsAsync<NotFoundException>(() => _reserveService.FindBillingReportAsync(motelId, null, null));
+            _mockMotelRepository.Verify(r => r.Exist(motelId), Times.Once);
+            _mockReserveRepository.Verify(repo => repo.FindBillingReport(It.IsAny<long?>(), It.IsAny<int?>(), It.IsAny<int?>()), Times.Never);
         }
     }
 }

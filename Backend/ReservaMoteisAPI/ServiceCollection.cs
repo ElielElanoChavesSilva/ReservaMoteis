@@ -5,7 +5,6 @@ using BookMotelsInfra.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using IAuthenticationService = BookMotelsApplication.Interfaces.IAuthenticationService;
 
 namespace BookMotelsAPI
 {
@@ -39,6 +38,21 @@ namespace BookMotelsAPI
              });
         }
 
+        public static void ConfigureCors(this IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "FrontendAllow",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials();
+                    });
+            });
+            services.AddControllers();
+        }
 
         public static void ConfigureAuthentication(this IServiceCollection services, IConfiguration config)
         {

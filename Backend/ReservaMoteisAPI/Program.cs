@@ -20,6 +20,8 @@ builder.Services.ConfigureRedisCache(builder.Configuration);
 builder.Services.AddSingleton<IJwtConfiguration>(sp =>
     sp.GetRequiredService<IOptions<JwtConfiguration>>().Value);
 
+builder.Services.ConfigureCors();
+
 builder.Services.ConfigureRepositories();
 builder.Services.ConfigureServices();
 builder.Services.ConfigureRedisCache(builder.Configuration);
@@ -32,7 +34,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwagger();
 
 var app = builder.Build();
-
+app.UseCors("FrontendAllow");
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<MainContext>();

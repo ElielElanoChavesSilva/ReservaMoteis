@@ -45,7 +45,7 @@ public class SuiteService : ISuiteService
 
         IEnumerable<SuiteEntity> suites = (await _suiteRepository.FindAllAvailable(motelId, name, checkin, checkout)).ToList();
 
-        var json = System.Text.Json.JsonSerializer.Serialize<IEnumerable<GetSuiteDTO>>(
+        var json = System.Text.Json.JsonSerializer.Serialize(
             suites.ToDTO(),
             new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
         );

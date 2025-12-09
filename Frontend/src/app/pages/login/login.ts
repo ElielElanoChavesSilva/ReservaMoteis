@@ -17,8 +17,14 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   login() {
-    this.authService.login(this.credentials).subscribe(() => {
-      this.router.navigate(['/motels']);
+    this.authService.login(this.credentials).subscribe({
+      next: () => {
+        this.router.navigate(['/motels']);
+      },
+      error: (err) => {
+        console.error('Login failed:', err);
+        // Optionally, display an error message to the user
+      }
     });
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Motel } from '../../models/motel.model';
+import { Suite } from '../../models/suite.model'; // Import Suite model
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -30,6 +31,10 @@ export class MotelService {
 
   deleteMotel(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseMotelUrl}/${id}`);
+  }
+
+  getAvailableSuites(motelId: number): Observable<Suite[]> {
+    return this.http.get<Suite[]>(`${this.baseMotelUrl}/${motelId}/suites/available`);
   }
 }
 

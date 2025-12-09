@@ -29,6 +29,17 @@ export class ReserveFormComponent implements OnInit {
       this.reserveService.getReserve(Number(id)).subscribe((reserve) => {
         this.reserve = reserve;
       });
+    } else {
+      // Check for query parameters for new reservation
+      this.route.queryParams.subscribe(params => {
+        if (params['suiteId']) {
+          this.reserve.suiteId = Number(params['suiteId']);
+        }
+        // If motelId is also needed for other logic in the future, it's available here
+        // if (params['motelId']) {
+        //   this.motelId = Number(params['motelId']);
+        // }
+      });
     }
   }
 

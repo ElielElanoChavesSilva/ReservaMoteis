@@ -9,7 +9,6 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
-  private baseAuthUrl = `${environment.apiUrl}/Auth`;
   private authTokenKey = 'auth_token';
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
 
@@ -22,7 +21,7 @@ export class AuthService {
   }
 
   login(credentials: Login): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.baseAuthUrl}/sign-in`, credentials).pipe(
+    return this.http.post<AuthResponse>(`${environment.apiUrl}/Auth/sign-in`, credentials).pipe(
       tap(response => {
         if (response.token) {
           localStorage.setItem(this.authTokenKey, response.token);

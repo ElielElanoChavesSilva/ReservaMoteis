@@ -53,3 +53,27 @@
     </form>
   </div>
 </div>
+
+<div *ngIf="isEditMode" class="card mt-4">
+  <div class="card-header">
+    <h3>Suites</h3>
+  </div>
+  <div class="card-body">
+    <button type="button" class="btn btn-success mb-3" (click)="openAddSuiteForm()">Add New Suite</button>
+
+    <div *ngIf="showSuiteForm">
+      <app-suite-form
+        [suiteToEdit]="suiteToEdit"
+        [motelId]="motel.id!"
+        (suiteSaved)="onSuiteFormClosed()"
+        (suiteCanceled)="onSuiteFormClosed()"
+      ></app-suite-form>
+    </div>
+
+    <app-suite-list
+      [motelId]="motel.id"
+      (suiteEdited)="editSuite($event)"
+      (suiteDeleted)="onSuiteFormClosed()"
+    ></app-suite-list>
+  </div>
+</div>
