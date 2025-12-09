@@ -25,9 +25,9 @@ namespace BookMotelsAPI
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMotelService, MotelService>();
+            services.AddScoped<IReserveService, ReserveService>();
             services.AddScoped<ISuiteService, SuiteService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
-            services.AddScoped<ReserveService>();
         }
 
         public static void ConfigureRedisCache(this IServiceCollection services, IConfiguration configuration)

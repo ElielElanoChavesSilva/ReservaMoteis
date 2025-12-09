@@ -1,0 +1,48 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h2>Suites</h2>
+    <button class="btn btn-primary" [routerLink]="['/suite/new']">
+      Adicionar Suite
+    </button>
+  </div>
+  <div class="card-body">
+    <div *ngIf="suites.length === 0" class="alert alert-info">
+      Nenhuma suite encontrada.
+    </div>
+    <table *ngIf="suites.length > 0" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Descrição</th>
+          <th>Preço por Período</th>
+          <th>Ocupação Máxima</th>
+          <th>Motel ID</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let suite of suites">
+          <td>{{ suite.name }}</td>
+          <td>{{ suite.description }}</td>
+          <td>{{ suite.pricePerPeriod }}</td>
+          <td>{{ suite.maxOccupancy }}</td>
+          <td>{{ suite.motelId }}</td>
+          <td>
+            <button
+              class="btn btn-sm btn-info me-2"
+              [routerLink]="['/suite/edit', suite.id]"
+            >
+              Editar
+            </button>
+            <button
+              class="btn btn-sm btn-danger"
+              (click)="deleteSuite(suite.id)"
+            >
+              Excluir
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

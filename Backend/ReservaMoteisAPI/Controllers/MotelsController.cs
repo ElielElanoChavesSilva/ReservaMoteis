@@ -55,7 +55,6 @@ namespace BookMotelsAPI.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpPost]
         [HttpDelete("{motelId}")]
         public async Task<IActionResult> DeleteAsync(long motelId)
         {

@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="card-header">
+    <h2>{{ isEditMode ? 'Editar Reserva' : 'Adicionar Reserva' }}</h2>
+  </div>
+  <div class="card-body">
+    <form (ngSubmit)="saveReserve()">
+      <div class="mb-3">
+        <label for="suiteId" class="form-label">Suite ID</label>
+        <input
+          type="number"
+          class="form-control"
+          id="suiteId"
+          name="suiteId"
+          [(ngModel)]="reserve.suiteId"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="checkIn" class="form-label">Check-in</label>
+        <input
+          type="date"
+          class="form-control"
+          id="checkIn"
+          name="checkIn"
+          [(ngModel)]="reserve.checkIn"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="checkOut" class="form-label">Check-out</label>
+        <input
+          type="date"
+          class="form-control"
+          id="checkOut"
+          name="checkOut"
+          [(ngModel)]="reserve.checkOut"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-primary me-2">Salvar</button>
+      <button type="button" class="btn btn-secondary" (click)="goBack()">
+        Cancelar
+      </button>
+    </form>
+  </div>
+</div>

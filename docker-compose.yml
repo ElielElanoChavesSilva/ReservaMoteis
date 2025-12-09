@@ -1,30 +1,30 @@
-version: "3.9"
-
 services:
   api:
     build:
-      context: ./Backend/ReservaMoteisAPI
-      dockerfile: Dockerfile
-    container_name: reservamoteis-api
+      context: ./Backend
+      dockerfile: ./ReservaMoteisAPI/Dockerfile
+    container_name: reserva_api
     ports:
       - "5000:80"
-    depends_on:
-      - redis
-    volumes:
-      - sqlite_data:/app/data
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
       ConnectionStrings__DefaultConnection: "Data Source=/app/data/main.db"
-      Redis__ConnectionString: "redis:6379"
+      Redis__Host: "cache"
+      Redis__Port: "6379"
+    depends_on:
+      - cache
+    volumes:
+      - ./data:/app/data
+    networks:
+      - reserva_net
 
-  redis:
+  cache:
     image: redis:7
-    container_name: redis-cache
+    container_name: reserva_cache
     ports:
       - "6379:6379"
-    volumes:
-      - redis_data:/data
+    networks:
+      - reserva_net
 
-volumes:
-  sqlite_data:
-  redis_data:
+networks:
+  reserva_net:

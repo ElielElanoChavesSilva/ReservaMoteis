@@ -1,0 +1,66 @@
+<div class="card">
+  <div class="card-header">
+    <h2>{{ isEditMode ? 'Editar Suite' : 'Adicionar Suite' }}</h2>
+  </div>
+  <div class="card-body">
+    <form (ngSubmit)="saveSuite()">
+      <div class="mb-3">
+        <label for="name" class="form-label">Nome</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          [(ngModel)]="suite.name"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Descrição</label>
+        <textarea
+          class="form-control"
+          id="description"
+          name="description"
+          [(ngModel)]="suite.description"
+        ></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="pricePerPeriod" class="form-label">Preço por Período</label>
+        <input
+          type="number"
+          class="form-control"
+          id="pricePerPeriod"
+          name="pricePerPeriod"
+          [(ngModel)]="suite.pricePerPeriod"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="maxOccupancy" class="form-label">Ocupação Máxima</label>
+        <input
+          type="number"
+          class="form-control"
+          id="maxOccupancy"
+          name="maxOccupancy"
+          [(ngModel)]="suite.maxOccupancy"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="motelId" class="form-label">ID do Motel</label>
+        <input
+          type="number"
+          class="form-control"
+          id="motelId"
+          name="motelId"
+          [(ngModel)]="suite.motelId"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-primary me-2">Salvar</button>
+      <button type="button" class="btn btn-secondary" (click)="goBack()">
+        Cancelar
+      </button>
+    </form>
+  </div>
+</div>

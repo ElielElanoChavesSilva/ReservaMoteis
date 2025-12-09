@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h2>Reservas</h2>
+    <button class="btn btn-primary" [routerLink]="['/reserve/new']">
+      Adicionar Reserva
+    </button>
+  </div>
+  <div class="card-body">
+    <div *ngIf="reserves.length === 0" class="alert alert-info">
+      Nenhuma reserva encontrada.
+    </div>
+    <table *ngIf="reserves.length > 0" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Usuário ID</th>
+          <th>Suite ID</th>
+          <th>Check-in</th>
+          <th>Check-out</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reserve of reserves">
+          <td>{{ reserve.userId }}</td>
+          <td>{{ reserve.suiteId }}</td>
+          <td>{{ reserve.checkIn | date }}</td>
+          <td>{{ reserve.checkOut | date }}</td>
+          <td>
+            <button
+              class="btn btn-sm btn-info me-2"
+              [routerLink]="['/reserve/edit', reserve.id]"
+            >
+              Editar
+            </button>
+            <button
+              class="btn btn-sm btn-danger"
+              (click)="deleteReserve(reserve.id)"
+            >
+              Excluir
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

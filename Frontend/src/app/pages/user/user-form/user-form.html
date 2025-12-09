@@ -1,0 +1,57 @@
+<div class="card">
+  <div class="card-header">
+    <h2>{{ isEditMode ? 'Editar Usuário' : 'Adicionar Usuário' }}</h2>
+  </div>
+  <div class="card-body">
+    <form (ngSubmit)="saveUser()">
+      <div class="mb-3">
+        <label for="name" class="form-label">Nome</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          [(ngModel)]="user.name"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          [(ngModel)]="user.email"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="profileId" class="form-label">Perfil ID</label>
+        <input
+          type="number"
+          class="form-control"
+          id="profileId"
+          name="profileId"
+          [(ngModel)]="user.profileId"
+          required
+        />
+      </div>
+      <div class="mb-3" *ngIf="!isEditMode">
+        <label for="password" class="form-label">Senha</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          [(ngModel)]="user.password"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-primary me-2">Salvar</button>
+      <button type="button" class="btn btn-secondary" (click)="goBack()">
+        Cancelar
+      </button>
+    </form>
+  </div>
+</div>
