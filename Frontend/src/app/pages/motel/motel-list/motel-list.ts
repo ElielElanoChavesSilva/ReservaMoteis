@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MotelService } from '../motel';
 import { Motel } from '../../../models/motel.model';
-import { Suite } from '../../../models/suite.model'; // Import Suite model
-import { Router, RouterLink } from '@angular/router';
+import { Suite } from '../../../models/suite.model';
+import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MotelService } from '../../../services/motel.service';
+import { AuthService } from '../../../core/auth';
 
 @Component({
   selector: 'app-motel-list',
@@ -17,11 +18,18 @@ export class MotelListComponent implements OnInit {
   selectedMotelId: number | null = null;
   availableSuites: Suite[] = [];
   showAvailableSuites: boolean = false;
+  isAdmin: boolean = false;
 
-  constructor(private motelService: MotelService, private router: Router) {}
+  constructor(
+    private motelService: MotelService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.getMotels();
+    this.authService.currentUserRole$.subscribe((role) => {
+      this.isAdmin = role === 'Admin';
+    });
   }
 
   getMotels(): void {
@@ -40,12 +48,10 @@ export class MotelListComponent implements OnInit {
 
   toggleAvailableSuites(motelId: number): void {
     if (this.selectedMotelId === motelId && this.showAvailableSuites) {
-      // If clicking the same motel and suites are already shown, hide them
       this.showAvailableSuites = false;
       this.selectedMotelId = null;
       this.availableSuites = [];
     } else {
-      // Show suites for the selected motel
       this.selectedMotelId = motelId;
       this.showAvailableSuites = true;
       this.motelService.getAvailableSuites(motelId).subscribe({
@@ -54,7 +60,7 @@ export class MotelListComponent implements OnInit {
         },
         error: (err) => {
           console.error('Error fetching available suites', err);
-          this.availableSuites = []; // Clear on error
+          this.availableSuites = [];
         }
       });
     }

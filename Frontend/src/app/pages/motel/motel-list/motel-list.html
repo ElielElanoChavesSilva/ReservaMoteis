@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-header d-flex justify-content-between align-items-center">
     <h2>Moteis</h2>
-    <button class="btn btn-primary" [routerLink]="['/motel/new']">
+    <button *ngIf="isAdmin" class="btn btn-primary" [routerLink]="['/motel/new']">
       Adicionar Motel
     </button>
   </div>
@@ -15,7 +15,7 @@
           <th>Nome</th>
           <th>Endereço</th>
           <th>Telefone</th>
-          <th>Ações</th>
+          <th *ngIf="isAdmin">Ações</th>
           <th>Suítes Disponíveis</th>
         </tr>
       </thead>
@@ -25,7 +25,7 @@
             <td>{{ motel.name }}</td>
             <td>{{ motel.address }}</td>
             <td>{{ motel.phone }}</td>
-            <td>
+            <td *ngIf="isAdmin">
               <button
                 class="btn btn-sm btn-info me-2"
                 [routerLink]="['/motel/edit', motel.id]"
@@ -59,6 +59,7 @@
                       <th>Descrição</th>
                       <th>Preço por Período</th>
                       <th>Ocupação Máxima</th>
+                        <th>Faça sua Reserva</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -67,7 +68,7 @@
                       <td>{{ suite.description }}</td>
                       <td>{{ suite.pricePerPeriod | currency }}</td>
                       <td>{{ suite.maxOccupancy }}</td>
-                      <td>
+                      <td >
                         <button
                           class="btn btn-sm btn-success"
                           [routerLink]="['/reserve/new']"

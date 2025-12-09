@@ -35,7 +35,7 @@ namespace BookMotelsTest.Services
             // Arrange
             var suites = new List<SuiteEntity>
             {
-                new SuiteEntity { Id = 1, Name = "Suite 1", Description = "Desc 1", PricePerPeriod = 100, MaxOccupancy = 2, MotelId = 1 },
+                new () { Id = 1, Name = "Suite 1", Description = "Desc 1", PricePerPeriod = 100, MaxOccupancy = 2, MotelId = 1 },
                 new SuiteEntity { Id = 2, Name = "Suite 2", Description = "Desc 2", PricePerPeriod = 150, MaxOccupancy = 3, MotelId = 1 }
             };
             _mockSuiteRepository.Setup(r => r.FindAll()).ReturnsAsync(suites);
@@ -105,7 +105,7 @@ namespace BookMotelsTest.Services
         {
             // Arrange
             long motelId = 1;
-            string cacheKey = $"suites:available:{motelId}:::00:00"; // Specific format for the cache key
+            string cacheKey = $"suites:available:{motelId}:::00:00";
             var repoSuites = new List<SuiteEntity> { new SuiteEntity { Id = 1, Name = "Repo Suite", MotelId = motelId } };
             var expectedDto = repoSuites.ToDTO().ToList();
             var expectedJson = System.Text.Json.JsonSerializer.Serialize(

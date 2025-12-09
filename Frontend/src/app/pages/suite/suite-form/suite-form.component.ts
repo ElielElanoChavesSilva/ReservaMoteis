@@ -39,7 +39,6 @@ export class SuiteFormComponent implements OnInit {
       return;
     }
 
-    // Ensure motelId is set if passed as input, even if not explicitly in suite object
     if (!this.suite.motelId) {
       this.suite.motelId = this.motelId;
     }

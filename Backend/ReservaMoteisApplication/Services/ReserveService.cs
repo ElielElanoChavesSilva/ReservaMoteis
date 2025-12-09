@@ -49,7 +49,7 @@ namespace BookMotelsApplication.Services
             await ValidateReservation(reserveDto);
 
             SuiteEntity suite = await _suiteRepository.FindById(reserveDto.SuiteId) ??
-                            throw new NotFoundException($"Suíte não encontrada");
+                            throw new NotFoundException("Suíte não encontrada");
 
             ReserveEntity entity = reserveDto.ToEntity();
 

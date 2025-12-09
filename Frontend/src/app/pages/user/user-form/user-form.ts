@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user';
-import { User } from '../../../models/user.model';
+import { GetUserDTO } from '../../../models/user.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './user-form.css'
 })
 export class UserFormComponent implements OnInit {
-  user: User = {};
+  user: GetUserDTO = {};
   isEditMode: boolean = false;
 
   constructor(

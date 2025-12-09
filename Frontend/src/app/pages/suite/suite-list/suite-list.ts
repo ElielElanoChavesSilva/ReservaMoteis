@@ -3,6 +3,7 @@ import { SuiteService } from '../suite';
 import { Suite } from '../../../models/suite.model';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../core/auth';
 
 @Component({
   selector: 'app-suite-list',
@@ -13,11 +14,18 @@ import { CommonModule } from '@angular/common';
 })
 export class SuiteListComponent implements OnInit {
   suites: Suite[] = [];
+  isAdmin: boolean = false;
 
-  constructor(private suiteService: SuiteService, private router: Router) {}
+  constructor(
+    private suiteService: SuiteService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.getSuites();
+    this.authService.currentUserRole$.subscribe((role) => {
+      this.isAdmin = role === 'Admin';
+    });
   }
 
   getSuites(): void {

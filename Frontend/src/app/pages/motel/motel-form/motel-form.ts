@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MotelService } from '../motel';
 import { Motel } from '../../../models/motel.model';
 import { CommonModule } from '@angular/common';
 import { Suite } from '../../../models/suite.model';
 import { SuiteListComponent } from '../../suite/suite-list/suite-list.component';
 import { SuiteFormComponent } from '../../suite/suite-form/suite-form.component';
+import { MotelService } from '../../../services/motel.service';
 
 @Component({
   selector: 'app-motel-form',
@@ -54,7 +54,7 @@ export class MotelFormComponent implements OnInit {
   }
 
   openAddSuiteForm(): void {
-    this.suiteToEdit = null; // Explicitly set to null for new suite
+    this.suiteToEdit = null;
     this.showSuiteForm = true;
   }
 

@@ -30,38 +30,40 @@ export class ReserveFormComponent implements OnInit {
         this.reserve = reserve;
       });
     } else {
-      // Check for query parameters for new reservation
       this.route.queryParams.subscribe(params => {
         if (params['suiteId']) {
           this.reserve.suiteId = Number(params['suiteId']);
         }
-        // If motelId is also needed for other logic in the future, it's available here
-        // if (params['motelId']) {
-        //   this.motelId = Number(params['motelId']);
-        // }
       });
     }
   }
 
-  saveReserve(): void {
-    // Format dates to ISO 8601 string for backend
-    if (this.reserve.checkIn) {
-      this.reserve.checkIn = new Date(this.reserve.checkIn).toISOString().split('T')[0] as any;
-    }
-    if (this.reserve.checkOut) {
-      this.reserve.checkOut = new Date(this.reserve.checkOut).toISOString().split('T')[0] as any;
-    }
-
-    if (this.isEditMode && this.reserve.id) {
-      this.reserveService.updateReserve(this.reserve.id, this.reserve).subscribe(() => {
-        this.router.navigate(['/reserves']);
-      });
-    } else {
-      this.reserveService.addReserve(this.reserve).subscribe(() => {
-        this.router.navigate(['/reserves']);
-      });
-    }
+saveReserve(): void {
+  if (this.reserve.checkIn) {
+    this.reserve.checkIn = new Date(this.reserve.checkIn).toISOString().split('T')[0] as any;
   }
+  if (this.reserve.checkOut) {
+    this.reserve.checkOut = new Date(this.reserve.checkOut).toISOString().split('T')[0] as any;
+  }
+
+  const handleError = (err: any) => {
+    alert(err.error?.error || 'Ocorreu um erro ao salvar a reserva.');
+  };
+
+  if (this.isEditMode && this.reserve.id) {
+    this.reserveService.updateReserve(this.reserve.id, this.reserve).subscribe({
+      next: () => this.router.navigate(['/reserves']),
+      error: handleError
+    });
+  } else {
+    this.reserveService.addReserve(this.reserve).subscribe({
+      next: () => this.router.navigate(['/reserves']),
+      error: handleError
+    });
+  }
+}
+
+
 
   goBack(): void {
     this.router.navigate(['/reserves']);

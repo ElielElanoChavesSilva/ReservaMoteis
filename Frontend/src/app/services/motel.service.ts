@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Motel } from '../../models/motel.model';
-import { Suite } from '../../models/suite.model'; // Import Suite model
-import { environment } from '../../../environments/environment';
+import { Motel } from '../models/motel.model';
+import { Suite } from '../models/suite.model'; 
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -37,4 +37,3 @@ export class MotelService {
     return this.http.get<Suite[]>(`${this.baseMotelUrl}/${motelId}/suites/available`);
   }
 }
-

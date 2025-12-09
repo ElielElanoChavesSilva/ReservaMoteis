@@ -20,7 +20,6 @@ namespace BookMotelsTest.Services
             _mockUserRepository = new Mock<IUserRepository>();
             _mockJwtConfiguration = new Mock<IJwtConfiguration>();
 
-            // Setup common JWT configuration mock
             _mockJwtConfiguration.Setup(x => x.Key).Returns("supersecretkeythatisatleast32characterslong");
             _mockJwtConfiguration.Setup(x => x.TokenExpirationInMinutes).Returns(60);
 
@@ -39,7 +38,7 @@ namespace BookMotelsTest.Services
                 Id = Guid.NewGuid(),
                 Email = "test@example.com",
                 Name = "Test User",
-                Password = BCrypt.Net.BCrypt.HashPassword("Password123"), // Hash the password
+                Password = BCrypt.Net.BCrypt.HashPassword("Password123"),
                 Profile = new ProfileEntity { Name = "Admin" }
             };
 
@@ -66,7 +65,7 @@ namespace BookMotelsTest.Services
             var loginDto = new LoginDTO { Email = "nonexistent@example.com", Password = "Password123" };
 
             _mockUserRepository.Setup(r => r.GetByEmailAsync(loginDto.Email))
-                               .ReturnsAsync((UserEntity)null!); // Simulate user not found
+                               .ReturnsAsync((UserEntity)null!);
 
             // Act & Assert
             await Assert.ThrowsAsync<NotFoundException>(() => _authenticationService.AuthenticateAsync(loginDto));
@@ -82,7 +81,7 @@ namespace BookMotelsTest.Services
                 Id = Guid.NewGuid(),
                 Email = "test@example.com",
                 Name = "Test User",
-                Password = BCrypt.Net.BCrypt.HashPassword("Password123"), // Correct hashed password
+                Password = BCrypt.Net.BCrypt.HashPassword("Password123"),
                 Profile = new ProfileEntity { Name = "Admin" }
             };
 
