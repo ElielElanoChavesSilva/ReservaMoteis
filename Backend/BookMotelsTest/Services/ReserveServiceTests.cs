@@ -1,5 +1,6 @@
 using BookMotelsApplication.DTOs.Reserve;
 using BookMotelsApplication.Services;
+using BookMotelsDomain.DTOs;
 using BookMotelsDomain.Entities;
 using BookMotelsDomain.Exceptions;
 using BookMotelsDomain.Interfaces;
@@ -12,11 +13,85 @@ namespace BookMotelsTest.Services
     {
         private readonly Mock<IReserveRepository> _mockReserveRepository;
         private readonly ReserveService _reserveService;
+        private readonly Mock<ISuiteRepository> _suiteRepository;
+        private readonly Mock<IMotelRepository> _motelRepository;
 
         public ReserveServiceTests()
         {
             _mockReserveRepository = new Mock<IReserveRepository>();
-            _reserveService = new ReserveService(_mockReserveRepository.Object);
+            _suiteRepository = new Mock<ISuiteRepository>();
+            _motelRepository = new Mock<IMotelRepository>();
+            _reserveService = new ReserveService(
+                _suiteRepository.Object,
+                _motelRepository.Object,
+                _mockReserveRepository.Object);
+        }
+
+
+        [Fact]
+        public async Task GetBillingReportAsync_ShouldReturnFullReport_WhenNoParametersProvided()
+        {
+            // Arrange
+            var expectedReport = new List<BillingReportDTO>
+            {
+                new() { MotelId = 1, MotelName = "Motel A", Year = 2023, Month = 1, TotalRevenue = 1000m },
+                new () { MotelId = 2, MotelName = "Motel B", Year = 2023, Month = 1, TotalRevenue = 1500m }
+            };
+            _mockReserveRepository.Setup(repo => repo.FindBillingReport(null, null, null)).ReturnsAsync(expectedReport);
+
+            // Act
+            var result = await _reserveService.FindBillingReportAsync(null, null, null);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(2, result.Count());
+            Assert.Equal(expectedReport, result);
+            _mockReserveRepository.Verify(repo => repo.FindBillingReport(null, null, null), Times.Once);
+        }
+
+        [Fact]
+        public async Task GetBillingReportAsync_ShouldReturnFilteredReport_WhenYearAndMonthProvided()
+        {
+            // Arrange
+            int year = 2024;
+            int month = 6;
+            var expectedReport = new List<BillingReportDTO>
+            {
+                new BillingReportDTO { MotelId = 1, MotelName = "Motel A", Year = year, Month = month, TotalRevenue = 2000m }
+            };
+            _mockReserveRepository.Setup(repo => repo.FindBillingReport(null, year, month)).ReturnsAsync(expectedReport);
+
+            // Act
+            var result = await _reserveService.FindBillingReportAsync(null, year, month);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Single(result);
+            Assert.Equal(expectedReport, result);
+            _mockReserveRepository.Verify(repo => repo.FindBillingReport(null, year, month), Times.Once);
+        }
+
+        [Fact]
+        public async Task FindBillingReportAsync_ShouldReturnFilteredReport_WhenMotelIdYearAndMonthProvided()
+        {
+            // Arrange
+            long motelId = 1;
+            int year = 2024;
+            int month = 7;
+            var expectedReport = new List<BillingReportDTO>
+            {
+                new () { MotelId = motelId, MotelName = "Motel A", Year = year, Month = month, TotalRevenue = 3000m }
+            };
+            _mockReserveRepository.Setup(repo => repo.FindBillingReport(motelId, year, month)).ReturnsAsync(expectedReport);
+
+            // Act
+            var result = await _reserveService.FindBillingReportAsync(motelId, year, month);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Single(result);
+            Assert.Equal(expectedReport, result);
+            _mockReserveRepository.Verify(repo => repo.FindBillingReport(motelId, year, month), Times.Once);
         }
 
         [Fact]

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookMotelsInfra.Migrations
 {
     [DbContext(typeof(MainContext))]
-    [Migration("20251208202925_InitialCreate")]
+    [Migration("20251209002445_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,6 +92,9 @@ namespace BookMotelsInfra.Migrations
 
                     b.Property<long>("SuiteId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT");

@@ -1,5 +1,6 @@
 using BookMotelsApplication.DTOs.Reserve;
 using BookMotelsApplication.Interfaces;
+using BookMotelsDomain.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,6 +25,16 @@ namespace BookMotelsAPI.Controllers
             var reserves = await _reserveService.FindAllAsync();
             return Ok(reserves);
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("billing-report")]
+        public async Task<ActionResult<IEnumerable<BillingReportDTO>>> FindBillingReport([FromQuery] long? motelId,
+            [FromQuery] int? year, [FromQuery] int? month)
+        {
+            var report = await _reserveService.FindBillingReportAsync(motelId, year, month);
+            return Ok(report);
+        }
+
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetReserveDTO>>> FindAllByUserAsync()

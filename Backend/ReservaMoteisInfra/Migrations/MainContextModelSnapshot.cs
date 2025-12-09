@@ -91,6 +91,9 @@ namespace BookMotelsInfra.Migrations
                     b.Property<long>("SuiteId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("TEXT");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT");
 

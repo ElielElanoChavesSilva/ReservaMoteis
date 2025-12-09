@@ -1,4 +1,5 @@
-﻿using BookMotelsDomain.Entities;
+﻿using BookMotelsDomain.DTOs;
+using BookMotelsDomain.Entities;
 using BookMotelsDomain.Interfaces.Base;
 
 namespace BookMotelsDomain.Interfaces
@@ -7,5 +8,7 @@ namespace BookMotelsDomain.Interfaces
     {
         Task<bool> HasConflictingReservation(long suiteId, DateTime checkIn, DateTime checkOut);
         Task<IEnumerable<ReserveEntity>> FindAllByUserAsync(Guid userId);
+        Task<IEnumerable<BillingReportDTO>> FindBillingReport(long? motelId, int? year, int? month);
+
     }
 }

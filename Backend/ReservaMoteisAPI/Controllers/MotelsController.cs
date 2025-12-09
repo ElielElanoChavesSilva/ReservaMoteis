@@ -1,7 +1,6 @@
 using BookMotelsApplication.DTOs.Motel;
 using BookMotelsApplication.DTOs.Suite;
 using BookMotelsApplication.Interfaces;
-using BookMotelsDomain.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,15 +38,6 @@ namespace BookMotelsAPI.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet("billing-report")]
-        public async Task<ActionResult<IEnumerable<BillingReportDTO>>> FindBillingReport([FromQuery] long? motelId,
-            [FromQuery] int? year, [FromQuery] int? month)
-        {
-            var report = await _motelService.FindBillingReportAsync(motelId, year, month);
-            return Ok(report);
-        }
-
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<GetMotelDTO>> AddAsync(MotelDTO motelDto)
         {
@@ -57,7 +47,7 @@ namespace BookMotelsAPI.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut("{motelId}")]
-        public async Task<IActionResult> UpdateAsync(long motelId, GetMotelDTO motelDto)
+        public async Task<IActionResult> UpdateAsync(long motelId, MotelDTO motelDto)
         {
             await _motelService.UpdateAsync(motelId, motelDto);
 
@@ -65,6 +55,7 @@ namespace BookMotelsAPI.Controllers
         }
 
         [Authorize(Roles = "Admin")]
+        [HttpPost]
         [HttpDelete("{motelId}")]
         public async Task<IActionResult> DeleteAsync(long motelId)
         {

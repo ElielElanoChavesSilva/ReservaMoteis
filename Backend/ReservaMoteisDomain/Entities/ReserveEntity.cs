@@ -16,7 +16,8 @@ namespace BookMotelsDomain.Entities
         public DateTime CheckIn { get; set; }
         [Required]
         public DateTime CheckOut { get; set; }
-
+        [Required]
+        public decimal TotalPrice { get; set; }
         [ForeignKey(nameof(UserId))]
         public UserEntity User { get; set; }
         [ForeignKey(nameof(SuiteId))]

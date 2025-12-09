@@ -16,16 +16,16 @@ builder.Services.AddDbContext<MainContext>(options =>
 builder.Services.Configure<JwtConfiguration>(
     builder.Configuration.GetSection("JwtConfiguration"));
 
+builder.Services.ConfigureRedisCache(builder.Configuration);
 builder.Services.AddSingleton<IJwtConfiguration>(sp =>
     sp.GetRequiredService<IOptions<JwtConfiguration>>().Value);
 
-
 builder.Services.ConfigureRepositories();
 builder.Services.ConfigureServices();
+builder.Services.ConfigureRedisCache(builder.Configuration);
 
 builder.Services.ConfigureAuthentication(builder.Configuration);
 builder.Services.AddAuthorization();
-
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

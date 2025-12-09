@@ -27,7 +27,16 @@ namespace BookMotelsAPI
             services.AddScoped<IMotelService, MotelService>();
             services.AddScoped<ISuiteService, SuiteService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
-            services.AddScoped<IReserveService, ReserveService>();
+            services.AddScoped<ReserveService>();
+        }
+
+        public static void ConfigureRedisCache(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddStackExchangeRedisCache(options =>
+             {
+                 options.Configuration = configuration.GetConnectionString("Redis");
+                 options.InstanceName = "Upper_";
+             });
         }
 
 

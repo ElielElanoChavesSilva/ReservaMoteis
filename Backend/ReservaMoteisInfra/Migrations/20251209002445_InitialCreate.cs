@@ -91,7 +91,8 @@ namespace BookMotelsInfra.Migrations
                     UserId = table.Column<Guid>(type: "TEXT", nullable: false),
                     SuiteId = table.Column<long>(type: "INTEGER", nullable: false),
                     CheckIn = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CheckOut = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    CheckOut = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    TotalPrice = table.Column<decimal>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
