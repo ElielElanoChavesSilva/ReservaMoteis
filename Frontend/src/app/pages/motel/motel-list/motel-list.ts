@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Motel } from '../../../models/motel.model';
 import { Suite } from '../../../models/suite.model';
 import { RouterLink } from '@angular/router';
@@ -22,7 +22,8 @@ export class MotelListComponent implements OnInit {
 
   constructor(
     private motelService: MotelService,
-    private authService: AuthService
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +36,7 @@ export class MotelListComponent implements OnInit {
   getMotels(): void {
     this.motelService.getMotels().subscribe((motels) => {
       this.motels = motels;
+      this.cdr.markForCheck();
     });
   }
 
@@ -57,10 +59,12 @@ export class MotelListComponent implements OnInit {
       this.motelService.getAvailableSuites(motelId).subscribe({
         next: (suites) => {
           this.availableSuites = suites;
+          this.cdr.markForCheck();
         },
         error: (err) => {
           console.error('Error fetching available suites', err);
           this.availableSuites = [];
+          this.cdr.markForCheck();
         }
       });
     }

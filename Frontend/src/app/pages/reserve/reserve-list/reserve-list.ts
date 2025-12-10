@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ReserveService } from '../reserve';
 import { Reserve } from '../../../models/reserve.model';
 import { Router, RouterLink } from '@angular/router';
@@ -14,7 +14,11 @@ import { CommonModule, DatePipe } from '@angular/common';
 export class ReserveListComponent implements OnInit {
   reserves: Reserve[] = [];
 
-  constructor(private reserveService: ReserveService, private router: Router) {}
+  constructor(
+    private reserveService: ReserveService,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.getReserves();
@@ -23,6 +27,7 @@ export class ReserveListComponent implements OnInit {
   getReserves(): void {
     this.reserveService.getReserves().subscribe((reserves) => {
       this.reserves = reserves;
+      this.cdr.markForCheck();
     });
   }
 
