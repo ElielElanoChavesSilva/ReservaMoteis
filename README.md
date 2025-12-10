@@ -1,4 +1,4 @@
-# 📘 Book Motels – Projeto Fullstack
+# 📘 Reserva Moteis – Projeto Fullstack
 
 API em **.NET 6** com **Clean Architecture**, **SQLite**, **Redis Cache** e Frontend em **Angular**.
 
