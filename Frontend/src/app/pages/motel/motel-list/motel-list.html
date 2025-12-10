@@ -68,13 +68,20 @@
                       <td>{{ suite.description }}</td>
                       <td>{{ suite.pricePerPeriod | currency }}</td>
                       <td>{{ suite.maxOccupancy }}</td>
-                      <td >
+                      <td>
                         <button
-                          class="btn btn-sm btn-success"
+                          class="btn btn-sm btn-success me-2"
                           [routerLink]="['/reserve/new']"
                           [queryParams]="{ suiteId: suite.id, motelId: motel.id }"
                         >
                           Reservar
+                        </button>
+                        <button
+                          *ngIf="isAdmin"
+                          class="btn btn-sm btn-danger"
+                          (click)="deleteAvailableSuite(motel.id!, suite.id!)"
+                        >
+                          Remover
                         </button>
                       </td>
                     </tr>

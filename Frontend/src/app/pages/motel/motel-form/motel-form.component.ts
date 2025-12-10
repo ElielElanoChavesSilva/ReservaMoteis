@@ -81,9 +81,4 @@ export class MotelFormComponent implements OnInit {
     this.selectedSuiteForEdit = null;
   }
 
-  // onSuiteDeleted(): void { // METHOD REMOVED
-  //   if (this.motel.id && this.suiteListComponent) {
-  //     this.suiteListComponent.loadSuites(this.motel.id);
-  //   }
-  // }
 }

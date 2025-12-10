@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Suite } from '../../../models/suite.model';
 import { SuiteService } from '../../../services/suite.service';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-suite-form',
   standalone: true,
@@ -21,7 +21,7 @@ export class SuiteFormComponent implements OnInit {
   isEditMode: boolean = false;
 
   constructor(
-    private suiteService: SuiteService,
+    private suiteService: SuiteService,private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
