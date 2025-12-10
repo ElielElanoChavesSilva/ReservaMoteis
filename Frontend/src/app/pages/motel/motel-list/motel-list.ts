@@ -5,7 +5,8 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MotelService } from '../../../services/motel.service';
 import { AuthService } from '../../../core/auth';
-import { SuiteService } from '../../../services/suite.service'; // Import SuiteService
+import { SuiteService } from '../../../services/suite.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-motel-list',
@@ -25,8 +26,9 @@ export class MotelListComponent implements OnInit {
     private motelService: MotelService,
     private authService: AuthService,
     private cdr: ChangeDetectorRef,
-    private suiteService: SuiteService // Inject SuiteService
-  ) {}
+    private suiteService: SuiteService,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     this.getMotels();
@@ -74,16 +76,18 @@ export class MotelListComponent implements OnInit {
 
   deleteAvailableSuite(motelId: number, suiteId: number): void {
     if (confirm('Tem certeza que deseja remover esta suíte?')) {
-      this.suiteService.deleteSuite(motelId, suiteId).subscribe({
+      this.suiteService.deleteSuite(suiteId).subscribe({
         next: () => {
-          // Reload available suites for the current motel
           if (this.selectedMotelId) {
-            this.toggleAvailableSuites(this.selectedMotelId); // Re-fetch and display
+            this.toggleAvailableSuites(this.selectedMotelId);
           }
+            this.cdr.markForCheck();
+
+          this.snackBar.open('Suíte removida com sucesso!', 'Fechar', { duration: 3000 });
         },
         error: (err) => {
           console.error('Erro ao remover suíte:', err);
-          alert('Não foi possível remover a suíte. Tente novamente.');
+          this.snackBar.open('Não foi possível remover a suíte. Tente novamente.', 'Fechar', { duration: 3000 });
         }
       });
     }

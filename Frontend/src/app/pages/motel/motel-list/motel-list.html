@@ -60,6 +60,7 @@
                       <th>Preço por Período</th>
                       <th>Ocupação Máxima</th>
                         <th>Faça sua Reserva</th>
+                        <th>Remover</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -76,14 +77,14 @@
                         >
                           Reservar
                         </button>
-                        <button
+                      </td>
+                      <td> <button
                           *ngIf="isAdmin"
                           class="btn btn-sm btn-danger"
                           (click)="deleteAvailableSuite(motel.id!, suite.id!)"
                         >
                           Remover
-                        </button>
-                      </td>
+                        </button></td>
                     </tr>
                   </tbody>
                 </table>

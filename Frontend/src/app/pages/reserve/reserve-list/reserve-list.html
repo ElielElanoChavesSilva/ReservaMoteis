@@ -1,6 +1,6 @@
 <div class="card">
    <div class="card-header d-flex justify-content-between align-items-center">
-    <h2>Minhas Reservas</h2>
+    <h2>Reservas</h2>
   </div>
   <div class="card-body">
     <div *ngIf="reserves.length === 0" class="alert alert-info">
@@ -11,6 +11,8 @@
         <tr>
           <th>Usuário ID</th>
           <th>Suite ID</th>
+          <th>Suíte</th>
+          <th>Motel</th>
           <th>Check-in</th>
           <th>Check-out</th>
           <th>Ações</th>
@@ -20,6 +22,8 @@
         <tr *ngFor="let reserve of reserves">
           <td>{{ reserve.userId }}</td>
           <td>{{ reserve.suiteId }}</td>
+          <td>{{ reserve.suiteName }}</td>
+          <td>{{ reserve.motelName }}</td>
           <td>{{ reserve.checkIn | date }}</td>
           <td>{{ reserve.checkOut | date }}</td>
           <td>

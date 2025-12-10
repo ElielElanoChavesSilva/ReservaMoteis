@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Suite } from '../../../models/suite.model';
 import { SuiteService } from '../../../services/suite.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-suite-form',
   standalone: true,
@@ -21,7 +22,7 @@ export class SuiteFormComponent implements OnInit {
   isEditMode: boolean = false;
 
   constructor(
-    private suiteService: SuiteService,private snackBar: MatSnackBar
+    private suiteService: SuiteService, private snackBar: MatSnackBar,  private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +37,7 @@ export class SuiteFormComponent implements OnInit {
   saveSuite(): void {
     if (this.motelId === undefined) {
       console.error('Motel ID is required to save a suite.');
+      this.snackBar.open('Erro: ID do motel é obrigatório!', 'Fechar', { duration: 3000 });
       return;
     }
 
@@ -46,28 +48,37 @@ export class SuiteFormComponent implements OnInit {
     if (this.isEditMode) {
       if (this.suite.id === undefined) {
         console.error('Cannot update suite: ID is undefined');
+        this.snackBar.open('Erro ao atualizar suíte: ID indefinido', 'Fechar', { duration: 3000 });
         return;
       }
-      this.suiteService.updateSuite(this.motelId, this.suite.id, this.suite).subscribe({
+
+      this.suiteService.updateSuite(this.suite.id, this.suite).subscribe({
         next: () => {
           this.suiteSaved.emit();
+          this.router.navigate(['/motels']);
+          this.snackBar.open('Suíte atualizada com sucesso!', 'Fechar', { duration: 3000 });
+
         },
         error: (err) => {
           console.error('Error updating suite', err);
+          this.snackBar.open('Erro ao atualizar suíte!', 'Fechar', { duration: 3000 });
         }
       });
+
     } else {
       this.suiteService.createSuite(this.motelId, this.suite).subscribe({
         next: () => {
           this.suiteSaved.emit();
+          this.snackBar.open('Suíte criada com sucesso!', 'Fechar', { duration: 3000 });
+            this.router.navigate(['/motels']);
         },
         error: (err) => {
           console.error('Error creating suite', err);
+          this.snackBar.open('Erro ao criar suíte!', 'Fechar', { duration: 3000 });
         }
       });
     }
   }
-
   cancel(): void {
     this.suiteCanceled.emit();
   }

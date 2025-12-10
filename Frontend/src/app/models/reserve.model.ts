@@ -4,4 +4,6 @@ export interface Reserve {
   suiteId?: number;
   checkIn?: Date;
   checkOut?: Date;
+  suiteName?: string;
+  motelName?: string;
 }

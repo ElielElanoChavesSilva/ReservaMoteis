@@ -28,15 +28,14 @@ namespace BookMotelsApplication.Services
         public async Task<IEnumerable<GetMotelDTO>> FindAllAvailableAsync()
         {
             if (_cache.TryGetValue(AllMotelsCacheKey, out IEnumerable<GetMotelDTO>? motels))
-            {
                 return motels!;
-            }
 
             motels = (await _motelRepository.FindAll()).ToDTO();
 
-            _cache.Set(AllMotelsCacheKey, motels, TimeSpan.FromMinutes(5)); // Cache for 5 minutes
+            var findAllAvailableAsync = motels as GetMotelDTO[] ?? motels.ToArray();
+            _cache.Set(AllMotelsCacheKey, findAllAvailableAsync, TimeSpan.FromMinutes(5));
 
-            return motels;
+            return findAllAvailableAsync;
         }
 
         public async Task<GetMotelDTO> FindByIdAsync(long id)

@@ -1,58 +1,79 @@
+:host {
+  display: block;
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+}
+
+h2 {
+  color: #2c3e50;
+  text-align: center;
+  font-size: 1.5rem; /* Slightly smaller than main form h2 */
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.5px;
+}
+
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 1.5rem;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #34495e;
 }
 
-.form-group input[type="text"],
-.form-group input[type="number"],
+.form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box; /* Ensures padding doesn't increase width */
+  padding: 0.8rem 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
 }
 
-.form-group textarea {
-  resize: vertical; /* Allow vertical resizing */
-  min-height: 80px;
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
 }
 
 .form-actions {
-  margin-top: 20px;
   display: flex;
   justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
 .button-save, .button-cancel {
-  display: inline-block;
-  padding: 10px 20px;
-  margin-left: 10px;
-  border-radius: 4px;
-  text-decoration: none;
-  color: white;
-  text-align: center;
-  cursor: pointer;
+  padding: 0.75rem 1.5rem;
   border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .button-save {
-  background-color: #28a745;
-}
-
-.button-cancel {
-  background-color: #6c757d;
+  background-color: #3498db; /* Primary button color */
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .button-save:hover {
-  background-color: #218838;
+  background-color: #2980b9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-cancel {
+  background-color: #e0e0e0; /* Secondary button color */
+  color: #333;
 }
 
 .button-cancel:hover {
-  background-color: #5a6268;
+  background-color: #bdbdbd;
 }

@@ -1,71 +1,60 @@
-<div class="register-container">
-  <div class="card">
-    <div class="card-header">
-      <h2>Cadastro</h2>
+<div class="register-card">
+  <h2>Cadastro</h2>
+  <form (ngSubmit)="register()">
+    <div class="form-group">
+      <label for="name">Nome</label>
+      <input
+        type="text"
+        id="name"
+        [(ngModel)]="user.name"
+        name="name"
+        required
+      />
     </div>
-    <div class="card-body">
-      <form (ngSubmit)="register()">
-        <div class="mb-3">
-          <label for="name" class="form-label">Nome</label>
-          <input
-            type="text"
-            class="form-control"
-            id="name"
-            [(ngModel)]="user.name"
-            name="name"
-            required
-          />
-        </div>
-        <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            [(ngModel)]="user.email"
-            name="email"
-            required
-          />
-        </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Senha</label>
-          <input
-            type="password"
-            class="form-control"
-            id="password"
-            [(ngModel)]="user.password"
-            name="password"
-            required
-          />
-        </div>
-        <div class="mb-3">
-          <label for="confirmPassword" class="form-label">Confirmar Senha</label>
-          <input
-            type="password"
-            class="form-control"
-            id="confirmPassword"
-            [(ngModel)]="confirmPassword"
-            name="confirmPassword"
-            required
-          />
-        </div>
-        <div class="mb-3">
-          <label for="profileId" class="form-label">ID do Perfil</label>
-          <input
-            type="number"
-            class="form-control"
-            id="profileId"
-            [(ngModel)]="user.profileId"
-            name="profileId"
-            required
-          />
-        </div>
-        <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-        <button type="submit" class="btn btn-primary w-100">Cadastrar</button>
-      </form>
-      <div class="text-center mt-3">
-        Já tem uma conta? <a routerLink="/login">Faça login aqui</a>
-      </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        [(ngModel)]="user.email"
+        name="email"
+        required
+      />
     </div>
+    <div class="form-group">
+      <label for="password">Senha</label>
+      <input
+        type="password"
+        id="password"
+        [(ngModel)]="user.password"
+        name="password"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="confirmPassword">Confirmar Senha</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        [(ngModel)]="confirmPassword"
+        name="confirmPassword"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="profileId">ID do Perfil</label>
+      <input
+        type="number"
+        id="profileId"
+        [(ngModel)]="user.profileId"
+        name="profileId"
+        required
+      />
+    </div>
+    <div *ngIf="errorMessage" class="alert-danger">{{ errorMessage }}</div>
+    <button type="submit" class="btn-primary">Cadastrar</button>
+  </form>
+  <div class="login-link">
+    Já tem uma conta? <a routerLink="/login">Faça login aqui</a>
   </div>
 </div>

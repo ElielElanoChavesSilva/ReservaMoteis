@@ -8,6 +8,7 @@ import { MotelService } from '../../../services/motel.service';
 import { SuiteFormComponent } from '../../suite/suite-form/suite-form.component';
 import { SuiteService } from '../../../services/suite.service';
 import { Suite } from '../../../models/suite.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-motel-form',
@@ -17,15 +18,14 @@ import { Suite } from '../../../models/suite.model';
   styleUrl: './motel-form.component.css'
 })
 export class MotelFormComponent implements OnInit {
-  // @ViewChild(SuiteListComponent) suiteListComponent?: SuiteListComponent; // REMOVED
 
   motel: Motel = { name: '', address: '' };
   isEditMode: boolean = false;
-  selectedSuiteForEdit: Suite | null = null; // To hold the suite being edited
+  selectedSuiteForEdit: Suite | null = null;
 
   constructor(
     private motelService: MotelService,
-    private suiteService: SuiteService, // Inject SuiteService
+    private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -43,7 +43,7 @@ export class MotelFormComponent implements OnInit {
         error: (err) => {
           console.error('Error fetching motel for editing:', err);
           alert('Erro ao carregar os dados do motel. Por favor, tente novamente.');
-          this.router.navigate(['/motels']); // Redirect if load fails
+          this.router.navigate(['/motels']);
         }
       });
     }
@@ -53,9 +53,11 @@ export class MotelFormComponent implements OnInit {
     if (this.isEditMode) {
       this.motelService.updateMotel(this.motel.id!, this.motel).subscribe(() => {
         this.router.navigate(['/motels']);
+          this.snackBar.open('Atualizado com sucesso!', 'Fechar', { duration: 3000 });
       });
     } else {
       this.motelService.addMotel(this.motel).subscribe(() => {
+          this.snackBar.open('Criado com sucesso!', 'Fechar', { duration: 3000 });
         this.router.navigate(['/motels']);
       });
     }
@@ -66,11 +68,7 @@ export class MotelFormComponent implements OnInit {
   }
 
   onSuiteSaved(): void {
-    // if (this.motel.id && this.suiteListComponent) { // Condition REMOVED
-    //   this.suiteListComponent.loadSuites(this.motel.id); // Call REMOVED
-    // }
-    this.selectedSuiteForEdit = null; // Clear selection after save
-    // No need to reload suite list as it's not present
+    this.selectedSuiteForEdit = null;
   }
 
   onSuiteEdited(suite: Suite): void {

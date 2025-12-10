@@ -3,9 +3,23 @@
   padding: 2rem;
   background-color: #f7f9fc;
 }
+.forms-wrapper {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap; 
+  max-width: 1200px; /* Set a max-width for the wrapper */
+  margin: 0 auto; /* Center the wrapper horizontally */
+}
+
+.form-container,
+app-suite-form {
+  flex: 1 1 400px;
+    max-width: 600px;
+}
 
 .form-container {
-  max-width: 600px; /* Reduced width */
+  max-width: 600px;
   margin: 0 auto 2rem auto;
   padding: 2.5rem;
   background-color: #ffffff;

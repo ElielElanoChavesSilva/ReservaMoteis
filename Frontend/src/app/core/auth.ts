@@ -16,6 +16,9 @@ import { jwtDecode } from 'jwt-decode'; // Import jwtDecode
   private currentUserRoleSubject = new BehaviorSubject<string | null>(null);
   currentUserRole$ = this.currentUserRoleSubject.asObservable();
 
+  private currentUserNameSubject = new BehaviorSubject<string | null>(null);
+  currentUserName$ = this.currentUserNameSubject.asObservable();
+
   constructor(private http: HttpClient, private router: Router) {
     this.loadUserRoleFromToken();
   }
@@ -35,14 +38,25 @@ import { jwtDecode } from 'jwt-decode'; // Import jwtDecode
           decodedToken['roles'] ||
           decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] ||
           null;
-
-        console.log('AuthService: Decoded user role from token:', userRole);
-
         this.currentUserRoleSubject.next(userRole);
+
+        const userName =
+          decodedToken['name'] ||
+          decodedToken['given_name'] ||
+          decodedToken['preferred_username'] ||
+          decodedToken['email'] ||
+          decodedToken['sub'] ||
+          null;
+        console.log('AuthService: Decoded user name from token:', userName);
+        this.currentUserNameSubject.next(userName);
+
       } catch (error) {
         console.error('Error decoding token:', error);
         this.logout();
       }
+    } else {
+      this.currentUserRoleSubject.next(null);
+      this.currentUserNameSubject.next(null);
     }
   }
 
@@ -67,6 +81,7 @@ import { jwtDecode } from 'jwt-decode'; // Import jwtDecode
     localStorage.removeItem(this.authTokenKey);
     this.isAuthenticatedSubject.next(false);
     this.currentUserRoleSubject.next(null);
+    this.currentUserNameSubject.next(null); // Clear user name on logout
     this.router.navigate(['/login']);
   }
 

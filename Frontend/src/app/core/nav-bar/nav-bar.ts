@@ -14,10 +14,12 @@ import { Observable } from 'rxjs';
 export class NavBarComponent {
   isAuthenticated$: Observable<boolean>;
   userRole$: Observable<string | null>;
+  currentUserName$: Observable<string | null>;
 
   constructor(private authService: AuthService, private router: Router) {
     this.isAuthenticated$ = this.authService.isAuthenticated$;
     this.userRole$ = this.authService.currentUserRole$;
+    this.currentUserName$ = this.authService.currentUserName$;
   }
 
   logout(): void {

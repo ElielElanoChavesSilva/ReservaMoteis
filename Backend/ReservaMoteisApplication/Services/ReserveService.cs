@@ -27,21 +27,69 @@ namespace BookMotelsApplication.Services
         public async Task<IEnumerable<GetReserveDTO>> FindAllAsync()
         {
             IEnumerable<ReserveEntity> reserves = await _reserveRepository.FindAll();
-            return reserves.ToDTO();
+            var dtos = new List<GetReserveDTO>();
+
+            foreach (var reserve in reserves)
+            {
+                SuiteEntity suite = await _suiteRepository.FindById(reserve.SuiteId);
+                MotelEntity motel = null;
+                if (suite != null)
+                {
+                    motel = await _motelRepository.FindById(suite.MotelId);
+                }
+
+                GetReserveDTO dto = reserve.ToDTO();
+                if (suite != null)
+                {
+                    dto.SuiteName = suite.Name;
+                }
+                if (motel != null)
+                {
+                    dto.MotelName = motel.Name;
+                }
+                dtos.Add(dto);
+            }
+            return dtos;
         }
 
         public async Task<IEnumerable<GetReserveDTO>> FindAllByUserAsync(Guid userId)
         {
             IEnumerable<ReserveEntity> reserves = await _reserveRepository.FindAllByUserAsync(userId);
-            return reserves.ToDTO();
+            var dtos = new List<GetReserveDTO>();
+
+            foreach (var reserve in reserves)
+            {
+                SuiteEntity? suite = await _suiteRepository.FindById(reserve.SuiteId) ??
+                                    throw new NotFoundException("Ocorreu um erro ao buscar informações das reservas");
+
+
+                MotelEntity motel = await _motelRepository.FindById(suite.MotelId) ??
+                                    throw new NotFoundException("Ocorreu um erro ao buscar informações das reservas");
+
+                GetReserveDTO dto = reserve.ToDTO();
+                dto.SuiteName = suite.Name;
+                dto.MotelName = motel.Name;
+                dtos.Add(dto);
+            }
+            return dtos;
         }
 
         public async Task<GetReserveDTO> FindByIdAsync(long id)
         {
             ReserveEntity reserve = await _reserveRepository.FindById(id) ??
-                          throw new NotFoundException("Reserva de encontrada");
+                          throw new NotFoundException("Reserva nÃ£o encontrada");
 
-            return reserve.ToDTO();
+            SuiteEntity suite = await _suiteRepository.FindById(reserve.SuiteId) ??
+                                throw new NotFoundException("SuÃ­te nÃ£o encontrada para a reserva.");
+
+            MotelEntity motel = await _motelRepository.FindById(suite.MotelId) ??
+                                throw new NotFoundException("Motel nÃ£o encontrado para a suÃ­te.");
+
+            GetReserveDTO dto = reserve.ToDTO();
+            dto.SuiteName = suite.Name;
+            dto.MotelName = motel.Name;
+
+            return dto;
         }
 
         public async Task<GetReserveDTO> AddAsync(Guid userId, ReserveDTO reserveDto)
@@ -49,7 +97,7 @@ namespace BookMotelsApplication.Services
             await ValidateReservation(reserveDto);
 
             SuiteEntity suite = await _suiteRepository.FindById(reserveDto.SuiteId) ??
-                            throw new NotFoundException("Suíte não encontrada");
+                            throw new NotFoundException("Suï¿½te nï¿½o encontrada");
 
             ReserveEntity entity = reserveDto.ToEntity();
 
@@ -75,13 +123,13 @@ namespace BookMotelsApplication.Services
                 reserveDto.CheckOut);
 
             if (hasConflict)
-                throw new ConflictException("A suíte já está reservada no período informado.");
+                throw new ConflictException("A suï¿½te jï¿½ estï¿½ reservada no perï¿½odo informado.");
         }
 
         public async Task UpdateAsync(long id, ReserveDTO reserveDto)
         {
             var existingReserve = await _reserveRepository.FindById(id) ??
-                                  throw new NotFoundException("Reserva não encontrada");
+                                  throw new NotFoundException("Reserva nï¿½o encontrada");
 
             existingReserve.SuiteId = reserveDto.SuiteId;
             existingReserve.CheckIn = reserveDto.CheckIn;
@@ -94,7 +142,7 @@ namespace BookMotelsApplication.Services
         {
             if (motelId is not null)
                 if (!await _motelRepository.Exist(motelId.GetValueOrDefault()))
-                    throw new NotFoundException("Motel não encontrado");
+                    throw new NotFoundException("Motel nï¿½o encontrado");
 
             return await _reserveRepository.FindBillingReport(motelId, year, month);
         }
@@ -102,7 +150,7 @@ namespace BookMotelsApplication.Services
         public async Task DeleteAsync(long id)
         {
             var entity = await _reserveRepository.FindById(id) ??
-                                  throw new NotFoundException("Reserva não encontrada");
+                                  throw new NotFoundException("Reserva nï¿½o encontrada");
 
             await _reserveRepository.Delete(entity);
         }
