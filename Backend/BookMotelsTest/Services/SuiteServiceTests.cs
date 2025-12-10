@@ -1,5 +1,4 @@
 using BookMotelsApplication.DTOs.Suite;
-using BookMotelsApplication.Mappers;
 using BookMotelsApplication.Services;
 using BookMotelsDomain.Entities;
 using BookMotelsDomain.Exceptions;
@@ -7,6 +6,7 @@ using BookMotelsDomain.Interfaces;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using Newtonsoft.Json;
+using System.Text;
 using Xunit;
 
 namespace BookMotelsTest.Services
@@ -77,16 +77,67 @@ namespace BookMotelsTest.Services
         }
 
         [Fact]
+        public async Task FindAllAvailable_FetchesAndCaches_WhenCacheMiss()
+        {
+            // Arrange
+            long motelId = 1;
+            string cacheKey = $"suites:available:{motelId}:::";
+
+            _mockMotelRepository.Setup(r => r.Exist(motelId)).ReturnsAsync(true);
+            _mockDistributedCache
+                .Setup(c => c.GetAsync(cacheKey, default))
+                .ReturnsAsync((byte[]?)null); // Cache miss
+
+            var suitesFromRepo = new List<SuiteEntity>
+            {
+                new() { Id = 1, Name = "Suite A", MotelId = motelId },
+                new() { Id = 2, Name = "Suite B", MotelId = motelId }
+            };
+            _mockSuiteRepository
+                .Setup(r => r.FindAllAvailable(motelId, null, null, null))
+                .ReturnsAsync(suitesFromRepo);
+
+            // Capture the value passed to SetStringAsync
+            string? capturedJson = null;
+            _mockDistributedCache
+                .Setup(c => c.SetAsync(cacheKey, It.IsAny<byte[]>(), It.IsAny<DistributedCacheEntryOptions>(), default))
+                .Callback<string, byte[], DistributedCacheEntryOptions, CancellationToken>((_, value, _, _) => capturedJson = Encoding.UTF8.GetString(value))
+                .Returns(Task.CompletedTask);
+
+            // Act
+            var result = await _suiteService.FindAllAvailable(motelId, null, null, null);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(2, result.Count());
+            _mockMotelRepository.Verify(r => r.Exist(motelId), Times.Once);
+            _mockDistributedCache.Verify(c => c.GetAsync(cacheKey, default), Times.Once);
+            _mockSuiteRepository.Verify(r => r.FindAllAvailable(motelId, null, null, null), Times.Once);
+            _mockDistributedCache.Verify(c => c.SetAsync(cacheKey, It.IsAny<byte[]>(), It.IsAny<DistributedCacheEntryOptions>(), default), Times.Once);
+
+            Assert.NotNull(capturedJson);
+            var cachedSuites = JsonConvert.DeserializeObject<IEnumerable<GetSuiteDTO>>(capturedJson);
+            Assert.Equal(2, cachedSuites!.Count());
+        }
+
+
+        [Fact]
         public async Task FindAllAvailable_ReturnsCachedData_WhenAvailable()
         {
             // Arrange
             long motelId = 1;
-            string cacheKey = $"suites:available:{motelId}:::00:00";
-            var cachedSuites = new List<GetSuiteDTO> { new GetSuiteDTO { Id = 1, Name = "Cached Suite" } };
+            string cacheKey = $"suites:available:{motelId}:::";
+
+            var cachedSuites = new List<GetSuiteDTO>
+            {
+                new GetSuiteDTO { Id = 1, Name = "Cached Suite" }
+            };
             var cachedJson = JsonConvert.SerializeObject(cachedSuites);
 
             _mockMotelRepository.Setup(r => r.Exist(motelId)).ReturnsAsync(true);
-            _mockDistributedCache.Setup(c => c.GetStringAsync(cacheKey, default)).ReturnsAsync(cachedJson);
+            _mockDistributedCache
+                .Setup(c => c.GetAsync(cacheKey, default))
+                .ReturnsAsync(Encoding.UTF8.GetBytes(cachedJson));
 
             // Act
             var result = await _suiteService.FindAllAvailable(motelId, null, null, null);
@@ -95,40 +146,14 @@ namespace BookMotelsTest.Services
             Assert.NotNull(result);
             Assert.Single(result);
             Assert.Equal("Cached Suite", result.First().Name);
+
             _mockMotelRepository.Verify(r => r.Exist(motelId), Times.Once);
-            _mockDistributedCache.Verify(c => c.GetStringAsync(cacheKey, default), Times.Once);
-            _mockSuiteRepository.Verify(r => r.FindAllAvailable(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<DateTime?>(), It.IsAny<DateTime?>()), Times.Never);
-        }
+            _mockDistributedCache.Verify(c => c.GetAsync(cacheKey, default), Times.Once);
 
-        [Fact]
-        public async Task FindAllAvailable_FetchesAndCaches_WhenCacheMiss()
-        {
-            // Arrange
-            long motelId = 1;
-            string cacheKey = $"suites:available:{motelId}:::00:00";
-            var repoSuites = new List<SuiteEntity> { new SuiteEntity { Id = 1, Name = "Repo Suite", MotelId = motelId } };
-            var expectedDto = repoSuites.ToDTO().ToList();
-            var expectedJson = System.Text.Json.JsonSerializer.Serialize(
-                expectedDto,
-                new System.Text.Json.JsonSerializerOptions { PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase }
-            );
-
-            _mockMotelRepository.Setup(r => r.Exist(motelId)).ReturnsAsync(true);
-            _mockDistributedCache.Setup(c => c.GetStringAsync(cacheKey, default)).ReturnsAsync((string)null!);
-            _mockSuiteRepository.Setup(r => r.FindAllAvailable(motelId, null, null, null)).ReturnsAsync(repoSuites);
-            _mockDistributedCache.Setup(c => c.SetStringAsync(cacheKey, expectedJson, It.IsAny<DistributedCacheEntryOptions>(), default)).Returns(Task.CompletedTask);
-
-            // Act
-            var result = await _suiteService.FindAllAvailable(motelId, null, null, null);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.Single(result);
-            Assert.Equal("Repo Suite", result.First().Name);
-            _mockMotelRepository.Verify(r => r.Exist(motelId), Times.Once);
-            _mockDistributedCache.Verify(c => c.GetStringAsync(cacheKey, default), Times.Once);
-            _mockSuiteRepository.Verify(r => r.FindAllAvailable(motelId, null, null, null), Times.Once);
-            _mockDistributedCache.Verify(c => c.SetStringAsync(cacheKey, expectedJson, It.IsAny<DistributedCacheEntryOptions>(), default), Times.Once);
+            _mockSuiteRepository
+                .Verify(r => r.FindAllAvailable(It.IsAny<long>(), It.IsAny<string>(),
+                        It.IsAny<DateTime?>(), It.IsAny<DateTime?>()),
+                    Times.Never);
         }
 
         [Fact]
@@ -186,6 +211,7 @@ namespace BookMotelsTest.Services
             _mockMotelRepository.Setup(r => r.Exist(motelId)).ReturnsAsync(true);
             _mockSuiteRepository.Setup(r => r.Add(It.IsAny<SuiteEntity>()))
                                 .ReturnsAsync(suiteEntity);
+            _mockDistributedCache.Setup(c => c.RemoveAsync(It.IsAny<string>(), default)).Returns(Task.CompletedTask);
 
             // Act
             var result = await _suiteService.AddAsync(motelId, suiteDto);
@@ -197,6 +223,7 @@ namespace BookMotelsTest.Services
             Assert.Equal(motelId, result.MotelId);
             _mockMotelRepository.Verify(r => r.Exist(motelId), Times.Once);
             _mockSuiteRepository.Verify(r => r.Add(It.Is<SuiteEntity>(s => s.MotelId == motelId && s.Name == suiteDto.Name)), Times.Once);
+            _mockDistributedCache.Verify(c => c.RemoveAsync($"suites:available:{motelId}:::", default), Times.Once);
         }
 
         [Fact]
@@ -218,11 +245,21 @@ namespace BookMotelsTest.Services
         {
             // Arrange
             long suiteId = 1;
+            long motelId = 1;
             var suiteDto = new SuiteDTO { Name = "Updated Suite", Description = "New Desc", PricePerPeriod = 250, MaxOccupancy = 5 };
-            var existingSuite = new SuiteEntity { Id = suiteId, Name = "Original", Description = "Old Desc", PricePerPeriod = 200, MaxOccupancy = 4, MotelId = 1 };
+            var existingSuite = new SuiteEntity
+            {
+                Id = suiteId,
+                Name = "Original",
+                Description = "Old Desc",
+                PricePerPeriod = 200,
+                MaxOccupancy = 4,
+                MotelId = motelId
+            };
 
             _mockSuiteRepository.Setup(r => r.FindById(suiteId)).ReturnsAsync(existingSuite);
             _mockSuiteRepository.Setup(r => r.Update(It.IsAny<SuiteEntity>())).ReturnsAsync(existingSuite);
+            _mockDistributedCache.Setup(c => c.RemoveAsync(It.IsAny<string>(), default)).Returns(Task.CompletedTask);
 
             // Act
             await _suiteService.UpdateAsync(suiteId, suiteDto);
@@ -236,6 +273,7 @@ namespace BookMotelsTest.Services
                 s.PricePerPeriod == suiteDto.PricePerPeriod &&
                 s.MaxOccupancy == suiteDto.MaxOccupancy
             )), Times.Once);
+            _mockDistributedCache.Verify(c => c.RemoveAsync($"suites:available:{motelId}:::", default), Times.Once);
         }
 
         [Fact]
@@ -256,9 +294,11 @@ namespace BookMotelsTest.Services
         {
             // Arrange
             long suiteId = 1;
-            var suiteEntity = new SuiteEntity { Id = suiteId, Name = "Suite to delete" };
+            long motelId = 1;
+            var suiteEntity = new SuiteEntity { Id = suiteId, Name = "Suite to delete", MotelId = motelId };
             _mockSuiteRepository.Setup(r => r.FindById(suiteId)).ReturnsAsync(suiteEntity);
             _mockSuiteRepository.Setup(r => r.Delete(suiteEntity)).Returns(Task.CompletedTask);
+            _mockDistributedCache.Setup(c => c.RemoveAsync(It.IsAny<string>(), default)).Returns(Task.CompletedTask);
 
             // Act
             await _suiteService.DeleteAsync(suiteId);
@@ -266,6 +306,7 @@ namespace BookMotelsTest.Services
             // Assert
             _mockSuiteRepository.Verify(r => r.FindById(suiteId), Times.Once);
             _mockSuiteRepository.Verify(r => r.Delete(suiteEntity), Times.Once);
+            _mockDistributedCache.Verify(c => c.RemoveAsync($"suites:available:{motelId}:::", default), Times.Once);
         }
     }
 }

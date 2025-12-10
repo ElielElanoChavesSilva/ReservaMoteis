@@ -20,6 +20,13 @@ namespace BookMotelsAPI.Controllers
             _authService = authService;
         }
 
+        /// <summary>
+        /// Autentica um usuário e retorna um token JWT.
+        /// </summary>
+        /// <param name="loginDto">As credenciais de login (email e senha).</param>
+        /// <returns>Um ActionResult contendo o token JWT se a autenticação for bem-sucedida, ou Não Autorizado se as credenciais forem inválidas.</returns>
+        /// <response code="200">Retorna o token JWT após autenticação bem-sucedida.</response>
+        /// <response code="401">Se as credenciais forem inválidas.</response>
         [HttpPost("sign-in")]
         public async Task<IActionResult> Login(LoginDTO loginDto)
         {
@@ -31,6 +38,14 @@ namespace BookMotelsAPI.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Registra um novo usuário.
+        /// </summary>
+        /// <param name="userDto">Os detalhes de registro do usuário.</param>
+        /// <returns>Um ActionResult contendo os detalhes do usuário recém-criado.</returns>
+        /// <response code="201">Retorna o ID do usuário recém-criado.</response>
+        /// <response code="400">Se os detalhes de registro do usuário forem inválidos.</response>
+        /// <response code="409">Se já existir um usuário com o email fornecido.</response>
         [HttpPost("sign-up")]
         public async Task<ActionResult<GetUserDTO>> AddAsync(UserDTO userDto)
         {

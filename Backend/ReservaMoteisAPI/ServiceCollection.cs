@@ -4,6 +4,7 @@ using BookMotelsDomain.Interfaces;
 using BookMotelsInfra.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Reflection;
 using System.Text;
 
 namespace BookMotelsAPI
@@ -27,6 +28,7 @@ namespace BookMotelsAPI
             services.AddScoped<IReserveService, ReserveService>();
             services.AddScoped<ISuiteService, SuiteService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddMemoryCache();
         }
 
         public static void ConfigureRedisCache(this IServiceCollection services, IConfiguration configuration)
@@ -92,6 +94,8 @@ namespace BookMotelsAPI
                      Title = "Reserva Motéis API",
                      Version = "v1"
                  });
+                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 
                  var securitySchema = new Microsoft.OpenApi.Models.OpenApiSecurityScheme
                  {

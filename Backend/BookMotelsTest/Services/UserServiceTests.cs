@@ -128,7 +128,7 @@ namespace BookMotelsTest.Services
         {
             // Arrange
             var userId = Guid.NewGuid();
-            var userDto = new GetUserDTO { Id = userId, Name = "Updated Name" };
+            var userDto = new GetUserDTO { Id = userId, Name = "Updated" };
             _mockUserRepository.Setup(r => r.FindById(userId)).ReturnsAsync((UserEntity)null!);
 
             // Act & Assert
@@ -183,7 +183,7 @@ namespace BookMotelsTest.Services
         {
             // Arrange
             var userId = Guid.NewGuid();
-            var userEntity = new UserEntity { Id = userId, Name = "User to delete" };
+            var userEntity = new UserEntity { Id = userId, Name = "Usuário pra deletar" };
             _mockUserRepository.Setup(r => r.FindById(userId)).ReturnsAsync(userEntity);
             _mockUserRepository.Setup(r => r.Delete(userEntity)).Returns(Task.CompletedTask);
 

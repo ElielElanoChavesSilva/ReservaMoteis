@@ -1,26 +1,114 @@
+:host {
+  display: block;
+  padding: 2rem;
+  background-color: #f7f9fc;
+}
+
 .billing-report-container {
-  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+}
+
+h2 {
+  color: #2c3e50;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  letter-spacing: -0.5px;
 }
 
 .filters {
   display: flex;
-  gap: 15px;
-  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
   align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background-color: #f7f9fc;
+  border-radius: 8px;
+  border: 1px solid #e3e8f0;
+}
+
+.filters mat-form-field {
+  flex: 1 1 200px; /* Allow form fields to grow and shrink */
+}
+
+.filters button {
+  height: 52px;
+  min-width: 130px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.filters button.mat-raised-button {
+  background-color: #3498db; /* A friendly, professional blue */
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filters button.mat-raised-button:hover {
+  background-color: #2980b9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filters button.mat-button {
+  color: #555;
+}
+
+.filters button.mat-button:hover {
+  background-color: rgba(0, 0, 0, 0.04);
 }
 
 .report-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  overflow: hidden; /* Ensures the border-radius is applied to the table corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.report-table th, .report-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
+.report-table th, 
+.report-table td {
   text-align: left;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #e3e8f0;
 }
 
 .report-table th {
-  background-color: #f2f2f2;
+  background-color: #34495e; /* A darker, professional blue/grey */
+  color: #ffffff;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.report-table tbody tr:nth-child(even) {
+  background-color: #f7f9fc;
+}
+
+.report-table tbody tr:hover {
+  background-color: #eaf2f8; /* A light blue hover effect */
+  cursor: pointer;
+}
+
+.report-table td:last-child {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.report-table tr td[colspan="4"] {
+  text-align: center;
+  padding: 2rem;
+  font-style: italic;
+  color: #7f8c8d;
 }

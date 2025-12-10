@@ -8,4 +8,5 @@ public interface IMotelService
     Task<GetMotelDTO> AddAsync(MotelDTO motelDto);
     Task UpdateAsync(long id, MotelDTO motelDto);
     Task DeleteAsync(long id);
+    Task<IEnumerable<GetMotelDTO>> FindAllAvailableAsync();
 }

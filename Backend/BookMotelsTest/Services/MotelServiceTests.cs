@@ -3,6 +3,8 @@ using BookMotelsApplication.Services;
 using BookMotelsDomain.Entities;
 using BookMotelsDomain.Exceptions;
 using BookMotelsDomain.Interfaces;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Options;
 using Moq;
 using Xunit;
 
@@ -11,12 +13,14 @@ namespace BookMotelsTest.Services
     public class MotelServiceTests
     {
         private readonly Mock<IMotelRepository> _mockMotelRepository;
+        private readonly IMemoryCache _memoryCache;
         private readonly MotelService _motelService;
 
         public MotelServiceTests()
         {
             _mockMotelRepository = new Mock<IMotelRepository>();
-            _motelService = new MotelService(_mockMotelRepository.Object);
+            _memoryCache = new MemoryCache(Options.Create(new MemoryCacheOptions()));
+            _motelService = new MotelService(_mockMotelRepository.Object, _memoryCache);
         }
 
         [Fact]
@@ -25,8 +29,8 @@ namespace BookMotelsTest.Services
             // Arrange
             var motels = new List<MotelEntity>
             {
-                new MotelEntity { Id = 1, Name = "Motel A" },
-                new MotelEntity { Id = 2, Name = "Motel B" }
+                new () { Id = 1, Name = "Motel A" },
+                new () { Id = 2, Name = "Motel B" }
             };
             _mockMotelRepository.Setup(r => r.FindAll()).ReturnsAsync(motels);
 
@@ -52,6 +56,51 @@ namespace BookMotelsTest.Services
             Assert.NotNull(result);
             Assert.Empty(result);
             _mockMotelRepository.Verify(r => r.FindAll(), Times.Once);
+        }
+
+        [Fact]
+        public async Task FindAllAvailable_FetchesAndCaches_WhenCacheMiss()
+        {
+            // Arrange
+            _memoryCache.Remove("AllMotels");
+            var motels = new List<MotelEntity>
+            {
+                new () { Id = 1, Name = "Motel A" },
+                new () { Id = 2, Name = "Motel B" }
+            };
+            _mockMotelRepository.Setup(r => r.FindAll()).ReturnsAsync(motels);
+
+            // Act
+            var result = await _motelService.FindAllAvailableAsync();
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(2, result.Count());
+            _mockMotelRepository.Verify(r => r.FindAll(), Times.Once);
+
+            // Verify cache entry
+            Assert.True(_memoryCache.TryGetValue("AllMotels", out var cachedMotels));
+            Assert.Equal(2, ((IEnumerable<GetMotelDTO>)cachedMotels!).Count());
+        }
+
+        [Fact]
+        public async Task FindAllAvailable_ReturnsCachedData_WhenAvailable()
+        {
+            // Arrange
+            var cachedMotels = new List<GetMotelDTO>
+            {
+                new () { Id = 3, Name = "Motel C" }
+            };
+            _memoryCache.Set("AllMotels", cachedMotels);
+
+            // Act
+            var result = await _motelService.FindAllAvailableAsync();
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Single(result);
+            Assert.Equal("Motel C", result.First().Name);
+            _mockMotelRepository.Verify(r => r.FindAll(), Times.Never);
         }
 
         [Fact]
@@ -88,6 +137,7 @@ namespace BookMotelsTest.Services
         public async Task AddAsync_SuccessfulAdd_ReturnsAddedMotelDTO()
         {
             // Arrange
+            _memoryCache.Remove("AllMotels");
             var motelDto = new MotelDTO { Name = "New Motel", Address = "123 St" };
             var motelEntity = new MotelEntity { Id = 1, Name = "New Motel", Address = "123 St" };
 
@@ -102,6 +152,7 @@ namespace BookMotelsTest.Services
             Assert.Equal(1, result.Id);
             Assert.Equal("New Motel", result.Name);
             _mockMotelRepository.Verify(r => r.Add(It.Is<MotelEntity>(m => m.Name == motelDto.Name)), Times.Once);
+            Assert.False(_memoryCache.TryGetValue("AllMotels", out _));
         }
 
         [Fact]
@@ -122,6 +173,7 @@ namespace BookMotelsTest.Services
         public async Task UpdateAsync_SuccessfulUpdate()
         {
             // Arrange
+            _memoryCache.Set("AllMotels", new List<GetMotelDTO> { new() { Id = 1, Name = "Original" } });
             long motelId = 1;
             var motelDto = new MotelDTO { Name = "Updated Motel", Address = "New Address", Phone = "111", Description = "New Desc" };
             var existingMotel = new MotelEntity { Id = motelId, Name = "Original", Address = "Old Address", Phone = "000", Description = "Old Desc" };
@@ -141,6 +193,7 @@ namespace BookMotelsTest.Services
                 m.Phone == motelDto.Phone &&
                 m.Description == motelDto.Description
             )), Times.Once);
+            Assert.False(_memoryCache.TryGetValue("AllMotels", out _));
         }
 
         [Fact]
@@ -160,6 +213,7 @@ namespace BookMotelsTest.Services
         public async Task DeleteAsync_SuccessfulDelete()
         {
             // Arrange
+            _memoryCache.Set("AllMotels", new List<GetMotelDTO> { new GetMotelDTO { Id = 1, Name = "Motel to delete" } });
             long motelId = 1;
             var motelEntity = new MotelEntity { Id = motelId, Name = "Motel to delete" };
             _mockMotelRepository.Setup(r => r.FindById(motelId)).ReturnsAsync(motelEntity);
@@ -171,6 +225,7 @@ namespace BookMotelsTest.Services
             // Assert
             _mockMotelRepository.Verify(r => r.FindById(motelId), Times.Once);
             _mockMotelRepository.Verify(r => r.Delete(motelEntity), Times.Once);
+            Assert.False(_memoryCache.TryGetValue("AllMotels", out _));
         }
     }
 }

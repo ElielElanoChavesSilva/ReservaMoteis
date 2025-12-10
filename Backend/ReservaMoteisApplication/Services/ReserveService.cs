@@ -39,7 +39,7 @@ namespace BookMotelsApplication.Services
         public async Task<GetReserveDTO> FindByIdAsync(long id)
         {
             ReserveEntity reserve = await _reserveRepository.FindById(id) ??
-                          throw new NotFoundException($"Reserva de Id: {id} nï¿½o encontrada");
+                          throw new NotFoundException("Reserva de encontrada");
 
             return reserve.ToDTO();
         }
@@ -81,7 +81,7 @@ namespace BookMotelsApplication.Services
         public async Task UpdateAsync(long id, ReserveDTO reserveDto)
         {
             var existingReserve = await _reserveRepository.FindById(id) ??
-                                  throw new NotFoundException($"Reserva de Id: {id} não encontrada");
+                                  throw new NotFoundException("Reserva não encontrada");
 
             existingReserve.SuiteId = reserveDto.SuiteId;
             existingReserve.CheckIn = reserveDto.CheckIn;
@@ -102,7 +102,7 @@ namespace BookMotelsApplication.Services
         public async Task DeleteAsync(long id)
         {
             var entity = await _reserveRepository.FindById(id) ??
-                                  throw new NotFoundException($"Reserva de Id: {id} não encontrada");
+                                  throw new NotFoundException("Reserva não encontrada");
 
             await _reserveRepository.Delete(entity);
         }
