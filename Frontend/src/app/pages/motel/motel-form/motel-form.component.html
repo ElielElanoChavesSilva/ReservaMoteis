@@ -1,5 +1,5 @@
 <div class="form-container">
-  <h2>{{ isEditMode ? 'Edit Motel' : 'New Motel' }}</h2>
+  <h2>{{ isEditMode ? 'Editar Motel' : 'New Motel' }}</h2>
   <form (ngSubmit)="saveMotel()">
     <div class="form-group">
       <label for="name">Name</label>
@@ -9,6 +9,14 @@
       <label for="address">Address</label>
       <input type="text" id="address" name="address" [(ngModel)]="motel.address" required>
     </div>
+    <div class="form-group">
+      <label for="phone">Phone</label>
+      <input type="text" id="phone" name="phone" [(ngModel)]="motel.phone">
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" [(ngModel)]="motel.description"></textarea>
+    </div>
     <div class="form-actions">
       <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Update' : 'Create' }}</button>
       <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
@@ -17,6 +25,18 @@
 </div>
 
 <div *ngIf="isEditMode && motel.id">
-  <app-suite-list [motelId]="motel.id"></app-suite-list>
-  <app-suite-form [motelId]="motel.id"></app-suite-form>
+  <h3>Gerenciar Suítes</h3>
+  <app-suite-list
+    #suiteList
+    [motelId]="motel.id"
+    (suiteEdited)="onSuiteEdited($event)"
+    (suiteDeleted)="onSuiteDeleted()">
+  </app-suite-list>
+
+  <app-suite-form
+    [motelId]="motel.id"
+    [suiteToEdit]="selectedSuiteForEdit"
+    (suiteSaved)="onSuiteSaved()"
+    (suiteCanceled)="onSuiteCanceled()">
+  </app-suite-form>
 </div>

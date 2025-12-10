@@ -26,8 +26,27 @@ export class ReserveFormComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEditMode = true;
-      this.reserveService.getReserve(Number(id)).subscribe((reserve) => {
-        this.reserve = reserve;
+      this.reserveService.getReserve(Number(id)).subscribe({
+        next: (reserveData) => {
+          this.reserve = { ...reserveData }; // Use spread to create a new object, might help with change detection
+          // Explicitly handle suiteId type
+          if (this.reserve.suiteId !== undefined && this.reserve.suiteId !== null) {
+            this.reserve.suiteId = Number(this.reserve.suiteId);
+          }
+
+          // Convert dates to 'YYYY-MM-DD' format for date input fields
+          if (this.reserve.checkIn) {
+            this.reserve.checkIn = new Date(this.reserve.checkIn).toISOString().split('T')[0] as any;
+          }
+          if (this.reserve.checkOut) {
+            this.reserve.checkOut = new Date(this.reserve.checkOut).toISOString().split('T')[0] as any;
+          }
+        },
+        error: (err) => {
+          console.error('Error fetching reserve for editing:', err);
+          alert('Erro ao carregar os dados da reserva. Por favor, tente novamente.');
+          this.router.navigate(['/reserves']); // Redirect if load fails
+        }
       });
     } else {
       this.route.queryParams.subscribe(params => {
