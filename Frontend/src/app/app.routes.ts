@@ -7,7 +7,6 @@ import { UserFormComponent } from './pages/user/user-form/user-form';
 import { authGuard } from './core/auth.guard';
 import { BillingReportComponent } from './pages/billing-report/billing-report';
 import { AdminLandingComponent } from './pages/admin-landing/admin-landing';
-import { SuiteListComponent } from './pages/suite/suite-list/suite-list';
 import { SuiteFormComponent } from './pages/suite/suite-form/suite-form';
 import { RegisterComponent } from './pages/register/register';
 import { MotelFormComponent } from './pages/motel/motel-form/motel-form.component';
@@ -19,7 +18,6 @@ export const routes: Routes = [
   { path: 'motel/new', component: MotelFormComponent, canActivate: [authGuard], data: { roles: ['Admin'] } },
   { path: 'motel/edit/:id', component: MotelFormComponent, canActivate: [authGuard], data: { roles: ['Admin'] } },
 
-  { path: 'suites', component: SuiteListComponent, canActivate: [authGuard] },
   { path: 'suite/new', component: SuiteFormComponent, canActivate: [authGuard], data: { roles: ['Admin'] } },
   { path: 'suite/edit/:id', component: SuiteFormComponent, canActivate: [authGuard], data: { roles: ['Admin'] } },
 

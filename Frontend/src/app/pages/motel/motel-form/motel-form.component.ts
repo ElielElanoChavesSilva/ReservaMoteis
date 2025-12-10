@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core'; // Removed ViewChild
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Motel } from '../../../models/motel.model';
 import { MotelService } from '../../../services/motel.service';
-import { SuiteListComponent } from '../../suite/suite-list/suite-list.component';
+// import { SuiteListComponent } from '../../suite/suite-list/suite-list.component'; // REMOVED
 import { SuiteFormComponent } from '../../suite/suite-form/suite-form.component';
 import { SuiteService } from '../../../services/suite.service';
 import { Suite } from '../../../models/suite.model';
@@ -12,12 +12,12 @@ import { Suite } from '../../../models/suite.model';
 @Component({
   selector: 'app-motel-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, SuiteListComponent, SuiteFormComponent],
+  imports: [CommonModule, FormsModule, SuiteFormComponent], // Removed SuiteListComponent
   templateUrl: './motel-form.component.html',
   styleUrl: './motel-form.component.css'
 })
 export class MotelFormComponent implements OnInit {
-  @ViewChild(SuiteListComponent) suiteListComponent?: SuiteListComponent;
+  // @ViewChild(SuiteListComponent) suiteListComponent?: SuiteListComponent; // REMOVED
 
   motel: Motel = { name: '', address: '' };
   isEditMode: boolean = false;
@@ -34,8 +34,17 @@ export class MotelFormComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEditMode = true;
-      this.motelService.getMotel(+id).subscribe((motel: Motel) => {
-        this.motel = motel;
+      this.motelService.getMotel(+id).subscribe({
+        next: (motel: Motel) => {
+          this.motel = motel;
+          console.log('Motel fetched for editing:', this.motel);
+          console.log('isEditMode:', this.isEditMode);
+        },
+        error: (err) => {
+          console.error('Error fetching motel for editing:', err);
+          alert('Erro ao carregar os dados do motel. Por favor, tente novamente.');
+          this.router.navigate(['/motels']); // Redirect if load fails
+        }
       });
     }
   }
@@ -57,10 +66,11 @@ export class MotelFormComponent implements OnInit {
   }
 
   onSuiteSaved(): void {
-    if (this.motel.id && this.suiteListComponent) {
-      this.suiteListComponent.loadSuites(this.motel.id);
-      this.selectedSuiteForEdit = null; // Clear selection after save
-    }
+    // if (this.motel.id && this.suiteListComponent) { // Condition REMOVED
+    //   this.suiteListComponent.loadSuites(this.motel.id); // Call REMOVED
+    // }
+    this.selectedSuiteForEdit = null; // Clear selection after save
+    // No need to reload suite list as it's not present
   }
 
   onSuiteEdited(suite: Suite): void {
@@ -71,9 +81,9 @@ export class MotelFormComponent implements OnInit {
     this.selectedSuiteForEdit = null;
   }
 
-  onSuiteDeleted(): void {
-    if (this.motel.id && this.suiteListComponent) {
-      this.suiteListComponent.loadSuites(this.motel.id);
-    }
-  }
+  // onSuiteDeleted(): void { // METHOD REMOVED
+  //   if (this.motel.id && this.suiteListComponent) {
+  //     this.suiteListComponent.loadSuites(this.motel.id);
+  //   }
+  // }
 }

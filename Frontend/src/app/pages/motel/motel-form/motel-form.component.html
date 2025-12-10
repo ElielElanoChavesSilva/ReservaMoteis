@@ -24,15 +24,12 @@
   </form>
 </div>
 
-<div *ngIf="isEditMode && motel.id">
-  <h3>Gerenciar Suítes</h3>
-  <app-suite-list
-    #suiteList
-    [motelId]="motel.id"
-    (suiteEdited)="onSuiteEdited($event)"
-    (suiteDeleted)="onSuiteDeleted()">
-  </app-suite-list>
+<div *ngIf="!isEditMode" class="alert alert-info" style="max-width: 600px; margin: 2rem auto;">
+  As suítes podem ser gerenciadas após a criação do motel.
+</div>
 
+<div style="max-width: 600px; margin: 2rem auto;">
+  <h3>Gerenciar Suítes</h3>
   <app-suite-form
     [motelId]="motel.id"
     [suiteToEdit]="selectedSuiteForEdit"

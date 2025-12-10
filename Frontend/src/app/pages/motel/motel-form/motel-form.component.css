@@ -89,6 +89,17 @@ h2 {
   background-color: #bdbdbd;
 }
 
+
+
+h3 {
+  color: #2c3e50;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 2rem auto 1.5rem auto; /* Add margin for spacing */
+  text-align: center;
+  max-width: 800px;
+}
+
 /* Styling for the embedded suite components */
 app-suite-list, app-suite-form {
   display: block;
@@ -98,13 +109,4 @@ app-suite-list, app-suite-form {
   background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-h3 {
-  color: #2c3e50;
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin: 2rem auto 1.5rem auto; /* Add margin for spacing */
-  text-align: center;
-  max-width: 800px;
 }
