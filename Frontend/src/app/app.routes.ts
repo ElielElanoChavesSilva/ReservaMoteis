@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login';
 import { MotelListComponent } from './pages/motel/motel-list/motel-list';
-import { MotelFormComponent } from './pages/motel/motel-form/motel-form';
 import { ReserveListComponent } from './pages/reserve/reserve-list/reserve-list';
 import { ReserveFormComponent } from './pages/reserve/reserve-form/reserve-form';
 import { UserFormComponent } from './pages/user/user-form/user-form';
@@ -10,7 +9,8 @@ import { BillingReportComponent } from './pages/billing-report/billing-report';
 import { AdminLandingComponent } from './pages/admin-landing/admin-landing';
 import { SuiteListComponent } from './pages/suite/suite-list/suite-list';
 import { SuiteFormComponent } from './pages/suite/suite-form/suite-form';
-import { RegisterComponent } from './pages/register/register'; 
+import { RegisterComponent } from './pages/register/register';
+import { MotelFormComponent } from './pages/motel/motel-form/motel-form.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
