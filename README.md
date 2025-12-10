@@ -57,7 +57,6 @@ A aplicação segue **Clean Architecture**, separando regras de negócio da infr
 * Clean Architecture
 * Redis Cache
 * Swagger
-* Entity Framework
 * JWT Authentication
 * Xunit
   
