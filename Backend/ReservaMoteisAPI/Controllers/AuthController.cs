@@ -1,12 +1,14 @@
 ﻿using BookMotelsApplication.DTOs.Auth;
 using BookMotelsApplication.DTOs.User;
 using BookMotelsApplication.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookMotelsAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class AuthController : ApiController
     {
         private readonly IAuthenticationService _authService;
@@ -51,6 +53,18 @@ namespace BookMotelsAPI.Controllers
         {
             var newUser = await _userService.AddAsync(userDto);
             return Created($"api/users/{newUser.Id}", newUser.Id);
+        }
+
+        /// <summary>
+        /// Retorna o perfil do usuário logado.
+        /// </summary>
+        /// <returns>O UserDTO do usuário logado.</returns>
+        /// <response code="200">Retorna o UserDTO do usuário logado.</response>
+        /// <response code="404">Se o usuário não for encontrado.</response>
+        [HttpGet("me")]
+        public async Task<ActionResult<GetUserDTO>> GetLoggedUser()
+        {
+            return Ok(await _userService.FindByIdAsync(LoggedUserId));
         }
     }
 }
