@@ -1,6 +1,6 @@
 using BookMotelsApplication.DTOs.Reserve;
 using BookMotelsApplication.Services;
-using BookMotelsDomain.DTOs;
+using BookMotelsDomain;
 using BookMotelsDomain.Entities;
 using BookMotelsDomain.Exceptions;
 using BookMotelsDomain.Interfaces;

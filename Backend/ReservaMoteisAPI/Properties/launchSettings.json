@@ -1,15 +1,5 @@
 {
   "profiles": {
-    "BookMotelsAPI": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7226;http://localhost:5273"
-    },
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,

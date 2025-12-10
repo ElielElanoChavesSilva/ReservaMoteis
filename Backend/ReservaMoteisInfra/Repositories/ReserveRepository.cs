@@ -1,4 +1,4 @@
-﻿using BookMotelsDomain.DTOs;
+﻿using BookMotelsDomain;
 using BookMotelsDomain.Entities;
 using BookMotelsDomain.Interfaces;
 using BookMotelsInfra.Context;

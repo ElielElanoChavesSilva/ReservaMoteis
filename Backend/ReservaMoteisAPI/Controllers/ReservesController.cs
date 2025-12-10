@@ -1,6 +1,6 @@
 using BookMotelsApplication.DTOs.Reserve;
 using BookMotelsApplication.Interfaces;
-using BookMotelsDomain.DTOs;
+using BookMotelsDomain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

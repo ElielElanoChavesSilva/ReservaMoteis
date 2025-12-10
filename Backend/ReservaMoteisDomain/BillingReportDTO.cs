@@ -1,4 +1,4 @@
-namespace BookMotelsDomain.DTOs
+namespace BookMotelsDomain
 {
     public class BillingReportDTO
     {

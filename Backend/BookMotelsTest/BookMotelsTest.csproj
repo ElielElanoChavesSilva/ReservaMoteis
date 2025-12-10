@@ -16,7 +16,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-
+	<PropertyGroup>
+		<IsPackable>false</IsPackable>
+		<IsTestProject>true</IsTestProject>
+	</PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReservaMoteisApplication\BookMotelsApplication.csproj" />
     <ProjectReference Include="..\ReservaMoteisDomain\BookMotelsDomain.csproj" />

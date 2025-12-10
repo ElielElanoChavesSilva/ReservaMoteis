@@ -1,5 +1,5 @@
 using BookMotelsApplication.DTOs.Reserve;
-using BookMotelsDomain.DTOs;
+using BookMotelsDomain;
 
 namespace BookMotelsApplication.Interfaces;
 

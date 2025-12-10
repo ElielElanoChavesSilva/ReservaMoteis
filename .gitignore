@@ -21,6 +21,8 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+.vs/
+*.csproj.user
 [Ll]ogs/
 **/bin
 **/obj

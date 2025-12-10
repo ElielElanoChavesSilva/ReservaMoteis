@@ -1,5 +1,4 @@
-﻿using BookMotelsDomain.DTOs;
-using BookMotelsDomain.Entities;
+﻿using BookMotelsDomain.Entities;
 using BookMotelsDomain.Interfaces.Base;
 
 namespace BookMotelsDomain.Interfaces

@@ -1,7 +1,7 @@
 ﻿using BookMotelsApplication.DTOs.Reserve;
 using BookMotelsApplication.Interfaces;
 using BookMotelsApplication.Mappers;
-using BookMotelsDomain.DTOs;
+using BookMotelsDomain;
 using BookMotelsDomain.Entities;
 using BookMotelsDomain.Exceptions;
 using BookMotelsDomain.Interfaces;
