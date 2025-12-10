@@ -110,15 +110,7 @@ cd .\Backend\ReservaMoteisAPI
 dotnet restore
 ```
 
-Agora gere a migration inicial entrando na camada **Infrastructure**:
-
-```bash
-cd ../ReservaMoteisInfra
-
-dotnet ef migrations add InitialCreate --startup-project ../ReservaMoteisAPI --project .
-```
-
-Por fim, execute a API:
+Por fim, execute:
 ```bash
 dotnet run --project ../ReservaMoteisAPI
 ```
