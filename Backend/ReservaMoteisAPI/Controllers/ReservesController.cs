@@ -86,10 +86,10 @@ namespace BookMotelsAPI.Controllers
         /// <summary>
         /// Cria uma nova reserva.
         /// </summary>
-        /// <param name="reserveDto">Os detalhes de criação da reserva.</param>
+        /// <param name="reserveDto">Os detalhes de cria��o da reserva.</param>
         /// <returns>A reserva recém-criada.</returns>
         /// <response code="201">Retorna a reserva recém-criada.</response>
-        /// <response code="400">Se os detalhes de criação da reserva forem inválidos.</response>
+        /// <response code="400">Se os detalhes de cria��o da reserva forem inválidos.</response>
         /// <response code="401">Se o usuário não estiver autenticado.</response>
         /// <response code="404">Se a suíte ou motel associado à reserva não for encontrado.</response>
         /// <response code="409">Se houver um conflito com uma reserva existente.</response>

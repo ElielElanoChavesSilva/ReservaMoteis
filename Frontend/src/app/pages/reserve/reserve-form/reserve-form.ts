@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReserveService } from '../reserve';
 import { Reserve } from '../../../models/reserve.model';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-reserve-form',
@@ -19,7 +20,8 @@ export class ReserveFormComponent implements OnInit {
   constructor(
     private reserveService: ReserveService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -28,13 +30,11 @@ export class ReserveFormComponent implements OnInit {
       this.isEditMode = true;
       this.reserveService.getReserve(Number(id)).subscribe({
         next: (reserveData) => {
-          this.reserve = { ...reserveData }; // Use spread to create a new object, might help with change detection
-          // Explicitly handle suiteId type
+          this.reserve = { ...reserveData };
           if (this.reserve.suiteId !== undefined && this.reserve.suiteId !== null) {
             this.reserve.suiteId = Number(this.reserve.suiteId);
           }
 
-          // Convert dates to 'YYYY-MM-DD' format for date input fields
           if (this.reserve.checkIn) {
             this.reserve.checkIn = new Date(this.reserve.checkIn).toISOString().split('T')[0] as any;
           }
@@ -45,7 +45,7 @@ export class ReserveFormComponent implements OnInit {
         error: (err) => {
           console.error('Error fetching reserve for editing:', err);
           alert('Erro ao carregar os dados da reserva. Por favor, tente novamente.');
-          this.router.navigate(['/reserves']); // Redirect if load fails
+          this.router.navigate(['/reserves']);
         }
       });
     } else {
@@ -57,30 +57,30 @@ export class ReserveFormComponent implements OnInit {
     }
   }
 
-saveReserve(): void {
-  if (this.reserve.checkIn) {
-    this.reserve.checkIn = new Date(this.reserve.checkIn).toISOString().split('T')[0] as any;
-  }
-  if (this.reserve.checkOut) {
-    this.reserve.checkOut = new Date(this.reserve.checkOut).toISOString().split('T')[0] as any;
-  }
+  saveReserve(): void {
+    if (this.reserve.checkIn) {
+      this.reserve.checkIn = new Date(this.reserve.checkIn).toISOString().split('T')[0] as any;
+    }
+    if (this.reserve.checkOut) {
+      this.reserve.checkOut = new Date(this.reserve.checkOut).toISOString().split('T')[0] as any;
+    }
 
-  const handleError = (err: any) => {
-    alert(err.error?.error || 'Ocorreu um erro ao salvar a reserva.');
-  };
+    const handleError = (err: any) => {
+      this.snackBar.open(err.error?.error || 'Ocorreu um erro ao salvar a reserva.', 'Fechar', { duration: 3000 });
+    };
 
-  if (this.isEditMode && this.reserve.id) {
-    this.reserveService.updateReserve(this.reserve.id, this.reserve).subscribe({
-      next: () => this.router.navigate(['/reserves']),
-      error: handleError
-    });
-  } else {
-    this.reserveService.addReserve(this.reserve).subscribe({
-      next: () => this.router.navigate(['/reserves']),
-      error: handleError
-    });
+    if (this.isEditMode && this.reserve.id) {
+      this.reserveService.updateReserve(this.reserve.id, this.reserve).subscribe({
+        next: () => this.router.navigate(['/reserves']),
+        error: handleError
+      });
+    } else {
+      this.reserveService.addReserve(this.reserve).subscribe({
+        next: () => this.router.navigate(['/reserves']),
+        error: handleError
+      });
+    }
   }
-}
 
 
 

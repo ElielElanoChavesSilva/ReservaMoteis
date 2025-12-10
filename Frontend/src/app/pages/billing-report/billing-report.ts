@@ -8,7 +8,7 @@ import { BillingReport } from '../../models/billing-report.model';
 import { AuthService } from '../../core/auth';
 import { BillingReportService } from '../../services/billing-report';
 import { MotelService } from '../../services/motel.service';
-import { Motel } from '../../models/motel.model'; 
+import { Motel } from '../../models/motel.model';
 
 @Component({
   selector: 'app-billing-report',
@@ -23,7 +23,7 @@ export class BillingReportComponent implements OnInit {
   yearFilter: number | null = null;
   monthFilter: number | null = null;
 
-  motels: Motel[] = []; // Change type to Motel[]
+  motels: Motel[] = [];
   years: number[] = [];
   months: { value: number; name: string }[] = [
     { value: 1, name: 'January' },
@@ -42,14 +42,13 @@ export class BillingReportComponent implements OnInit {
 
   constructor(
     private billingReportService: BillingReportService,
-    private authService: AuthService,
-    private motelService: MotelService // Inject MotelService
+    private motelService: MotelService
   ) {}
 
   ngOnInit(): void {
     this.initializeYears();
     this.loadBillingReport();
-    this.loadMotels(); // Load motels
+    this.loadMotels();
   }
 
   loadMotels(): void {

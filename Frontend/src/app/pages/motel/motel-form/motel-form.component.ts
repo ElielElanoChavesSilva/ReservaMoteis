@@ -4,16 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Motel } from '../../../models/motel.model';
 import { MotelService } from '../../../services/motel.service';
-// import { SuiteListComponent } from '../../suite/suite-list/suite-list.component'; // REMOVED
 import { SuiteFormComponent } from '../../suite/suite-form/suite-form.component';
-import { SuiteService } from '../../../services/suite.service';
 import { Suite } from '../../../models/suite.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-motel-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, SuiteFormComponent], // Removed SuiteListComponent
+  imports: [CommonModule, FormsModule, SuiteFormComponent], 
   templateUrl: './motel-form.component.html',
   styleUrl: './motel-form.component.css'
 })

@@ -1,0 +1,11 @@
+server {
+    listen 80;
+    root /usr/share/nginx/html;
+    index index.html; # Certifica que ele procure pelo index.html
+
+    location / {
+        # ESSENCIAL PARA SPAs: Tenta servir o arquivo pedido.
+        # Se não encontrar, ele retorna o index.html (para o roteador do seu app funcionar).
+        try_files $uri $uri/ /index.html;
+    }
+}

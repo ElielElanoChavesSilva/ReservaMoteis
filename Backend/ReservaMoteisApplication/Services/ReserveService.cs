@@ -1,4 +1,4 @@
-using BookMotelsApplication.DTOs.Reserve;
+﻿using BookMotelsApplication.DTOs.Reserve;
 using BookMotelsApplication.Interfaces;
 using BookMotelsApplication.Mappers;
 using BookMotelsDomain.DTOs;
@@ -60,11 +60,11 @@ namespace BookMotelsApplication.Services
             foreach (var reserve in reserves)
             {
                 SuiteEntity? suite = await _suiteRepository.FindById(reserve.SuiteId) ??
-                                    throw new NotFoundException("Ocorreu um erro ao buscar informa��es das reservas");
+                                    throw new NotFoundException("Ocorreu um erro ao buscar informações das reservas");
 
 
                 MotelEntity motel = await _motelRepository.FindById(suite.MotelId) ??
-                                    throw new NotFoundException("Ocorreu um erro ao buscar informa��es das reservas");
+                                    throw new NotFoundException("Ocorreu um erro ao buscar informações das reservas");
 
                 GetReserveDTO dto = reserve.ToDTO();
                 dto.SuiteName = suite.Name;
@@ -77,13 +77,13 @@ namespace BookMotelsApplication.Services
         public async Task<GetReserveDTO> FindByIdAsync(long id)
         {
             ReserveEntity reserve = await _reserveRepository.FindById(id) ??
-                          throw new NotFoundException("Reserva não encontrada");
+                          throw new NotFoundException("Reserva nÃ£o encontrada");
 
             SuiteEntity suite = await _suiteRepository.FindById(reserve.SuiteId) ??
-                                throw new NotFoundException("Suíte não encontrada para a reserva.");
+                                throw new NotFoundException("SuÃ­te nÃ£o encontrada para a reserva.");
 
             MotelEntity motel = await _motelRepository.FindById(suite.MotelId) ??
-                                throw new NotFoundException("Motel não encontrado para a suíte.");
+                                throw new NotFoundException("Motel nÃ£o encontrado para a suÃ­te.");
 
             GetReserveDTO dto = reserve.ToDTO();
             dto.SuiteName = suite.Name;
@@ -97,7 +97,7 @@ namespace BookMotelsApplication.Services
             await ValidateReservation(reserveDto);
 
             SuiteEntity suite = await _suiteRepository.FindById(reserveDto.SuiteId) ??
-                            throw new NotFoundException("Su�te n�o encontrada");
+                            throw new NotFoundException("Suíte não encontrada");
 
             ReserveEntity entity = reserveDto.ToEntity();
 
@@ -123,13 +123,13 @@ namespace BookMotelsApplication.Services
                 reserveDto.CheckOut);
 
             if (hasConflict)
-                throw new ConflictException("A su�te j� est� reservada no per�odo informado.");
+                throw new ConflictException("A suíte já está reservada no período informado.");
         }
 
         public async Task UpdateAsync(long id, ReserveDTO reserveDto)
         {
             var existingReserve = await _reserveRepository.FindById(id) ??
-                                  throw new NotFoundException("Reserva n�o encontrada");
+                                  throw new NotFoundException("Reserva não encontrada");
 
             existingReserve.SuiteId = reserveDto.SuiteId;
             existingReserve.CheckIn = reserveDto.CheckIn;
@@ -142,7 +142,7 @@ namespace BookMotelsApplication.Services
         {
             if (motelId is not null)
                 if (!await _motelRepository.Exist(motelId.GetValueOrDefault()))
-                    throw new NotFoundException("Motel n�o encontrado");
+                    throw new NotFoundException("Motel não encontrado");
 
             return await _reserveRepository.FindBillingReport(motelId, year, month);
         }
@@ -150,7 +150,7 @@ namespace BookMotelsApplication.Services
         public async Task DeleteAsync(long id)
         {
             var entity = await _reserveRepository.FindById(id) ??
-                                  throw new NotFoundException("Reserva n�o encontrada");
+                                  throw new NotFoundException("Reserva não encontrada");
 
             await _reserveRepository.Delete(entity);
         }

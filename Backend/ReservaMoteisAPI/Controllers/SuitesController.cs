@@ -18,10 +18,10 @@ namespace BookMotelsAPI.Controllers
         }
 
         /// <summary>
-        /// Recupera todas as suÃ­tes.
+        /// Recupera todas as suítes.
         /// </summary>
-        /// <returns>Uma lista de todas as suÃ­tes.</returns>
-        /// <response code="200">Retorna a lista de suÃ­tes.</response>
+        /// <returns>Uma lista de todas as suítes.</returns>
+        /// <response code="200">Retorna a lista de suítes.</response>
         /// <response code="401">Se o usuÃ¡rio nÃ£o estiver autenticado.</response>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetSuiteDTO>>> FindAllAsync()
