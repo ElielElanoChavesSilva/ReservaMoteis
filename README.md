@@ -105,7 +105,7 @@ docker-compose down
 ### 🛠️ 3. Configure a API
 
 ```bash
-cd src/Backend/ReservaMoteisAPI
+cd /ReservaMoteisAPI
 
 dotnet restore
 ```
