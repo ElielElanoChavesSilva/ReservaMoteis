@@ -19,7 +19,7 @@ API em **.NET 6** com **Clean Architecture**, **SQLite**, **Redis Cache** e Fron
 Este projeto é um sistema para gerenciamento de motéis, contendo:
 
 * Cadastro e edição de motéis
-* Cadastro e gerenciamento de suítes
+* Cadastro de suítes
 * Sistema de reservas
 * Autenticação e autorização por perfis (**Admin/User**)
 * Cache de dados usando Redis
@@ -137,7 +137,7 @@ npm install
 ### 4. Execute o frontend
 
 ```bash
-ng serve -o
+ng serve
 ```
 
 ---
