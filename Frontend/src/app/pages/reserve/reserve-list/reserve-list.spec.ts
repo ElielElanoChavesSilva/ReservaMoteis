@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReserveList } from './reserve-list';
+import { ReserveListComponent } from './reserve-list';
 
-describe('ReserveList', () => {
-  let component: ReserveList;
-  let fixture: ComponentFixture<ReserveList>;
+describe('ReserveListComponent', () => {
+  let component: ReserveListComponent;
+  let fixture: ComponentFixture<ReserveListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReserveList]
+      imports: [ReserveListComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ReserveList);
+    fixture = TestBed.createComponent(ReserveListComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

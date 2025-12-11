@@ -1,7 +1,6 @@
 ﻿using BookMotelsApplication.DTOs.Reserve;
 using BookMotelsApplication.Interfaces;
 using BookMotelsApplication.Mappers;
-using BookMotelsDomain;
 using BookMotelsDomain.Entities;
 using BookMotelsDomain.Exceptions;
 using BookMotelsDomain.Interfaces;
@@ -31,22 +30,15 @@ namespace BookMotelsApplication.Services
 
             foreach (var reserve in reserves)
             {
-                SuiteEntity suite = await _suiteRepository.FindById(reserve.SuiteId);
-                MotelEntity motel = null;
-                if (suite != null)
-                {
-                    motel = await _motelRepository.FindById(suite.MotelId);
-                }
+                SuiteEntity suite = await _suiteRepository.FindById(reserve.SuiteId)
+                                    ?? throw new BadRequestException("Ocorreu um erro ao buscar as reservas");
+                MotelEntity motel = await _motelRepository.FindById(suite.MotelId)
+                                    ?? throw new BadRequestException("Ocorreu um erro ao buscar as reservas");
 
                 GetReserveDTO dto = reserve.ToDTO();
-                if (suite != null)
-                {
-                    dto.SuiteName = suite.Name;
-                }
-                if (motel != null)
-                {
-                    dto.MotelName = motel.Name;
-                }
+
+                dto.SuiteName = suite.Name;
+                dto.MotelName = motel.Name;
                 dtos.Add(dto);
             }
             return dtos;
@@ -144,7 +136,15 @@ namespace BookMotelsApplication.Services
                 if (!await _motelRepository.Exist(motelId.GetValueOrDefault()))
                     throw new NotFoundException("Motel não encontrado");
 
-            return await _reserveRepository.FindBillingReport(motelId, year, month);
+            var reports = await _reserveRepository.FindBillingReport(motelId, year, month);
+            return reports.Select(x => new BillingReportDTO
+            {
+                Month = x.Month,
+                MotelId = x.MotelId,
+                TotalRevenue = x.TotalRevenue,
+                MotelName = x.MotelName,
+                Year = x.Year
+            });
         }
 
         public async Task DeleteAsync(long id)

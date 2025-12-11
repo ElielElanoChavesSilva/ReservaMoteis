@@ -34,6 +34,7 @@ export class LoginComponent {
         }
       },
       error: (err) => {
+        this.snackBar.open(err.error?.error || "Credenciais inválidas", 'Fechar', { duration: 3000 });
         console.error('Login failed:', err);
       }
     });

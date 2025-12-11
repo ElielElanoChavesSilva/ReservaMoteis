@@ -1,6 +1,6 @@
-namespace BookMotelsDomain
+namespace BookMotelsDomain.Models
 {
-    public class BillingReportDTO
+    public class BillingReportModel
     {
         public long MotelId { get; set; }
         public string MotelName { get; set; } = string.Empty;

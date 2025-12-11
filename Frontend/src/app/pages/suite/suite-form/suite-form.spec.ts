@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SuiteForm } from './suite-form';
+import { SuiteFormComponent } from './suite-form';
 
-describe('SuiteForm', () => {
-  let component: SuiteForm;
-  let fixture: ComponentFixture<SuiteForm>;
+describe('SuiteFormComponent', () => {
+  let component: SuiteFormComponent;
+  let fixture: ComponentFixture<SuiteFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SuiteForm]
+      imports: [SuiteFormComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SuiteForm);
+    fixture = TestBed.createComponent(SuiteFormComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

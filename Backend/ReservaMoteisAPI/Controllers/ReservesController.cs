@@ -1,6 +1,6 @@
 using BookMotelsApplication.DTOs.Reserve;
 using BookMotelsApplication.Interfaces;
-using BookMotelsDomain;
+using BookMotelsDomain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,8 +23,8 @@ namespace BookMotelsAPI.Controllers
         /// </summary>
         /// <returns>Uma lista de todas as reservas.</returns>
         /// <response code="200">Retorna a lista de reservas.</response>
-        /// <response code="401">Se o usuário não estiver autenticado.</response>
-        /// <response code="403">Se o usuário autenticado não for um Admin.</response>
+        /// <response code="401">Se o usu�rio n�o estiver autenticado.</response>
+        /// <response code="403">Se o usu�rio autenticado n�o for um Admin.</response>
         [Authorize(Roles = "Admin")]
         [HttpGet("list")]
         public async Task<ActionResult<IEnumerable<GetReserveDTO>>> FindAllAsync()
@@ -41,12 +41,12 @@ namespace BookMotelsAPI.Controllers
         /// <param name="month">Opcional: Filtrar por m�s.</param>
         /// <returns>Um relat�rio de faturamento.</returns>
         /// <response code="200">Retorna o relat�rio de faturamento.</response>
-        /// <response code="401">Se o usuário não estiver autenticado.</response>
-        /// <response code="403">Se o usuário autenticado não for um Admin.</response>
-        /// <response code="404">Se o motel especificado não for encontrado.</response>
+        /// <response code="401">Se o usu�rio n�o estiver autenticado.</response>
+        /// <response code="403">Se o usu�rio autenticado n�o for um Admin.</response>
+        /// <response code="404">Se o motel especificado n�o for encontrado.</response>
         [Authorize(Roles = "Admin")]
         [HttpGet("billing-report")]
-        public async Task<ActionResult<IEnumerable<BillingReportDTO>>> FindBillingReport([FromQuery] long? motelId,
+        public async Task<ActionResult<IEnumerable<BillingReportModel>>> FindBillingReport([FromQuery] long? motelId,
             [FromQuery] int? year, [FromQuery] int? month)
         {
             var report = await _reserveService.FindBillingReportAsync(motelId, year, month);
@@ -55,11 +55,11 @@ namespace BookMotelsAPI.Controllers
 
 
         /// <summary>
-        /// Recupera todas as reservas para o usuário autenticado.
+        /// Recupera todas as reservas para o usu�rio autenticado.
         /// </summary>
-        /// <returns>Uma lista de reservas para o usuário atual.</returns>
+        /// <returns>Uma lista de reservas para o usu�rio atual.</returns>
         /// <response code="200">Retorna a lista de reservas.</response>
-        /// <response code="401">Se o usuário não estiver autenticado.</response>
+        /// <response code="401">Se o usu�rio n�o estiver autenticado.</response>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetReserveDTO>>> FindAllByUserAsync()
         {
@@ -73,7 +73,7 @@ namespace BookMotelsAPI.Controllers
         /// <param name="id">O ID da reserva a ser recuperada.</param>
         /// <returns>A reserva com o ID especificado.</returns>
         /// <response code="200">Retorna a reserva.</response>
-        /// <response code="401">Se o usuário não estiver autenticado.</response>
+        /// <response code="401">Se o usu�rio n�o estiver autenticado.</response>
         /// <response code="404">Se nenhuma reserva com o ID fornecido for encontrada.</response>
         [HttpGet("{id}")]
         public async Task<ActionResult<GetReserveDTO>> FindById(long id)
@@ -90,8 +90,8 @@ namespace BookMotelsAPI.Controllers
         /// <returns>A reserva recém-criada.</returns>
         /// <response code="201">Retorna a reserva recém-criada.</response>
         /// <response code="400">Se os detalhes de cria��o da reserva forem inválidos.</response>
-        /// <response code="401">Se o usuário não estiver autenticado.</response>
-        /// <response code="404">Se a suíte ou motel associado à reserva não for encontrado.</response>
+        /// <response code="401">Se o usu�rio n�o estiver autenticado.</response>
+        /// <response code="404">Se a suíte ou motel associado à reserva n�o for encontrado.</response>
         /// <response code="409">Se houver um conflito com uma reserva existente.</response>
         [HttpPost]
         public async Task<ActionResult<ReserveDTO>> AddAsync(ReserveDTO reserveDto)
@@ -108,7 +108,7 @@ namespace BookMotelsAPI.Controllers
         /// <returns>Nenhum conteúdo.</returns>
         /// <response code="204">Se a reserva foi atualizada com sucesso.</response>
         /// <response code="400">Se os detalhes de atualização da reserva forem inválidos.</response>
-        /// <response code="401">Se o usuário não estiver autenticado.</response>
+        /// <response code="401">Se o usu�rio n�o estiver autenticado.</response>
         /// <response code="404">Se nenhuma reserva com o ID fornecido for encontrada.</response>
         /// <response code="409">Se houver um conflito com uma reserva existente.</response>
         [HttpPut("{id}")]
@@ -125,7 +125,7 @@ namespace BookMotelsAPI.Controllers
         /// <param name="id">O ID da reserva a ser excluída.</param>
         /// <returns>Nenhum conteúdo.</returns>
         /// <response code="204">Se a reserva foi excluída com sucesso.</response>
-        /// <response code="401">Se o usuário não estiver autenticado.</response>
+        /// <response code="401">Se o usu�rio n�o estiver autenticado.</response>
         /// <response code="404">Se nenhuma reserva com o ID fornecido for encontrada.</response>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(long id)

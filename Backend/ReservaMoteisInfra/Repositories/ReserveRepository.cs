@@ -1,6 +1,6 @@
-﻿using BookMotelsDomain;
-using BookMotelsDomain.Entities;
+﻿using BookMotelsDomain.Entities;
 using BookMotelsDomain.Interfaces;
+using BookMotelsDomain.Models;
 using BookMotelsInfra.Context;
 using BookMotelsInfra.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +26,7 @@ namespace BookMotelsInfra.Repositories
                 .Where(r => r.UserId == userId).ToListAsync();
         }
 
-        public async Task<IEnumerable<BillingReportDTO>> FindBillingReport(long? motelId, int? year, int? month)
+        public async Task<IEnumerable<BillingReportModel>> FindBillingReport(long? motelId, int? year, int? month)
         {
             var query = _context.Reserves
                 .Include(r => r.Suite)
@@ -50,7 +50,7 @@ namespace BookMotelsInfra.Repositories
                     Year = r.CheckOut.Year,
                     Month = r.CheckOut.Month
                 })
-                .Select(g => new BillingReportDTO
+                .Select(g => new BillingReportModel
                 {
                     MotelId = g.Key.MotelId,
                     MotelName = g.Key.MotelName,

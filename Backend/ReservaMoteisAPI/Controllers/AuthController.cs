@@ -1,14 +1,12 @@
 ﻿using BookMotelsApplication.DTOs.Auth;
 using BookMotelsApplication.DTOs.User;
 using BookMotelsApplication.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookMotelsAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
     public class AuthController : ApiController
     {
         private readonly IAuthenticationService _authService;
@@ -62,7 +60,7 @@ namespace BookMotelsAPI.Controllers
         /// <response code="200">Retorna o UserDTO do usuário logado.</response>
         /// <response code="404">Se o usuário não for encontrado.</response>
         [HttpGet("me")]
-        public async Task<ActionResult<GetUserDTO>> GetLoggedUser()
+        public async Task<ActionResult<GetUserDTO>> MeAsync()
         {
             return Ok(await _userService.FindByIdAsync(LoggedUserId));
         }
