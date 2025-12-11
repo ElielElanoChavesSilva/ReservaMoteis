@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,6 +19,7 @@ import { Motel } from '../../models/motel.model';
 })
 export class BillingReportComponent implements OnInit {
   billingReports: BillingReport[] = [];
+  isLoading = false;
   motelIdFilter: number | null = null;
   yearFilter: number | null = null;
   monthFilter: number | null = null;
@@ -29,7 +30,7 @@ export class BillingReportComponent implements OnInit {
     { value: 1, name: 'January' },
     { value: 2, name: 'February' },
     { value: 3, name: 'March' },
-    { value: 4, name: 'April' },
+    { value: 4, 'name': 'April' },
     { value: 5, name: 'May' },
     { value: 6, name: 'June' },
     { value: 7, name: 'July' },
@@ -42,19 +43,21 @@ export class BillingReportComponent implements OnInit {
 
   constructor(
     private billingReportService: BillingReportService,
-    private motelService: MotelService
+    private motelService: MotelService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.initializeYears();
-    this.loadBillingReport();
     this.loadMotels();
+    this.loadBillingReport();
   }
 
   loadMotels(): void {
     this.motelService.getMotels().subscribe({
       next: (motels) => {
         this.motels = motels;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error fetching motels:', err);
@@ -70,14 +73,25 @@ export class BillingReportComponent implements OnInit {
   }
 
   loadBillingReport(): void {
+    console.log('Fetching billing report with filters:', {
+      motelId: this.motelIdFilter,
+      year: this.yearFilter,
+      month: this.monthFilter,
+    });
+    this.isLoading = true;
     this.billingReportService
-      .getBillingReport(this.motelIdFilter!, this.yearFilter!, this.monthFilter!)
+      .getBillingReport(this.motelIdFilter, this.yearFilter, this.monthFilter)
       .subscribe({
         next: (data) => {
           this.billingReports = data;
+          console.log('Billing report data received:', data);
+          this.isLoading = false;
+          this.cdr.detectChanges();
         },
         error: (err) => {
           console.error('Error fetching billing report:', err);
+          this.isLoading = false;
+          this.cdr.detectChanges();
         },
       });
   }

@@ -51,7 +51,7 @@
 }
 
 .table th {
-  background-color: #34495e;
+  background-color: #484b4f;
   color: #ffffff;
   font-weight: 600;
   text-transform: uppercase;
@@ -86,11 +86,11 @@
 }
 
 .btn-info {
-  background-color: #1abc9c;
+  background-color: #17a2b8;
   color: #ffffff;
 }
 .btn-info:hover {
-  background-color: #16a085;
+  background-color: #ffffffff;
 }
 
 .btn-danger {

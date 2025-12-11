@@ -9,8 +9,7 @@
     <table *ngIf="reserves.length > 0" class="table table-striped">
       <thead>
         <tr>
-          <th>Usuário ID</th>
-          <th>Suite ID</th>
+          <th *ngIf="isAdmin">Usuário ID</th>
           <th>Suíte</th>
           <th>Motel</th>
           <th>Check-in</th>
@@ -20,8 +19,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let reserve of reserves">
-          <td>{{ reserve.userId }}</td>
-          <td>{{ reserve.suiteId }}</td>
+          <td *ngIf="isAdmin">{{ reserve.userId }}</td>
           <td>{{ reserve.suiteName }}</td>
           <td>{{ reserve.motelName }}</td>
           <td>{{ reserve.checkIn | date }}</td>

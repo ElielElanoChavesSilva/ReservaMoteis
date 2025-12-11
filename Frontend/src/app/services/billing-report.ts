@@ -12,7 +12,7 @@ export class BillingReportService {
 
   constructor(private http: HttpClient) {}
 
-  getBillingReport(motelId?: number, year?: number, month?: number): Observable<BillingReport[]> {
+  getBillingReport(motelId: number | null, year: number  | null, month: number  | null): Observable<BillingReport[]> {
     let params = new HttpParams();
     if (motelId) {
       params = params.set('motelId', motelId.toString());

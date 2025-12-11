@@ -5,31 +5,32 @@
 }
 
 .card {
-  max-width: 1400px;
-  margin: 0 auto;
+  max-width: 1600px; /* Slightly wider */
+  margin: 1.5rem auto; /* Add some margin top/bottom */
   padding: 0;
   background-color: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* More pronounced shadow */
   font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
-  overflow: hidden; /* To keep border-radius on children */
+  overflow: hidden;
+  border: 1px solid #e0e0e0; /* Subtle border */
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e3e8f0;
+  padding: 1.25rem 2rem; /* Slightly reduced padding */
+  background-color: #f8f9fa; /* Lighter background */
+  border-bottom: 1px solid #e9ecef; /* Lighter border */
 }
 
 .card-header h2 {
-  color: #2c3e50;
-  font-size: 2rem;
-  font-weight: 600;
+  color: #343a40; /* Darker, more neutral color */
+  font-size: 1.75rem; /* Slightly smaller, more balanced */
+  font-weight: 700; /* Bolder */
   margin: 0;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.25px; /* Tighter letter spacing */
 }
 
 .card-body {
@@ -38,97 +39,122 @@
 
 .table {
   width: 100%;
-  border-collapse: collapse;
-  font-size: 0.95rem;
+  border-collapse: separate; /* Use separate to allow border-radius on cells */
+  border-spacing: 0; /* Remove space between cell borders */
+  font-size: 0.9rem; /* Slightly smaller font for tables */
+  border-radius: 8px; /* Apply border-radius to the table */
+  overflow: hidden; /* Ensures border-radius is visible */
 }
 
 .table th,
 .table td {
   text-align: left;
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid #e3e8f0;
+  padding: 1.1rem 1.5rem; /* Increased padding for better readability */
+  border-bottom: 1px solid #e9ecef; /* Lighter border */
   vertical-align: middle;
 }
 
 .table th {
-  background-color: #34495e;
+  background-color: #495057; /* Darker, more professional background */
   color: #ffffff;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  position: sticky; /* Make header sticky */
+  top: 0; /* Stick to the top */
+  z-index: 1; /* Ensure it stays above content */
+}
+
+.table tbody tr:first-child td {
+  border-top: none; /* No top border for the first row */
 }
 
 .table tbody tr:nth-child(even) {
-  background-color: #f7f9fc;
+  background-color: #f8f9fa; /* Lighter even row background */
 }
 
 .table tbody tr:hover {
-  background-color: #eaf2f8;
+  background-color: #e2e6ea; /* More distinct hover effect */
+  cursor: pointer;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none; /* No bottom border for the last row */
 }
 
 .btn {
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.2rem; /* Slightly more padding */
   border: none;
-  border-radius: 8px;
-  font-size: 0.9rem;
+  border-radius: 6px; /* Slightly smaller border-radius */
+  font-size: 0.85rem; /* Slightly smaller font for buttons */
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease-in-out; /* Faster transition */
   text-transform: uppercase;
+  letter-spacing: 0.25px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.btn:hover {
+  transform: translateY(-1px); /* Slight lift on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
 }
 
 .btn-primary {
-  background-color: #3498db;
+  background-color: #007bff; /* Bootstrap primary color */
   color: #ffffff;
 }
 .btn-primary:hover {
-  background-color: #2980b9;
+  background-color: #0056b3;
 }
 
 .btn-info {
-  background-color: #1abc9c;
+  background-color: #17a2b8; /* Bootstrap info color */
   color: #ffffff;
 }
 .btn-info:hover {
-  background-color: #16a085;
+  background-color: #117a8b;
 }
 
 .btn-danger {
-  background-color: #e74c3c;
+  background-color: #dc3545; /* Bootstrap danger color */
   color: #ffffff;
 }
 .btn-danger:hover {
-  background-color: #c0392b;
+  background-color: #bd2130;
 }
 
 .btn-secondary {
-  background-color: #bdc3c7;
+  background-color: #6c757d; /* Bootstrap secondary color */
   color: #ffffff;
 }
 .btn-secondary:hover {
-  background-color: #95a5a6;
+  background-color: #545b62;
 }
 
 .btn-success {
-  background-color: #2ecc71;
+  background-color: #28a745; /* Bootstrap success color */
   color: #ffffff;
 }
 .btn-success:hover {
-  background-color: #27ae60;
+  background-color: #1e7e34;
 }
 
 td .btn {
-  margin-right: 0.5rem;
+  margin-right: 0.75rem; /* Increased margin for better separation */
 }
 
 .alert {
-  padding: 1rem 1.5rem;
+  padding: 1.25rem 2rem; /* Increased padding */
   border-radius: 8px;
   text-align: center;
-  margin: 1rem 0;
+  margin: 1.5rem 0; /* More margin */
+  font-size: 1.1rem; /* Slightly larger font */
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Subtle shadow */
 }
 .alert-info {
-  background-color: #eaf2f8;
-  color: #2c3e50;
-  border: 1px solid #d4e3f3;
+  background-color: #e0f7fa; /* Lighter, calming blue */
+  color: #00796b; /* Darker green-blue for text */
+  border: 1px solid #b2ebf2; /* Matching border color */
 }
