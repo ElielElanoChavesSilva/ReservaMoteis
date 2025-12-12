@@ -26,8 +26,7 @@ namespace BookMotelsAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetSuiteDTO>>> FindAllAsync()
         {
-            var suites = await _suiteService.FindAllAsync();
-            return Ok(suites);
+            return Ok(await _suiteService.FindAllAsync());
         }
 
         /// <summary>
@@ -41,9 +40,7 @@ namespace BookMotelsAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<GetSuiteDTO>> FindById(long id)
         {
-            var suite = await _suiteService.FindByIdAsync(id);
-
-            return Ok(suite);
+            return Ok(await _suiteService.FindByIdAsync(id));
         }
 
         /// <summary>

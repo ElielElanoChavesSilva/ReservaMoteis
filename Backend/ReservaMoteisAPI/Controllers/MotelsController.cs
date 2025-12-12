@@ -31,8 +31,7 @@ namespace BookMotelsAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetMotelDTO>>> FindAllAsync()
         {
-            var motels = await _motelService.FindAllAsync();
-            return Ok(motels);
+            return Ok(await _motelService.FindAllAsync());
         }
 
         /// <summary>
@@ -46,9 +45,7 @@ namespace BookMotelsAPI.Controllers
         [HttpGet("{motelId}")]
         public async Task<ActionResult<GetMotelDTO>> FindById(long motelId)
         {
-            var motel = await _motelService.FindByIdAsync(motelId);
-
-            return Ok(motel);
+            return Ok(await _motelService.FindByIdAsync(motelId));
         }
 
         /// <summary>
@@ -84,7 +81,6 @@ namespace BookMotelsAPI.Controllers
         public async Task<IActionResult> UpdateAsync(long motelId, MotelDTO motelDto)
         {
             await _motelService.UpdateAsync(motelId, motelDto);
-
             return NoContent();
         }
 
@@ -120,8 +116,7 @@ namespace BookMotelsAPI.Controllers
         public async Task<ActionResult<IEnumerable<GetSuiteDTO>>> FindAllAvailable(long motelId, [FromQuery] string? name,
             [FromQuery] DateTime? checkin, [FromQuery] DateTime? checkout)
         {
-            var suites = await _suiteService.FindAllAvailable(motelId, name, checkin, checkout);
-            return Ok(suites);
+            return Ok(await _suiteService.FindAllAvailable(motelId, name, checkin, checkout));
         }
 
         /// <summary>

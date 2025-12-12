@@ -28,8 +28,7 @@ namespace BookMotelsAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetUserDTO>>> FindAllAsync()
         {
-            var users = await _userService.FindAllAsync();
-            return Ok(users);
+            return Ok(await _userService.FindAllAsync());
         }
 
         /// <summary>
@@ -43,9 +42,7 @@ namespace BookMotelsAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<GetUserDTO>> FindById(Guid id)
         {
-            var user = await _userService.FindByIdAsync(id);
-
-            return Ok(user);
+            return Ok(await _userService.FindByIdAsync(id));
         }
 
 
@@ -64,7 +61,6 @@ namespace BookMotelsAPI.Controllers
         public async Task<IActionResult> UpdateAsync(Guid id, GetUserDTO userDto)
         {
             await _userService.UpdateAsync(id, userDto);
-
             return NoContent();
         }
 
