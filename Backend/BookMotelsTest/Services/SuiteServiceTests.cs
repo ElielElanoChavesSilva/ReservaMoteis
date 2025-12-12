@@ -86,7 +86,7 @@ namespace BookMotelsTest.Services
             _mockMotelRepository.Setup(r => r.Exist(motelId)).ReturnsAsync(true);
             _mockDistributedCache
                 .Setup(c => c.GetAsync(cacheKey, default))
-                .ReturnsAsync((byte[]?)null); // Cache miss
+                .ReturnsAsync((byte[]?)null);
 
             var suitesFromRepo = new List<SuiteEntity>
             {
@@ -97,7 +97,6 @@ namespace BookMotelsTest.Services
                 .Setup(r => r.FindAllAvailable(motelId, null, null, null))
                 .ReturnsAsync(suitesFromRepo);
 
-            // Capture the value passed to SetStringAsync
             string? capturedJson = null;
             _mockDistributedCache
                 .Setup(c => c.SetAsync(cacheKey, It.IsAny<byte[]>(), It.IsAny<DistributedCacheEntryOptions>(), default))
@@ -120,7 +119,6 @@ namespace BookMotelsTest.Services
             Assert.Equal(2, cachedSuites!.Count());
         }
 
-
         [Fact]
         public async Task FindAllAvailable_ReturnsCachedData_WhenAvailable()
         {
@@ -140,10 +138,9 @@ namespace BookMotelsTest.Services
                 .ReturnsAsync(Encoding.UTF8.GetBytes(cachedJson));
 
             // Act
-            var result = await _suiteService.FindAllAvailable(motelId, null, null, null);
+            var result = (await _suiteService.FindAllAvailable(motelId, null, null, null)).ToList();
 
             // Assert
-            Assert.NotNull(result);
             Assert.Single(result);
             Assert.Equal("Cached Suite", result.First().Name);
 

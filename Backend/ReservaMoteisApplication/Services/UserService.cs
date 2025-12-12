@@ -42,14 +42,12 @@ public class UserService : IUserService
         return entity.ToDTO();
     }
 
-    public async Task<GetUserDTO> UpdateAsync(Guid id, GetUserDTO userDto)
+    public async Task<GetUserDTO> UpdateAsync(Guid id, UpdateUserDTO userDto)
     {
         UserEntity existingUser = await _userRepository.FindById(id) ??
-                                  throw new Exception("Usuário não encontrado");
+                                  throw new NotFoundException("Usuário não encontrado");
 
-        existingUser.Name = userDto.Name;
-        existingUser.Email = userDto.Email;
-        existingUser.ProfileId = userDto.ProfileId;
+        userDto.ToEntity(existingUser);
 
         existingUser = await _userRepository.Update(existingUser);
         return existingUser.ToDTO();
@@ -58,7 +56,7 @@ public class UserService : IUserService
     public async Task DeleteAsync(Guid id)
     {
         UserEntity entity = await _userRepository.FindById(id) ??
-                            throw new Exception("Usuário não encontrado");
+                            throw new NotFoundException("Usuário não encontrado");
 
         await _userRepository.Delete(entity);
     }

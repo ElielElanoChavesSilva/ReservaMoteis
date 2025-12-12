@@ -18,6 +18,13 @@ namespace BookMotelsApplication.Mappers
             };
         }
 
+        public static void ToEntity(this UpdateUserDTO userDto, UserEntity userEntity)
+        {
+            userEntity.Name = userDto.Name;
+            userEntity.Email = userDto.Email;
+            userEntity.ProfileId = userDto.ProfileId;
+        }
+
         public static IEnumerable<GetUserDTO> ToDTO(this IEnumerable<UserEntity> entities)
         {
             return entities.Select(e => e.ToDTO());

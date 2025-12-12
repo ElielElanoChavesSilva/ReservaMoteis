@@ -24,8 +24,8 @@ namespace BookMotelsTest.Services
             // Arrange
             var users = new List<UserEntity>
             {
-                new UserEntity { Id = Guid.NewGuid(), Name = "User 1", Email = "user1@example.com", Profile = new ProfileEntity { Id = 1, Name = "Client" } },
-                new UserEntity { Id = Guid.NewGuid(), Name = "User 2", Email = "user2@example.com", Profile = new ProfileEntity { Id = 2, Name = "Admin" } }
+                new () { Id = Guid.NewGuid(), Name = "User 1", Email = "user1@example.com", Profile = new ProfileEntity { Id = 1, Name = "Client" } },
+                new (){ Id = Guid.NewGuid(), Name = "User 2", Email = "user2@example.com", Profile = new ProfileEntity { Id = 2, Name = "Admin" } }
             };
             _mockUserRepository.Setup(r => r.FindAll()).ReturnsAsync(users);
 
@@ -67,7 +67,7 @@ namespace BookMotelsTest.Services
             // Assert
             Assert.NotNull(result);
             Assert.Equal(userId, result.Id);
-            Assert.Equal("Eliel", result.Name); // Corrected assertion
+            Assert.Equal("Eliel", result.Name);
             _mockUserRepository.Verify(repo => repo.FindById(userId), Times.Once);
         }
 
@@ -92,7 +92,7 @@ namespace BookMotelsTest.Services
             _mockUserRepository.Setup(repo => repo.Add(It.IsAny<UserEntity>())).ReturnsAsync((UserEntity entity) =>
             {
                 entity.Id = Guid.NewGuid();
-                entity.Profile = new ProfileEntity { Id = userDto.ProfileId, Name = "Client" }; // Simulate profile
+                entity.Profile = new ProfileEntity { Id = userDto.ProfileId, Name = "Client" };
                 return entity;
             });
 
@@ -113,8 +113,8 @@ namespace BookMotelsTest.Services
         public async Task AddAsync_ShouldThrowConflictException_WhenEmailIsAlreadyRegistered()
         {
             // Arrange
-            var userDto = new UserDTO { Name = "UsuÃ¡rio Existente", Email = "existente@example.com", Password = "eliel", ProfileId = 1 };
-            var existingUserEntity = new UserEntity { Id = Guid.NewGuid(), Name = "UsuÃ¡rio Existente", Email = "existente@example.com", Profile = new ProfileEntity { Id = 1, Name = "Client" } };
+            var userDto = new UserDTO { Name = "Usuário Existente", Email = "existente@example.com", Password = "eliel", ProfileId = 1 };
+            var existingUserEntity = new UserEntity { Id = Guid.NewGuid(), Name = "Usuário Existente", Email = "existente@example.com", Profile = new ProfileEntity { Id = 1, Name = "Client" } };
             _mockUserRepository.Setup(repo => repo.GetByEmailAsync(userDto.Email)).ReturnsAsync(existingUserEntity);
 
             // Act & Assert
@@ -128,11 +128,11 @@ namespace BookMotelsTest.Services
         {
             // Arrange
             var userId = Guid.NewGuid();
-            var userDto = new GetUserDTO { Id = userId, Name = "Updated" };
+            var userDto = new UpdateUserDTO { Name = "Updated" };
             _mockUserRepository.Setup(r => r.FindById(userId)).ReturnsAsync((UserEntity)null!);
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(() => _userService.UpdateAsync(userId, userDto));
+            await Assert.ThrowsAsync<NotFoundException>(() => _userService.UpdateAsync(userId, userDto));
             _mockUserRepository.Verify(r => r.FindById(userId), Times.Once);
             _mockUserRepository.Verify(r => r.Update(It.IsAny<UserEntity>()), Times.Never);
         }
@@ -142,7 +142,7 @@ namespace BookMotelsTest.Services
         {
             // Arrange
             var userId = Guid.NewGuid();
-            var userDto = new GetUserDTO { Id = userId, Name = "Updated Name", Email = "updated@example.com", ProfileId = 2 };
+            var userDto = new UpdateUserDTO { Name = "Updated Name", Email = "updated@example.com", ProfileId = 2 };
             var existingUser = new UserEntity { Id = userId, Name = "Original Name", Email = "original@example.com", ProfileId = 1, Profile = new ProfileEntity { Id = 1, Name = "Client" } };
 
             _mockUserRepository.Setup(r => r.FindById(userId)).ReturnsAsync(existingUser);
@@ -173,7 +173,7 @@ namespace BookMotelsTest.Services
             _mockUserRepository.Setup(r => r.FindById(userId)).ReturnsAsync((UserEntity)null!);
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(() => _userService.DeleteAsync(userId));
+            await Assert.ThrowsAsync<NotFoundException>(() => _userService.DeleteAsync(userId));
             _mockUserRepository.Verify(r => r.FindById(userId), Times.Once);
             _mockUserRepository.Verify(r => r.Delete(It.IsAny<UserEntity>()), Times.Never);
         }

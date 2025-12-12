@@ -36,7 +36,15 @@ namespace BookMotelsTest.Services
                 new () { Id = 1, UserId = Guid.NewGuid(), SuiteId = 1, CheckIn = DateTime.Now, CheckOut = DateTime.Now.AddDays(1) },
                 new() { Id = 2, UserId = Guid.NewGuid(), SuiteId = 2, CheckIn = DateTime.Now, CheckOut = DateTime.Now.AddDays(2) }
             };
+
+            var suite1 = new SuiteEntity { Id = 1, MotelId = 1, Name = "Suite 1" };
+            var suite2 = new SuiteEntity { Id = 2, MotelId = 1, Name = "Suite 2" };
+            var motel = new MotelEntity { Id = 1, Name = "Motel" };
+
             _mockReserveRepository.Setup(r => r.FindAll()).ReturnsAsync(reserves);
+            _mockSuiteRepository.Setup(s => s.FindById(1)).ReturnsAsync(suite1);
+            _mockSuiteRepository.Setup(s => s.FindById(2)).ReturnsAsync(suite2);
+            _mockMotelRepository.Setup(m => m.FindById(1)).ReturnsAsync(motel);
 
             // Act
             var result = await _reserveService.FindAllAsync();
@@ -72,7 +80,15 @@ namespace BookMotelsTest.Services
                 new () { Id = 1, UserId = userId, SuiteId = 1, CheckIn = DateTime.Now, CheckOut = DateTime.Now.AddDays(1) },
                 new () { Id = 2, UserId = userId, SuiteId = 2, CheckIn = DateTime.Now, CheckOut = DateTime.Now.AddDays(2) }
             };
+
+            var suite1 = new SuiteEntity { Id = 1, MotelId = 1, Name = "Suite 1" };
+            var suite2 = new SuiteEntity { Id = 2, MotelId = 1, Name = "Suite 2" };
+            var motel = new MotelEntity { Id = 1, Name = "Motel" };
+
             _mockReserveRepository.Setup(r => r.FindAllByUserAsync(userId)).ReturnsAsync(reserves);
+            _mockSuiteRepository.Setup(s => s.FindById(1)).ReturnsAsync(suite1);
+            _mockSuiteRepository.Setup(s => s.FindById(2)).ReturnsAsync(suite2);
+            _mockMotelRepository.Setup(m => m.FindById(1)).ReturnsAsync(motel);
 
             // Act
             var result = await _reserveService.FindAllByUserAsync(userId);
@@ -106,7 +122,13 @@ namespace BookMotelsTest.Services
             // Arrange
             long reserveId = 1;
             var reserveEntity = new ReserveEntity { Id = reserveId, UserId = Guid.NewGuid(), SuiteId = 1, CheckIn = DateTime.Now, CheckOut = DateTime.Now.AddDays(1) };
+            var suite = new SuiteEntity { Id = 1, MotelId = 1, Name = "Suite Name" };
+            var motel = new MotelEntity { Id = 1, Name = "Motel Name" };
+
             _mockReserveRepository.Setup(r => r.FindById(reserveId)).ReturnsAsync(reserveEntity);
+            _mockSuiteRepository.Setup(s => s.FindById(1)).ReturnsAsync(suite);
+            _mockMotelRepository.Setup(m => m.FindById(1)).ReturnsAsync(motel);
+
 
             // Act
             var result = await _reserveService.FindByIdAsync(reserveId);
@@ -309,18 +331,16 @@ namespace BookMotelsTest.Services
         public async Task FindBillingReportAsync_ShouldReturnFullReport_WhenNoParametersProvided()
         {
             // Arrange
-            long motelId = 9;
-            int year = 1;
-            int month = 10;
-            IEnumerable<BillingReportDTO> expectedReport = new List<BillingReportDTO>
+            var expectedReport = new List<BillingReportDTO>
             {
                 new() { MotelId = 1, MotelName = "Motel A", Year = 2023, Month = 1, TotalRevenue = 1000m },
                 new () { MotelId = 2, MotelName = "Motel B", Year = 2023, Month = 1, TotalRevenue = 1500m }
             };
 
-            IEnumerable<BillingReportModel> modelReport = new List<BillingReportModel>
+            var modelReport = new List<BillingReportModel>
             {
-                new () { MotelId = motelId, MotelName = "Motel A", Year = year, Month = month, TotalRevenue = 3000m }
+                new () { MotelId = 1, MotelName = "Motel A", Year = 2023, Month = 1, TotalRevenue = 1000m },
+                new () { MotelId = 2, MotelName = "Motel B", Year = 2023, Month = 1, TotalRevenue = 1500m }
             };
 
 
@@ -333,7 +353,9 @@ namespace BookMotelsTest.Services
             // Assert
             Assert.NotNull(result);
             Assert.Equal(2, result.Count());
-            Assert.Equal(expectedReport, result);
+            Assert.Equal(
+                expectedReport.Select(e => new { e.MotelId, e.MotelName, e.Year, e.Month, e.TotalRevenue }),
+                result.Select(r => new { r.MotelId, r.MotelName, r.Year, r.Month, r.TotalRevenue }));
             _mockReserveRepository.Verify(repo => repo.FindBillingReport(null, null, null), Times.Once);
         }
 
@@ -346,7 +368,7 @@ namespace BookMotelsTest.Services
             long motelId = 1;
             IEnumerable<BillingReportDTO> expectedReport = new List<BillingReportDTO>
             {
-                new () { MotelId = 1, MotelName = "Motel A", Year = year, Month = month, TotalRevenue = 2000m }
+                new () { MotelId = 1, MotelName = "Motel A", Year = year, Month = month, TotalRevenue = 3000m }
             };
 
             IEnumerable<BillingReportModel> modelReport = new List<BillingReportModel>
@@ -362,7 +384,9 @@ namespace BookMotelsTest.Services
             // Assert
             Assert.NotNull(result);
             Assert.Single(result);
-            Assert.Equal(expectedReport, result);
+            Assert.Equal(
+                expectedReport.Select(e => new { e.MotelId, e.MotelName, e.Year, e.Month, e.TotalRevenue }),
+                result.Select(r => new { r.MotelId, r.MotelName, r.Year, r.Month, r.TotalRevenue }));
             _mockReserveRepository.Verify(repo => repo.FindBillingReport(null, year, month), Times.Once);
         }
 
@@ -392,7 +416,9 @@ namespace BookMotelsTest.Services
             // Assert
             Assert.NotNull(result);
             Assert.Single(result);
-            Assert.Equal(expectedReport, result);
+            Assert.Equal(
+                expectedReport.Select(e => new { e.MotelId, e.MotelName, e.Year, e.Month, e.TotalRevenue }),
+                result.Select(r => new { r.MotelId, r.MotelName, r.Year, r.Month, r.TotalRevenue }));
             _mockMotelRepository.Verify(r => r.Exist(motelId), Times.Once);
             _mockReserveRepository.Verify(repo => repo.FindBillingReport(motelId, year, month), Times.Once);
         }
