@@ -1,30 +1,41 @@
-<h2>{{ isEditMode ? 'Edit Suite' : 'Adicionar nova Suíte' }}</h2>
-
-<form (ngSubmit)="saveSuite()">
-  <div class="form-group">
-    <label for="name">Nome:</label>
-    <input type="text" id="name" [(ngModel)]="suite.name" name="name" required>
+<div class="suite-form-container">
+  <div class="card-header-suite">
+    <h2>{{ isEditMode ? 'Editar Suíte' : 'Nova Suíte' }}</h2>
+    <p class="subtitle-suite">Adicione ou edite detalhes das suítes</p>
   </div>
 
-  <div class="form-group">
-    <label for="description">Descrição:</label>
-    <textarea id="description" [(ngModel)]="suite.description" name="description"></textarea>
-  </div>
+  <form (ngSubmit)="saveSuite()">
+    <div class="form-body-suite">
+      <div class="form-group-suite">
+        <label for="suiteName">Nome da Suíte</label>
+        <input type="text" id="suiteName" [(ngModel)]="suite.name" name="name" required
+          placeholder="Ex: Suíte Presidencial">
+      </div>
 
-  <div class="form-group">
-    <label for="pricePerPeriod">Preço por Hora:</label>
-    <input type="number" id="pricePerPeriod" [(ngModel)]="suite.pricePerPeriod" name="pricePerPeriod" required>
-  </div>
+      <div class="form-group-suite">
+        <label for="suiteDescription">Descrição</label>
+        <textarea id="suiteDescription" [(ngModel)]="suite.description" name="description" rows="3"
+          placeholder="Detalhes da suíte..."></textarea>
+      </div>
 
-  <div class="form-group">
-    <label for="maxOccupancy">Ocupação Máxima:</label>
-    <input type="number" id="maxOccupancy" [(ngModel)]="suite.maxOccupancy" name="maxOccupancy" required>
-  </div>
+      <div class="row-inputs">
+        <div class="form-group-suite half">
+          <label for="pricePerPeriod">Preço (R$)</label>
+          <input type="number" id="pricePerPeriod" [(ngModel)]="suite.pricePerPeriod" name="pricePerPeriod" required
+            placeholder="0.00">
+        </div>
 
+        <div class="form-group-suite half">
+          <label for="maxOccupancy">Ocupação Máxima</label>
+          <input type="number" id="maxOccupancy" [(ngModel)]="suite.maxOccupancy" name="maxOccupancy" required
+            placeholder="2">
+        </div>
+      </div>
+    </div>
 
-
-  <div class="form-actions">
-    <button type="submit" class="button-save">Save</button>
-    <button type="button" class="button-cancel" (click)="cancel()">Cancel</button>
-  </div>
-</form>
+    <div class="form-actions-suite">
+      <button type="button" class="btn-cancel-suite" (click)="cancel()">Limpar</button>
+      <button type="submit" class="btn-save-suite">Salvar Suíte</button>
+    </div>
+  </form>
+</div>
