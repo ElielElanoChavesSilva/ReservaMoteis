@@ -1,45 +1,53 @@
-<div class="card">
-   <div class="card-header d-flex justify-content-between align-items-center">
-    <h2>Reservas</h2>
-  </div>
-  <div class="card-body">
-    <div *ngIf="reserves.length === 0" class="alert alert-info">
-      Nenhuma reserva encontrada.
+<div class="page-container">
+  <div class="card-list">
+    <div class="card-header">
+      <div class="header-content">
+        <h2>Minhas Reservas</h2>
+        <p class="subtitle">Gerencie suas reservas</p>
+      </div>
+      <!-- Add button if needed, otherwise just the header -->
     </div>
-    <table *ngIf="reserves.length > 0" class="table table-striped">
-      <thead>
-        <tr>
-          <th *ngIf="isAdmin">Usuário ID</th>
-          <th>Suíte</th>
-          <th>Motel</th>
-          <th>Check-in</th>
-          <th>Check-out</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let reserve of reserves">
-          <td *ngIf="isAdmin">{{ reserve.userId }}</td>
-          <td>{{ reserve.suiteName }}</td>
-          <td>{{ reserve.motelName }}</td>
-          <td>{{ reserve.checkIn | date }}</td>
-          <td>{{ reserve.checkOut | date }}</td>
-          <td>
-            <button
-              class="btn btn-sm btn-info me-2"
-              [routerLink]="['/reserve/edit', reserve.id]"
-            >
-              Editar
-            </button>
-            <button
-              class="btn btn-sm btn-danger"
-              (click)="deleteReserve(reserve.id)"
-            >
-              Excluir
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+
+    <div class="card-body">
+      <div *ngIf="reserves.length === 0" class="empty-state">
+        <span class="empty-icon">📅</span>
+        <p>Nenhuma reserva encontrada.</p>
+        <button class="btn-new" [routerLink]="['/motel']">Fazer uma Reserva</button>
+      </div>
+
+      <div *ngIf="reserves.length > 0" class="table-responsive">
+        <table class="main-table">
+          <thead>
+            <tr>
+              <th *ngIf="isAdmin" class="col-id">Usuário ID</th>
+              <th class="col-suite">Suíte</th>
+              <th class="col-motel">Motel</th>
+              <th class="col-date">Check-in</th>
+              <th class="col-date">Check-out</th>
+              <th class="col-actions">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let reserve of reserves" class="data-row">
+              <td *ngIf="isAdmin" class="col-id"><span class="badge">{{ reserve.userId }}</span></td>
+              <td class="col-suite"><strong>{{ reserve.suiteName }}</strong></td>
+              <td class="col-motel">{{ reserve.motelName }}</td>
+              <td class="col-date">{{ reserve.checkIn | date:'dd/MM/yyyy HH:mm' }}</td>
+              <td class="col-date">{{ reserve.checkOut | date:'dd/MM/yyyy HH:mm' }}</td>
+              <td class="col-actions">
+                <div class="action-buttons">
+                  <button class="btn-icon btn-edit" [routerLink]="['/reserve/edit', reserve.id]" title="Editar Reserva">
+                    ✏️
+                  </button>
+                  <button class="btn-icon btn-delete" (click)="deleteReserve(reserve.id)" title="Cancelar Reserva">
+                    🗑️
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,160 +1,181 @@
 :host {
   display: block;
-  padding: 2rem;
-  background-color: #f7f9fc;
+  background-color: #f4f6f9;
+  font-family: 'Poppins', 'Inter', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  padding: 40px 20px;
 }
 
-.card {
-  max-width: 1600px; /* Slightly wider */
-  margin: 1.5rem auto; /* Add some margin top/bottom */
-  padding: 0;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* More pronounced shadow */
-  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* --- Card Styles --- */
+.card-list {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   overflow: hidden;
-  border: 1px solid #e0e0e0; /* Subtle border */
 }
 
 .card-header {
+  padding: 32px 40px;
+  background: white;
+  border-bottom: 1px solid #f1f5f9;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.25rem 2rem; /* Slightly reduced padding */
-  background-color: #f8f9fa; /* Lighter background */
-  border-bottom: 1px solid #e9ecef; /* Lighter border */
 }
 
-.card-header h2 {
-  color: #343a40; /* Darker, more neutral color */
-  font-size: 1.75rem; /* Slightly smaller, more balanced */
-  font-weight: 700; /* Bolder */
-  margin: 0;
-  letter-spacing: -0.25px; /* Tighter letter spacing */
+.header-content h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 4px;
 }
 
+.subtitle {
+  color: #718096;
+  font-size: 0.95rem;
+}
+
+/* --- Table Styles --- */
 .card-body {
-  padding: 2rem;
+  padding: 0;
 }
 
-.table {
+.table-responsive {
   width: 100%;
-  border-collapse: separate; /* Use separate to allow border-radius on cells */
-  border-spacing: 0; /* Remove space between cell borders */
-  font-size: 0.9rem; /* Slightly smaller font for tables */
-  border-radius: 8px; /* Apply border-radius to the table */
-  overflow: hidden; /* Ensures border-radius is visible */
+  overflow-x: auto;
 }
 
-.table th,
-.table td {
+.main-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.main-table th {
+  background: #f8fafc;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 16px 24px;
   text-align: left;
-  padding: 1.1rem 1.5rem; /* Increased padding for better readability */
-  border-bottom: 1px solid #e9ecef; /* Lighter border */
+}
+
+.main-table td {
+  padding: 20px 24px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
   vertical-align: middle;
 }
 
-.table th {
-  background-color: #495057; /* Darker, more professional background */
-  color: #ffffff;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  position: sticky; /* Make header sticky */
-  top: 0; /* Stick to the top */
-  z-index: 1; /* Ensure it stays above content */
+.data-row {
+  transition: background 0.2s;
 }
 
-.table tbody tr:first-child td {
-  border-top: none; /* No top border for the first row */
+.data-row:hover {
+  background: #f8fafc;
 }
 
-.table tbody tr:nth-child(even) {
-  background-color: #f8f9fa; /* Lighter even row background */
+/* Columns */
+.col-id {
+  width: 10%;
 }
 
-.table tbody tr:hover {
-  background-color: #e2e6ea; /* More distinct hover effect */
-  cursor: pointer;
+.col-suite {
+  width: 20%;
+  color: #2d3748;
 }
 
-.table tbody tr:last-child td {
-  border-bottom: none; /* No bottom border for the last row */
+.col-motel {
+  width: 20%;
 }
 
-.btn {
-  padding: 0.6rem 1.2rem; /* Slightly more padding */
-  border: none;
-  border-radius: 6px; /* Slightly smaller border-radius */
-  font-size: 0.85rem; /* Slightly smaller font for buttons */
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out; /* Faster transition */
-  text-transform: uppercase;
-  letter-spacing: 0.25px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+.col-date {
+  width: 15%;
+  font-variant-numeric: tabular-nums;
+  color: #4a5568;
 }
 
-.btn:hover {
-  transform: translateY(-1px); /* Slight lift on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
-}
-
-.btn-primary {
-  background-color: #007bff; /* Bootstrap primary color */
-  color: #ffffff;
-}
-.btn-primary:hover {
-  background-color: #0056b3;
-}
-
-.btn-info {
-  background-color: #17a2b8; /* Bootstrap info color */
-  color: #ffffff;
-}
-.btn-info:hover {
-  background-color: #117a8b;
-}
-
-.btn-danger {
-  background-color: #dc3545; /* Bootstrap danger color */
-  color: #ffffff;
-}
-.btn-danger:hover {
-  background-color: #bd2130;
-}
-
-.btn-secondary {
-  background-color: #6c757d; /* Bootstrap secondary color */
-  color: #ffffff;
-}
-.btn-secondary:hover {
-  background-color: #545b62;
-}
-
-.btn-success {
-  background-color: #28a745; /* Bootstrap success color */
-  color: #ffffff;
-}
-.btn-success:hover {
-  background-color: #1e7e34;
-}
-
-td .btn {
-  margin-right: 0.75rem; /* Increased margin for better separation */
-}
-
-.alert {
-  padding: 1.25rem 2rem; /* Increased padding */
-  border-radius: 8px;
+.col-actions {
+  width: 15%;
   text-align: center;
-  margin: 1.5rem 0; /* More margin */
-  font-size: 1.1rem; /* Slightly larger font */
-  font-weight: 500;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Subtle shadow */
 }
-.alert-info {
-  background-color: #e0f7fa; /* Lighter, calming blue */
-  color: #00796b; /* Darker green-blue for text */
-  border: 1px solid #b2ebf2; /* Matching border color */
+
+.badge {
+  background: #e2e8f0;
+  color: #475569;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* --- Actions --- */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.btn-edit:hover {
+  background: #eff6ff;
+}
+
+.btn-delete:hover {
+  background: #fef2f2;
+}
+
+/* --- Empty State --- */
+.empty-state {
+  text-align: center;
+  padding: 60px 40px;
+  color: #94a3b8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.empty-icon {
+  font-size: 3.5rem;
+  margin-bottom: 16px;
+  opacity: 0.8;
+}
+
+.empty-state p {
+  font-size: 1.1rem;
+  margin-bottom: 24px;
+}
+
+.btn-new {
+  background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+  color: white;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  text-decoration: none;
+  /* In case it's an a tag */
+}
+
+.btn-new:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.5);
 }
