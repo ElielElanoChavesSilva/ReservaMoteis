@@ -1,64 +1,89 @@
 <div class="billing-report-container">
-  <h2>Relatório de Faturamento</h2>
+  <header class="page-header">
+    <div class="header-content">
+      <h2>Relatório de Faturamento</h2>
+      <p class="subtitle">Acompanhe o desempenho financeiro dos motéis</p>
+    </div>
+  </header>
 
-  <div class="filters">
-    <div class="filter-inputs">
-      <mat-form-field appearance="fill">
-        <mat-label>Motel</mat-label>
-        <mat-select [(ngModel)]="motelIdFilter" (selectionChange)="loadBillingReport()">
-          <mat-option [value]="null">Todos</mat-option>
-          <mat-option *ngFor="let motel of motels" [value]="motel.id">{{ motel.name }}</mat-option>
-        </mat-select>
-      </mat-form-field>
+  <section class="filters-section">
+    <div class="filters-card">
+      <div class="filter-inputs">
+        <mat-form-field appearance="outline" class="custom-field">
+          <mat-label>Motel</mat-label>
+          <mat-select [(ngModel)]="motelIdFilter" (selectionChange)="loadBillingReport()">
+            <mat-option [value]="null">Todos os Motéis</mat-option>
+            <mat-option *ngFor="let motel of motels" [value]="motel.id">{{ motel.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Ano</mat-label>
-        <mat-select [(ngModel)]="yearFilter" (selectionChange)="loadBillingReport()">
-          <mat-option [value]="null">Todos</mat-option>
-          <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
-        </mat-select>
-      </mat-form-field>
+        <mat-form-field appearance="outline" class="custom-field">
+          <mat-label>Ano</mat-label>
+          <mat-select [(ngModel)]="yearFilter" (selectionChange)="loadBillingReport()">
+            <mat-option [value]="null">Todos os Anos</mat-option>
+            <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Mês</mat-label>
-        <mat-select [(ngModel)]="monthFilter" (selectionChange)="loadBillingReport()">
-          <mat-option [value]="null">Todos</mat-option>
-          <mat-option *ngFor="let month of months" [value]="month.value">{{ month.name }}</mat-option>
-        </mat-select>
-      </mat-form-field>
+        <mat-form-field appearance="outline" class="custom-field">
+          <mat-label>Mês</mat-label>
+          <mat-select [(ngModel)]="monthFilter" (selectionChange)="loadBillingReport()">
+            <mat-option [value]="null">Todos os Meses</mat-option>
+            <mat-option *ngFor="let month of months" [value]="month.value">{{ month.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="filter-actions">
+        <button mat-raised-button color="primary" class="btn-filter" (click)="loadBillingReport()">
+          FILTRAR
+        </button>
+        <button mat-stroked-button color="warn" class="btn-reset" (click)="resetFilters()">
+          Limpar
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="report-section">
+    <div *ngIf="isLoading" class="loading-overlay">
+      <div class="spinner"></div>
+      <p>Carregando dados...</p>
     </div>
 
-    <div class="filter-actions">
-      <button mat-raised-button color="primary" (click)="loadBillingReport()">Filtrar</button>
-      <button mat-button (click)="resetFilters()">Limpar Filtros</button>
+    <div class="table-card" *ngIf="!isLoading">
+      <div class="table-responsive">
+        <table class="report-table">
+          <thead>
+            <tr>
+              <th class="col-motel">Motel</th>
+              <th class="col-year">Ano</th>
+              <th class="col-month">Mês</th>
+              <th class="col-revenue">Faturamento Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let report of billingReports" class="data-row">
+              <td class="col-motel">
+                <span class="motel-name">{{ report.motelName }}</span>
+              </td>
+              <td class="col-year">{{ report.year }}</td>
+              <td class="col-month">{{ report.month }}</td>
+              <td class="col-revenue">
+                <span class="revenue-value">{{ report.totalRevenue | currency:'BRL':'symbol':'1.2-2' }}</span>
+              </td>
+            </tr>
+            <tr *ngIf="billingReports.length === 0" class="empty-row">
+              <td colspan="4">
+                <div class="empty-state">
+                  <span class="empty-icon">📊</span>
+                  <p>Nenhum dado de faturamento encontrado para os filtros selecionados.</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-
-  <div class="table-container">
-    <div *ngIf="isLoading" class="loading-indicator">
-      <p>Carregando...</p>
-    </div>
-
-    <table *ngIf="!isLoading" class="report-table">
-      <thead>
-        <tr>
-          <th>Motel</th>
-          <th>Ano</th>
-          <th>Mês</th>
-          <th>Faturamento Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let report of billingReports">
-          <td>{{ report.motelName }}</td>
-          <td>{{ report.year }}</td>
-          <td>{{ report.month }}</td>
-          <td>{{ report.totalRevenue | currency:'BRL':'symbol':'1.2-2' }}</td>
-        </tr>
-        <tr *ngIf="billingReports.length === 0">
-          <td colspan="4">Nenhum dado de faturamento encontrado.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  </section>
 </div>
