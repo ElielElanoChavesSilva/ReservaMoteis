@@ -34,7 +34,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    component: AdminLandingComponent,
+    component: LoginComponent,
     canActivate: [authGuard],
     data: { roles: ['Admin', 'User'] }
   },

@@ -51,7 +51,7 @@ namespace BookMotelsApplication.Services
 
             foreach (var reserve in reserves)
             {
-                SuiteEntity? suite = await _suiteRepository.FindById(reserve.SuiteId) ??
+                SuiteEntity suite = await _suiteRepository.FindById(reserve.SuiteId) ??
                                     throw new NotFoundException("Ocorreu um erro ao buscar informações das reservas");
 
 
