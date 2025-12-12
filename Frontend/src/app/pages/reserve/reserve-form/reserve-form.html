@@ -1,46 +1,42 @@
-<div class="card">
-  <div class="card-header">
-    <h2>{{ isEditMode ? 'Editar Reserva' : 'Reserva' }}</h2>
-  </div>
-  <div class="card-body">
+<div class="page-container">
+  <div class="form-card">
+    <div class="card-header">
+      <h2>{{ isEditMode ? 'Editar Reserva' : 'Nova Reserva' }}</h2>
+      <p class="subtitle">Preencha os dados da sua estadia</p>
+    </div>
+
     <form (ngSubmit)="saveReserve()">
-      <div class="mb-3">
-        <label for="suiteId" class="form-label">Suite ID</label>
-        <input
-          type="number"
-          class="form-control"
-          id="suiteId"
-          name="suiteId"
-          [(ngModel)]="reserve.suiteId"
-          required
-        />
+      <div class="form-body">
+        <div class="form-group" *ngIf="reserve.suiteId">
+          <label class="info-label">Suíte Selecionada (ID)</label>
+          <div class="static-info">{{ reserve.suiteId }}</div>
+          <!-- Hidden input to keep binding if needed, though usually bound to model directly -->
+        </div>
+
+        <!-- Fallback if suiteId is somehow empty/editable manually (rare case in this flow but good for safety) -->
+        <div class="form-group" *ngIf="!reserve.suiteId">
+          <label for="suiteId">ID da Suíte</label>
+          <input type="number" id="suiteId" name="suiteId" [(ngModel)]="reserve.suiteId" required
+            placeholder="Informe o ID da suíte" />
+        </div>
+
+        <div class="row-inputs">
+          <div class="form-group half">
+            <label for="checkIn">Check-in</label>
+            <input type="date" id="checkIn" name="checkIn" [(ngModel)]="reserve.checkIn" required />
+          </div>
+
+          <div class="form-group half">
+            <label for="checkOut">Check-out</label>
+            <input type="date" id="checkOut" name="checkOut" [(ngModel)]="reserve.checkOut" required />
+          </div>
+        </div>
       </div>
-      <div class="mb-3">
-        <label for="checkIn" class="form-label">Check-in</label>
-        <input
-          type="date"
-          class="form-control"
-          id="checkIn"
-          name="checkIn"
-          [(ngModel)]="reserve.checkIn"
-          required
-        />
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" (click)="goBack()">Cancelar</button>
+        <button type="submit" class="btn-save">Confirmar Reserva</button>
       </div>
-      <div class="mb-3">
-        <label for="checkOut" class="form-label">Check-out</label>
-        <input
-          type="date"
-          class="form-control"
-          id="checkOut"
-          name="checkOut"
-          [(ngModel)]="reserve.checkOut"
-          required
-        />
-      </div>
-      <button type="submit" class="btn btn-primary me-2">Salvar</button>
-      <button type="button" class="btn btn-secondary" (click)="goBack()">
-        Cancelar
-      </button>
     </form>
   </div>
 </div>
