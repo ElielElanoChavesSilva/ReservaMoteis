@@ -121,6 +121,8 @@ dotnet run --project ../ReservaMoteisAPI
 
 ### 3. Configure o Frontend
 
+* Certifique-se de usar no mínimo a versão 20.X do Node.js
+
 ```bash
 cd /Frontend/
 npm install
