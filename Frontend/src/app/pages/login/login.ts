@@ -18,8 +18,8 @@ export class LoginComponent {
 
   constructor(
     private authService: AuthService,
-     private router: Router,
-    private snackBar: MatSnackBar) {}
+    private router: Router,
+    private snackBar: MatSnackBar) { }
 
   login() {
     this.authService.login(this.credentials).pipe(
@@ -28,9 +28,10 @@ export class LoginComponent {
       next: (role) => {
         if (role === 'Admin') {
           this.router.navigate(['/billing-report']);
+          this.snackBar.open('Seja Bem Vindo!', 'Fechar', { duration: 3000 });
         } else {
           this.router.navigate(['/motels']);
-             this.snackBar.open('Seja Bem Vindo!', 'Fechar', { duration: 3000 });
+          this.snackBar.open('Seja Bem Vindo!', 'Fechar', { duration: 3000 });
         }
       },
       error: (err) => {

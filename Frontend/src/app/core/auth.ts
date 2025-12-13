@@ -81,7 +81,7 @@ import { jwtDecode } from 'jwt-decode'; // Import jwtDecode
     localStorage.removeItem(this.authTokenKey);
     this.isAuthenticatedSubject.next(false);
     this.currentUserRoleSubject.next(null);
-    this.currentUserNameSubject.next(null); // Clear user name on logout
+    this.currentUserNameSubject.next(null); 
     this.router.navigate(['/login']);
   }
 

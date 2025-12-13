@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'; // Removed ViewChild
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; // Removed ViewChild
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-motel-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, SuiteFormComponent], 
+  imports: [CommonModule, FormsModule, SuiteFormComponent],
   templateUrl: './motel-form.component.html',
   styleUrl: './motel-form.component.css'
 })
@@ -25,37 +25,46 @@ export class MotelFormComponent implements OnInit {
     private motelService: MotelService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.isEditMode = true;
-      this.motelService.getMotel(+id).subscribe({
-        next: (motel: Motel) => {
-          this.motel = motel;
-          console.log('Motel fetched for editing:', this.motel);
-          console.log('isEditMode:', this.isEditMode);
-        },
-        error: (err) => {
-          console.error('Error fetching motel for editing:', err);
-          alert('Erro ao carregar os dados do motel. Por favor, tente novamente.');
-          this.router.navigate(['/motels']);
-        }
-      });
-    }
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.isEditMode = true;
+        this.loadMotel(+id);
+      } else {
+        this.isEditMode = false;
+        this.motel = { name: '', address: '' };
+      }
+    });
+  }
+
+  loadMotel(id: number): void {
+    this.motelService.getMotel(id).subscribe({
+      next: (motel: Motel) => {
+        this.motel = motel;
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        console.error('Error fetching motel for editing:', err);
+        this.snackBar.open('Erro ao carregar os dados do motel.', 'Fechar', { duration: 3000 });
+        this.router.navigate(['/motels']);
+      }
+    });
   }
 
   saveMotel(): void {
     if (this.isEditMode) {
       this.motelService.updateMotel(this.motel.id!, this.motel).subscribe(() => {
         this.router.navigate(['/motels']);
-          this.snackBar.open('Atualizado com sucesso!', 'Fechar', { duration: 3000 });
+        this.snackBar.open('Atualizado com sucesso!', 'Fechar', { duration: 3000 });
       });
     } else {
       this.motelService.addMotel(this.motel).subscribe(() => {
-          this.snackBar.open('Criado com sucesso!', 'Fechar', { duration: 3000 });
+        this.snackBar.open('Criado com sucesso!', 'Fechar', { duration: 3000 });
         this.router.navigate(['/motels']);
       });
     }

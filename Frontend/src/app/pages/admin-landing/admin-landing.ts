@@ -7,18 +7,18 @@ import { CommonModule } from '@angular/common';
   selector: 'app-admin-landing',
   standalone: true,
   imports: [CommonModule],
-  template: '', // No template needed, just logic for redirection
+  template: '', 
 })
 export class AdminLandingComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.authService.currentUserRole$.subscribe(role => {
-      console.log('AdminLandingComponent: Current user role:', role); // Added log
+      console.log('AdminLandingComponent: Current user role:', role); 
       if (role === 'Admin') {
         this.router.navigate(['/billing-report']);
       } else {
-        this.router.navigate(['/motels']); // Default for non-admin users
+        this.router.navigate(['/motels']); 
       }
     });
   }
