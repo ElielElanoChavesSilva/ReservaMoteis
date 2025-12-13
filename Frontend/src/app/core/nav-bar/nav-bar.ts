@@ -15,6 +15,7 @@ export class NavBarComponent {
   isAuthenticated$: Observable<boolean>;
   userRole$: Observable<string | null>;
   currentUserName$: Observable<string | null>;
+  isMenuOpen = false;
 
   constructor(private authService: AuthService, private router: Router) {
     this.isAuthenticated$ = this.authService.isAuthenticated$;
@@ -22,7 +23,16 @@ export class NavBarComponent {
     this.currentUserName$ = this.authService.currentUserName$;
   }
 
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu(): void {
+    this.isMenuOpen = false;
+  }
+
   logout(): void {
     this.authService.logout();
+    this.closeMenu();
   }
 }

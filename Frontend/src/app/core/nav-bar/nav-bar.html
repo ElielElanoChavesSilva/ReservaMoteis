@@ -1,46 +1,38 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Reserva Moteis</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+<nav class="navbar">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/motels">Reserva Moteis</a>
+
+    <button class="menu-toggle" (click)="toggleMenu()" [class.active]="isMenuOpen" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+
+    <div class="nav-menu" [class.open]="isMenuOpen">
+      <ul class="nav-list">
+        <!-- Main Links -->
         <li class="nav-item" *ngIf="isAuthenticated$ | async">
-          <a
-            class="nav-link"
-            routerLink="/motels"
-            routerLinkActive="active"
-            >Moteis</a
-          >
+          <a class="nav-link" routerLink="/motels" routerLinkActive="active" (click)="closeMenu()">Moteis</a>
         </li>
         <li class="nav-item" *ngIf="isAuthenticated$ | async">
-          <a
-            class="nav-link"
-            routerLink="/reserves"  
-            routerLinkActive="active"
-            >Reservas</a
-          >
+          <a class="nav-link" routerLink="/reserves" routerLinkActive="active" (click)="closeMenu()">Reservas</a>
         </li>
         <li class="nav-item" *ngIf="(isAuthenticated$ | async) && (userRole$ | async) === 'Admin'">
-          <a
-            class="nav-link"
-            routerLink="/billing-report"
-            routerLinkActive="active"
-            >Faturamento</a
-          >
+          <a class="nav-link" routerLink="/billing-report" routerLinkActive="active"
+            (click)="closeMenu()">Faturamento</a>
         </li>
-      </ul>
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item" *ngIf="isAuthenticated$ | async">
-          <span class="nav-link">Olá, {{ currentUserName$ | async }}!</span>
+
+        <!-- Divider for mobile logic visualization if needed, but flex handles it -->
+
+        <!-- Auth Links -->
+        <li class="nav-item user-greeting" *ngIf="isAuthenticated$ | async">
+          <span class="nav-text">Olá, {{ currentUserName$ | async }}!</span>
         </li>
         <li class="nav-item" *ngIf="isAuthenticated$ | async">
-          <a class="nav-link" (click)="logout()" style="cursor: pointer;">Logout</a>
+          <a class="nav-link btn-logout" (click)="logout()">Logout</a>
         </li>
         <li class="nav-item" *ngIf="!(isAuthenticated$ | async)">
-          <a class="nav-link" routerLink="/login">Login</a>
+          <a class="nav-link btn-login" routerLink="/login" (click)="closeMenu()">Login</a>
         </li>
       </ul>
     </div>
