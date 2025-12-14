@@ -51,7 +51,6 @@
                 </td>
               </tr>
 
-              <!-- Nested Suites Row -->
               <tr *ngIf="selectedMotelId === motel.id && showAvailableSuites" class="suites-row">
                 <td [attr.colspan]="isAdmin ? 5 : 4" class="suites-cell">
                   <div class="suites-wrapper">
@@ -62,8 +61,8 @@
                     <div *ngIf="availableSuites.length > 0" class="suites-card-grid">
                       <div class="suite-card" *ngFor="let suite of availableSuites">
                         <div class="suite-card-image">
-                          <img *ngIf="suite.image" [src]="suite.image" [alt]="suite.name">
-                          <div *ngIf="!suite.image" class="no-image-placeholder">
+                          <img *ngIf="suite.imageUrl" [src]="getImageUrl(suite)" [alt]="suite.name">
+                          <div *ngIf="!suite.imageUrl" class="no-image-placeholder">
                             <span>🖼️</span>
                           </div>
                           <div class="suite-price-tag">

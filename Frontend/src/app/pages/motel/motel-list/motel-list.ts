@@ -81,7 +81,7 @@ export class MotelListComponent implements OnInit {
           if (this.selectedMotelId) {
             this.toggleAvailableSuites(this.selectedMotelId);
           }
-            this.cdr.markForCheck();
+          this.cdr.markForCheck();
 
           this.snackBar.open('Suíte removida com sucesso!', 'Fechar', { duration: 3000 });
         },
@@ -91,5 +91,14 @@ export class MotelListComponent implements OnInit {
         }
       });
     }
+  }
+  getImageUrl(suite: Suite): string {
+    if (suite.imageUrl) {
+      if (suite.imageUrl.startsWith('data:image')) {
+        return suite.imageUrl;
+      }
+      return `data:image/jpeg;base64,${suite.imageUrl}`;
+    }
+    return '';
   }
 }

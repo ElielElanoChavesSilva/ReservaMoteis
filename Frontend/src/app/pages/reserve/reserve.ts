@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, switchMap, of } from 'rxjs'; // Import of and switchMap
+import { Observable, switchMap, of } from 'rxjs';
 import { Reserve } from '../../models/reserve.model';
 import { environment } from '../../../environments/environment';
-import { AuthService } from '../../core/auth'; // Import AuthService
+import { AuthService } from '../../core/auth';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReserveService {
   private baseReserveUrl = `${environment.apiUrl}/Reserves`;
-  private listReserveUrl = `${environment.apiUrl}/Reserves/list`; // New endpoint for admin
+  private listReserveUrl = `${environment.apiUrl}/Reserves/list`;
 
-  constructor(private http: HttpClient, private authService: AuthService) { } // Inject AuthService
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   getReserves(): Observable<Reserve[]> {
     return this.authService.currentUserRole$.pipe(

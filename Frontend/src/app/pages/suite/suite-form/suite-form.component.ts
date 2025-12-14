@@ -31,8 +31,12 @@ export class SuiteFormComponent implements OnInit {
     if (this.suiteToEdit) {
       this.isEditMode = true;
       this.suite = { ...this.suiteToEdit };
-      if (this.suite.image) {
-        this.imagePreview = this.suite.image;
+      if (this.suite.imageUrl) {
+        this.imagePreview = this.suite.imageUrl.startsWith('data:image')
+          ? this.suite.imageUrl
+          : `data:image/jpeg;base64,${this.suite.imageUrl}`;
+      } else if (this.suite.imageUrl) {
+        this.imagePreview = this.suite.imageUrl;
       }
     } else if (this.motelId) {
       this.suite.motelId = this.motelId;

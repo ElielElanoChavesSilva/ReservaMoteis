@@ -5,5 +5,5 @@ export interface Suite {
   pricePerPeriod?: number;
   maxOccupancy?: number;
   motelId?: number;
-  image?: string;
+  imageUrl?: string;
 }

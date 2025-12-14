@@ -1,10 +1,10 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ReserveService } from '../reserve';
 import { Reserve } from '../../../models/reserve.model';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
-import { AuthService } from '../../../core/auth'; // Import AuthService
-import { take } from 'rxjs/operators'; // Import take
+import { AuthService } from '../../../core/auth';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-reserve-list',
@@ -15,19 +15,18 @@ import { take } from 'rxjs/operators'; // Import take
 })
 export class ReserveListComponent implements OnInit {
   reserves: Reserve[] = [];
-  isAdmin: boolean = false; // Add isAdmin property
+  isAdmin: boolean = false;
 
   constructor(
     private reserveService: ReserveService,
-    private router: Router,
     private cdr: ChangeDetectorRef,
-    private authService: AuthService // Inject AuthService
-  ) {}
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.authService.hasRole('Admin').pipe(take(1)).subscribe(isAdmin => {
       this.isAdmin = isAdmin;
-      this.cdr.markForCheck(); // Mark for check after isAdmin is updated
+      this.cdr.markForCheck();
     });
     this.getReserves();
   }

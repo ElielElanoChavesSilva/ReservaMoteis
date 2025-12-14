@@ -1,6 +1,6 @@
 export interface Reserve {
   id?: number;
-  userId?: string;
+  userName?: string;
   suiteId?: number;
   checkIn?: Date;
   checkOut?: Date;

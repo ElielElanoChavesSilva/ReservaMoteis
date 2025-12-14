@@ -5,7 +5,6 @@
         <h2>Minhas Reservas</h2>
         <p class="subtitle">Gerencie suas reservas</p>
       </div>
-      <!-- Add button if needed, otherwise just the header -->
     </div>
 
     <div class="card-body">
@@ -19,7 +18,7 @@
         <table class="main-table">
           <thead>
             <tr>
-              <th *ngIf="isAdmin" class="col-id">Usuário ID</th>
+              <th *ngIf="isAdmin" class="col-id">Usuário</th>
               <th class="col-suite">Suíte</th>
               <th class="col-motel">Motel</th>
               <th class="col-date">Check-in</th>
@@ -29,7 +28,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let reserve of reserves" class="data-row">
-              <td *ngIf="isAdmin" class="col-id"><span class="badge">{{ reserve.userId }}</span></td>
+              <td *ngIf="isAdmin" class="col-id"><span class="badge">{{ reserve.userName }}</span></td>
               <td class="col-suite"><strong>{{ reserve.suiteName }}</strong></td>
               <td class="col-motel">{{ reserve.motelName }}</td>
               <td class="col-date">{{ reserve.checkIn | date:'dd/MM/yyyy HH:mm' }}</td>
