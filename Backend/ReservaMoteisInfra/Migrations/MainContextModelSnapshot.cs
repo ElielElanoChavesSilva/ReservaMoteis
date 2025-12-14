@@ -117,6 +117,9 @@ namespace BookMotelsInfra.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
 
+                    b.Property<byte[]>("ImageUrl")
+                        .HasColumnType("BLOB");
+
                     b.Property<int>("MaxOccupancy")
                         .HasColumnType("INTEGER");
 

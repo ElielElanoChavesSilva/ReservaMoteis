@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookMotelsInfra.Migrations
 {
     [DbContext(typeof(MainContext))]
-    [Migration("20251209002445_InitialCreate")]
+    [Migration("20251214010121_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -118,6 +118,9 @@ namespace BookMotelsInfra.Migrations
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("ImageUrl")
+                        .HasColumnType("BLOB");
 
                     b.Property<int>("MaxOccupancy")
                         .HasColumnType("INTEGER");

@@ -34,8 +34,7 @@ namespace BookMotelsApplication.Mappers
                 Name = dto.Name,
                 Description = dto.Description,
                 PricePerPeriod = dto.PricePerPeriod,
-                MaxOccupancy = dto.MaxOccupancy,
-                ImageUrl = dto.ImageUrl
+                MaxOccupancy = dto.MaxOccupancy
             };
         }
         #endregion

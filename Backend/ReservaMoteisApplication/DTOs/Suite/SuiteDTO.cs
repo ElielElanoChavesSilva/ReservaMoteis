@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http;
+
 namespace BookMotelsApplication.DTOs.Suite;
 
 public record SuiteDTO(
@@ -5,5 +7,5 @@ public record SuiteDTO(
     string Description,
     decimal PricePerPeriod,
     int MaxOccupancy,
-    byte[]? ImageUrl
+    IFormFile? Image
 );

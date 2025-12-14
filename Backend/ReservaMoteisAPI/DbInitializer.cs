@@ -30,8 +30,18 @@ namespace BookMotelsAPI
                 {
                     Id = Guid.NewGuid(),
                     Name = "Eliel",
-                    Email = "eliel@admin.com",
-                    Password = BCrypt.Net.BCrypt.HashPassword("eliel123"),
+                    Email = "eliel@gmail.com",
+                    Password = BCrypt.Net.BCrypt.HashPassword("eliel"),
+                    ProfileId = 1
+                });
+                db.SaveChanges();
+
+                db.Users.Add(new UserEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Silva",
+                    Email = "silva@gmail.com",
+                    Password = BCrypt.Net.BCrypt.HashPassword("silva"),
                     ProfileId = 1
                 });
                 db.SaveChanges();

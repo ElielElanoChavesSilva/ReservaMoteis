@@ -84,9 +84,9 @@ namespace BookMotelsAPI.Controllers
         /// <param name="reserveDto">Os detalhes de criação da reserva.</param>
         /// <returns>A reserva recém-criada.</returns>
         /// <response code="201">Retorna a reserva recém-criada.</response>
-        /// <response code="400">Se os detalhes de criação da reserva forem invÃƒÂ¡lidos.</response>
+        /// <response code="400">Se os detalhes de criação da reserva forem inválidos.</response>
         /// <response code="401">Se o usuário não estiver autenticado.</response>
-        /// <response code="404">Se a suÃƒÂ­te ou motel associado ÃƒÂ  reserva não for encontrado.</response>
+        /// <response code="404">Se a suíte ou motel associado ÃƒÂ  reserva não for encontrado.</response>
         /// <response code="409">Se houver um conflito com uma reserva existente.</response>
         [HttpPost]
         public async Task<ActionResult<ReserveDTO>> AddAsync(ReserveDTO reserveDto)
@@ -99,10 +99,10 @@ namespace BookMotelsAPI.Controllers
         /// Atualiza uma reserva existente.
         /// </summary>
         /// <param name="id">O ID da reserva a ser atualizada.</param>
-        /// <param name="reserveDto">Os detalhes de atualizaÃƒÂ§ÃƒÂ£o da reserva.</param>
-        /// <returns>Nenhum conteÃƒÂºdo.</returns>
+        /// <param name="reserveDto">Os detalhes de atualização da reserva.</param>
+        /// <returns>Nenhum conteúdo.</returns>
         /// <response code="204">Se a reserva foi atualizada com sucesso.</response>
-        /// <response code="400">Se os detalhes de atualizaÃƒÂ§ÃƒÂ£o da reserva forem invÃƒÂ¡lidos.</response>
+        /// <response code="400">Se os detalhes de atualização da reserva forem inválidos.</response>
         /// <response code="401">Se o usuário não estiver autenticado.</response>
         /// <response code="404">Se nenhuma reserva com o ID fornecido for encontrada.</response>
         /// <response code="409">Se houver um conflito com uma reserva existente.</response>
@@ -116,9 +116,9 @@ namespace BookMotelsAPI.Controllers
         /// <summary>
         /// Exclui uma reserva.
         /// </summary>
-        /// <param name="id">O ID da reserva a ser excluÃƒÂ­da.</param>
-        /// <returns>Nenhum conteÃƒÂºdo.</returns>
-        /// <response code="204">Se a reserva foi excluÃƒÂ­da com sucesso.</response>
+        /// <param name="id">O ID da reserva a ser excluída.</param>
+        /// <returns>Nenhum conteúdo.</returns>
+        /// <response code="204">Se a reserva foi excluída com sucesso.</response>
         /// <response code="401">Se o usuário não estiver autenticado.</response>
         /// <response code="404">Se nenhuma reserva com o ID fornecido for encontrada.</response>
         [HttpDelete("{id}")]

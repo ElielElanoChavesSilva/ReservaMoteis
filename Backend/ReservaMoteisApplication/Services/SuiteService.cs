@@ -70,8 +70,18 @@ public class SuiteService : ISuiteService
         if (!await _motelRepository.Exist(motelId))
             throw new NotFoundException("Motel não encontrado");
 
+        byte[]? imageBytes = null;
+
+        if (suiteDto.Image is not null)
+        {
+            using var ms = new MemoryStream();
+            await suiteDto.Image.CopyToAsync(ms);
+            imageBytes = ms.ToArray();
+        }
+
         SuiteEntity entity = suiteDto.ToEntity();
         entity.MotelId = motelId;
+        entity.ImageUrl = imageBytes;
         entity = await _suiteRepository.Add(entity);
 
         string generalCacheKey = $"suites:available:{motelId}:::";

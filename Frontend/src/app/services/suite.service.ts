@@ -16,7 +16,7 @@ export class SuiteService {
     return this.http.get<Suite[]>(`${this.baseMotelsUrl}/${motelId}/suites`);
   }
 
-  createSuite(motelId: number, suite: Suite, imageFile?: File): Observable<Suite> {
+  createSuite(motelId: number, suite: Suite, imageFile?: Blob | File): Observable<Suite> {
     const url = `${this.baseMotelsUrl}/${motelId}/suites`;
     const formData = new FormData();
 
@@ -27,13 +27,18 @@ export class SuiteService {
     formData.append('motelId', motelId.toString());
 
     if (imageFile) {
-      formData.append('image', imageFile);
+      if (imageFile instanceof File) {
+        formData.append('image', imageFile);
+      } else {
+        formData.append('image', imageFile, 'suite-image.jpg');
+      }
     }
 
+    console.log(formData.get('image'));
     return this.http.post<Suite>(url, formData);
   }
 
-  updateSuite(suiteId: number, suite: Suite, imageFile?: File): Observable<Suite> {
+  updateSuite(suiteId: number, suite: Suite, imageFile?: Blob | File): Observable<Suite> {
     const url = `${this.baseSuiteUrl}/suites/${suiteId}`;
     const formData = new FormData();
 
@@ -45,7 +50,11 @@ export class SuiteService {
     formData.append('motelId', suite.motelId?.toString() || '');
 
     if (imageFile) {
-      formData.append('image', imageFile);
+      if (imageFile instanceof File) {
+        formData.append('image', imageFile);
+      } else {
+        formData.append('image', imageFile, 'suite-image.jpg');
+      }
     }
 
     return this.http.put<Suite>(url, formData);
