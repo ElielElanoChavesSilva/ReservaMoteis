@@ -42,7 +42,7 @@ namespace BookMotelsAPI
                     Name = "Silva",
                     Email = "silva@gmail.com",
                     Password = BCrypt.Net.BCrypt.HashPassword("silva"),
-                    ProfileId = 1
+                    ProfileId = 2
                 });
                 db.SaveChanges();
             }

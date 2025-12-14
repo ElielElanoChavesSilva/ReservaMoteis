@@ -22,12 +22,12 @@ namespace BookMotelsInfra.Repositories
 
         public async Task<IEnumerable<GetReserveProjection>> FindAllByUser(Guid userId)
         {
-            var query = _context.Reserves
+            var query = await _context.Reserves
                 .Include(s => s.Suite)
                 .ThenInclude(m => m.Motel).
-                 Include(x => x.User).AsQueryable();
+                 Include(x => x.User)
+                .Where(r => r.UserId == userId).ToListAsync();
 
-            await query.Where(r => r.UserId == userId).ToListAsync();
 
             return query.Select(x => new GetReserveProjection
             {

@@ -8,9 +8,10 @@
     <form (ngSubmit)="saveReserve()">
       <div class="form-body">
         <div class="form-group" *ngIf="reserve.suiteId">
-          <label class="info-label">Suíte Selecionada (ID)</label>
-          <div class="static-info">{{ reserve.suiteId }}</div>
-          <!-- Hidden input to keep binding if needed, though usually bound to model directly -->
+          <label class="info-label">Suíte Selecionada</label>
+          <div class="static-info">
+            {{ suiteName || 'Carregando...' }} <span class="id-badge">#{{ reserve.suiteId }}</span>
+          </div>
         </div>
 
         <!-- Fallback if suiteId is somehow empty/editable manually (rare case in this flow but good for safety) -->

@@ -6,6 +6,8 @@ import { Reserve } from '../../../models/reserve.model';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { SuiteService } from '../../../services/suite.service';
+
 @Component({
   selector: 'app-reserve-form',
   standalone: true,
@@ -16,9 +18,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ReserveFormComponent implements OnInit {
   reserve: Reserve = {};
   isEditMode: boolean = false;
+  suiteName: string | undefined;
 
   constructor(
     private reserveService: ReserveService,
+    private suiteService: SuiteService,
     private route: ActivatedRoute,
     private router: Router,
     private snackBar: MatSnackBar
@@ -33,6 +37,11 @@ export class ReserveFormComponent implements OnInit {
           this.reserve = { ...reserveData };
           if (this.reserve.suiteId !== undefined && this.reserve.suiteId !== null) {
             this.reserve.suiteId = Number(this.reserve.suiteId);
+            if (this.reserve.suiteName) {
+              this.suiteName = this.reserve.suiteName;
+            } else {
+              this.loadSuiteName(this.reserve.suiteId);
+            }
           }
 
           if (this.reserve.checkIn) {
@@ -52,9 +61,21 @@ export class ReserveFormComponent implements OnInit {
       this.route.queryParams.subscribe(params => {
         if (params['suiteId']) {
           this.reserve.suiteId = Number(params['suiteId']);
+          this.loadSuiteName(this.reserve.suiteId);
         }
       });
     }
+  }
+
+  loadSuiteName(suiteId: number): void {
+    this.suiteService.getSuiteById(suiteId).subscribe({
+      next: (suite) => {
+        this.suiteName = suite.name;
+      },
+      error: () => {
+        this.suiteName = 'Suíte não encontrada';
+      }
+    });
   }
 
   saveReserve(): void {

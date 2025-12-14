@@ -16,6 +16,10 @@ export class SuiteService {
     return this.http.get<Suite[]>(`${this.baseMotelsUrl}/${motelId}/suites`);
   }
 
+  getSuiteById(suiteId: number): Observable<Suite> {
+    return this.http.get<Suite>(`${this.baseSuiteUrl}/${suiteId}`);
+  }
+
   createSuite(motelId: number, suite: Suite, imageFile?: Blob | File): Observable<Suite> {
     const url = `${this.baseMotelsUrl}/${motelId}/suites`;
     const formData = new FormData();

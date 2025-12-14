@@ -1,5 +1,5 @@
 <div class="forms-wrapper" *ngIf="motel">
-  <div class="row-layout">
+  <div class="row-layout" [class.single-column]="!isEditMode">
     <div class="form-card main-form">
       <div class="card-header">
         <h2>{{ isEditMode ? 'Editar Motel' : 'Novo Motel' }}</h2>
@@ -38,7 +38,7 @@
       </form>
     </div>
 
-    <div class="form-card suite-section">
+    <div class="form-card suite-section" *ngIf="isEditMode">
       <app-suite-form [motelId]="motel.id" [suiteToEdit]="selectedSuiteForEdit" (suiteSaved)="onSuiteSaved()"
         (suiteCanceled)="onSuiteCanceled()">
       </app-suite-form>
