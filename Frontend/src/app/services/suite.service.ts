@@ -43,7 +43,7 @@ export class SuiteService {
   }
 
   updateSuite(suiteId: number, suite: Suite, imageFile?: Blob | File): Observable<Suite> {
-    const url = `${this.baseSuiteUrl}/suites/${suiteId}`;
+    const url = `${this.baseSuiteUrl}/${suiteId}`;
     const formData = new FormData();
 
     formData.append('id', suiteId.toString());

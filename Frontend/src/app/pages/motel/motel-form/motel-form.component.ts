@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Motel } from '../../../models/motel.model';
 import { MotelService } from '../../../services/motel.service';
-import { SuiteFormComponent } from '../../suite/suite-form/suite-form.component';
 import { Suite } from '../../../models/suite.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SuiteFormComponent } from '../../suite/suite-form/suite-form';
 
 @Component({
   selector: 'app-motel-form',

@@ -1,18 +1,10 @@
 :host {
   display: block;
-  /* Parent grid handles layout */
 }
 
-.suite-form-container {
-  /* Internal container styles if needed, but the card style comes from parent usually. 
-     Here we ensure internal padding matches the premium feel */
-}
-
-/* Header */
 .card-header-suite {
   padding: 24px 32px;
   background: #f8fafc;
-  /* Slightly different header bg for distinction */
   border-bottom: 1px solid #f1f5f9;
 }
 
@@ -29,7 +21,6 @@
   margin: 0;
 }
 
-/* Body */
 .form-body-suite {
   padding: 32px;
 }
@@ -61,8 +52,7 @@
 .form-group-suite input:focus,
 .form-group-suite textarea:focus {
   outline: none;
-  border-color: #3b82f6;
-  /* Blue for suites */
+  border-color: #a5a6a8;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
@@ -75,7 +65,6 @@
   flex: 1;
 }
 
-/* Actions */
 .form-actions-suite {
   padding: 24px 32px;
   background: #fff;
@@ -106,7 +95,6 @@
   background: transparent;
   color: #64748b;
   border: none;
-  /* Text only button for secondary action in this context */
   padding: 12px 16px;
   font-weight: 600;
   cursor: pointer;

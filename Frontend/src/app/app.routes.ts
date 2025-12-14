@@ -6,7 +6,6 @@ import { ReserveFormComponent } from './pages/reserve/reserve-form/reserve-form'
 import { UserFormComponent } from './pages/user/user-form/user-form';
 import { authGuard } from './core/auth.guard';
 import { BillingReportComponent } from './pages/billing-report/billing-report';
-import { AdminLandingComponent } from './pages/admin-landing/admin-landing';
 import { SuiteFormComponent } from './pages/suite/suite-form/suite-form';
 import { RegisterComponent } from './pages/register/register';
 import { MotelFormComponent } from './pages/motel/motel-form/motel-form.component';

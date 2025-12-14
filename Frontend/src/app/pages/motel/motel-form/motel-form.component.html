@@ -38,9 +38,9 @@
       </form>
     </div>
 
-    <div class="form-card suite-section" *ngIf="isEditMode">
-      <app-suite-form [motelId]="motel.id" [suiteToEdit]="selectedSuiteForEdit" (suiteSaved)="onSuiteSaved()"
-        (suiteCanceled)="onSuiteCanceled()">
+    <div class="suite-section" *ngIf="isEditMode">
+      <app-suite-form [motelId]="motel.id" [suiteToEdit]="selectedSuiteForEdit" [embedded]="true"
+        (suiteSaved)="onSuiteSaved()" (suiteCanceled)="onSuiteCanceled()">
       </app-suite-form>
     </div>
   </div>

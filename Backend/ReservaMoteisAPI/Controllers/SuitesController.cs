@@ -56,7 +56,7 @@ namespace BookMotelsAPI.Controllers
         /// <response code="404">Se nenhuma suíte com o ID fornecido for encontrada.</response>
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(long id, SuiteDTO suiteDto)
+        public async Task<IActionResult> UpdateAsync(long id, [FromForm] SuiteDTO suiteDto)
         {
             await _suiteService.UpdateAsync(id, suiteDto);
             return NoContent();

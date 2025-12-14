@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Suite } from '../../../models/suite.model';
-import { SuiteService } from '../../../services/suite.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Suite } from '../../../../models/suite.model';
+import { SuiteService } from '../../suite';
 @Component({
   selector: 'app-suite-form',
   standalone: true,
@@ -72,7 +72,7 @@ export class SuiteFormComponent implements OnInit {
         return;
       }
 
-      this.suiteService.updateSuite(this.suite.id, this.suite, this.selectedFile).subscribe({
+      this.suiteService.updateSuite(this.suite.id, this.suite).subscribe({
         next: () => {
           this.suiteSaved.emit();
           this.router.navigate(['/motels']);
@@ -85,13 +85,13 @@ export class SuiteFormComponent implements OnInit {
       });
 
     } else {
-      this.suiteService.createSuite(this.motelId, this.suite, this.selectedFile).subscribe({
+      this.suiteService.addSuite(this.suite).subscribe({
         next: () => {
           this.suiteSaved.emit();
           this.snackBar.open('Suíte criada com sucesso!', 'Fechar', { duration: 3000 });
           this.router.navigate(['/motels']);
         },
-        error: (err) => {
+        error: (err: { error: { message: any; }; }) => {
           this.snackBar.open(err.error.message ?? 'Erro ao criar suíte!', 'Fechar', { duration: 3000 });
         }
       });

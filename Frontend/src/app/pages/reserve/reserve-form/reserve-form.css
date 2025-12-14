@@ -114,14 +114,12 @@
   font-weight: normal;
 }
 
-/* --- Buttons --- */
 .form-actions {
   padding: 24px 40px;
   background: #f8fafc;
   border-top: 1px solid #f1f5f9;
   display: flex;
   justify-content: space-between;
-  /* Space out buttons */
   gap: 16px;
 }
 
@@ -137,7 +135,6 @@
   transition: all 0.3s;
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
   flex: 1;
-  /* Stretch button */
 }
 
 .btn-save:hover {

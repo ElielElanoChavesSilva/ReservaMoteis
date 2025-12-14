@@ -24,7 +24,7 @@
               <th class="col-address">Endereço</th>
               <th class="col-phone">Telefone</th>
               <th class="col-actions" *ngIf="isAdmin">Ações</th>
-              <th class="col-suites">Gerenciar Suítes</th>
+              <th class="col-suites">Suítes</th>
             </tr>
           </thead>
           <tbody>
@@ -84,6 +84,10 @@
                             <button class="btn-block btn-reserve" [routerLink]="['/reserve/new']"
                               [queryParams]="{ suiteId: suite.id, motelId: motel.id }">
                               Reservar Agora
+                            </button>
+                            <button *ngIf="isAdmin" class="btn-icon-edit" [routerLink]="['/suite/edit', suite.id]"
+                              title="Editar Suíte">
+                              ✏️
                             </button>
                             <button *ngIf="isAdmin" class="btn-icon-remove" title="Remover Suíte"
                               (click)="deleteAvailableSuite(motel.id!, suite.id!)">

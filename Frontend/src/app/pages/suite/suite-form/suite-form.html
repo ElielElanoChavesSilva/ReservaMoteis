@@ -1,66 +1,51 @@
-<div class="card">
+<div class="form-card">
   <div class="card-header">
-    <h2>{{ isEditMode ? 'Editar Suite' : 'Adicionar Suite' }}</h2>
+    <h2>{{ isEditMode ? 'Editar Suíte' : 'Nova Suíte' }}</h2>
+    <p class="subtitle">Detalhes da acomodação</p>
   </div>
-  <div class="card-body">
-    <form (ngSubmit)="saveSuite()">
-      <div class="mb-3">
-        <label for="name" class="form-label">Nome</label>
-        <input
-          type="text"
-          class="form-control"
-          id="name"
-          name="name"
-          [(ngModel)]="suite.name"
-          required
-        />
+
+  <form (ngSubmit)="saveSuite()">
+    <div class="form-body">
+      <div class="form-group">
+        <label for="suiteName">Nome da Suíte</label>
+        <input type="text" id="suiteName" name="name" [(ngModel)]="suite.name" required
+          placeholder="Ex: Suíte Presidencial">
       </div>
-      <div class="mb-3">
-        <label for="description" class="form-label">Descrição</label>
-        <textarea
-          class="form-control"
-          id="description"
-          name="description"
-          [(ngModel)]="suite.description"
-        ></textarea>
+
+      <div class="form-group">
+        <label for="suiteDescription">Descrição</label>
+        <textarea id="suiteDescription" name="description" [(ngModel)]="suite.description" rows="3"
+          placeholder="Descreva os itens da suíte..."></textarea>
       </div>
-      <div class="mb-3">
-        <label for="pricePerPeriod" class="form-label">Preço por Período</label>
-        <input
-          type="number"
-          class="form-control"
-          id="pricePerPeriod"
-          name="pricePerPeriod"
-          [(ngModel)]="suite.pricePerPeriod"
-          required
-        />
+
+      <div class="form-group">
+        <label>Imagem da Suíte</label>
+        <div class="image-preview-area" (click)="fileInput.click()">
+          <img *ngIf="imagePreview" [src]="imagePreview" alt="Preview da Suíte">
+          <div *ngIf="!imagePreview" class="image-placeholder">
+            <span>📷</span>
+            <span>Clique para selecionar uma imagem</span>
+          </div>
+          <input #fileInput type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+        </div>
       </div>
-      <div class="mb-3">
-        <label for="maxOccupancy" class="form-label">Ocupação Máxima</label>
-        <input
-          type="number"
-          class="form-control"
-          id="maxOccupancy"
-          name="maxOccupancy"
-          [(ngModel)]="suite.maxOccupancy"
-          required
-        />
+
+      <div class="form-group">
+        <label for="price">Preço por Período (R$)</label>
+        <input type="number" id="price" name="pricePerPeriod" [(ngModel)]="suite.pricePerPeriod" required min="0"
+          step="0.01">
       </div>
-      <div class="mb-3">
-        <label for="motelId" class="form-label">ID do Motel</label>
-        <input
-          type="number"
-          class="form-control"
-          id="motelId"
-          name="motelId"
-          [(ngModel)]="suite.motelId"
-          required
-        />
+
+      <div class="form-group">
+        <label for="occupancy">Ocupação Máxima</label>
+        <input type="number" id="occupancy" name="maxOccupancy" [(ngModel)]="suite.maxOccupancy" required min="1">
       </div>
-      <button type="submit" class="btn btn-primary me-2">Salvar</button>
-      <button type="button" class="btn btn-secondary" (click)="goBack()">
-        Cancelar
-      </button>
-    </form>
-  </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="goBack()">Cancelar</button>
+      <button type="submit" class="btn-save">{{ isEditMode ? 'Salvar Alterações' : 'Adicionar Suíte' }}</button>
+    </div>
+  </form>
 </div>

@@ -92,17 +92,27 @@ public class SuiteService : ISuiteService
 
     public async Task UpdateAsync(long id, SuiteDTO suiteDto)
     {
-        SuiteEntity existingSuite = await _suiteRepository.FindById(id) ??
+        SuiteEntity entity = await _suiteRepository.FindById(id) ??
                                     throw new NotFoundException("Suíte não encontrada");
 
-        existingSuite.Name = suiteDto.Name;
-        existingSuite.Description = suiteDto.Description;
-        existingSuite.PricePerPeriod = suiteDto.PricePerPeriod;
-        existingSuite.MaxOccupancy = suiteDto.MaxOccupancy;
 
-        await _suiteRepository.Update(existingSuite);
+        byte[]? imageBytes = null;
 
-        string generalCacheKey = $"suites:available:{existingSuite.MotelId}:::";
+        if (suiteDto.Image is not null)
+        {
+            using var ms = new MemoryStream();
+            await suiteDto.Image.CopyToAsync(ms);
+            imageBytes = ms.ToArray();
+        }
+
+        entity.Name = suiteDto.Name;
+        entity.Description = suiteDto.Description;
+        entity.PricePerPeriod = suiteDto.PricePerPeriod;
+        entity.MaxOccupancy = suiteDto.MaxOccupancy;
+        entity.ImageUrl = imageBytes ?? entity.ImageUrl;
+        await _suiteRepository.Update(entity);
+
+        string generalCacheKey = $"suites:available:{entity.MotelId}:::";
         await _cache.RemoveAsync(generalCacheKey);
     }
 
