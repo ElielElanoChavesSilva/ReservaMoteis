@@ -33,8 +33,9 @@ public class UserService : IUserService
         if (await _userRepository.GetByEmailAsync(userDto.Email) is not null)
             throw new ConflictException("Este email já está cadastrado");
 
-        userDto.Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
-        UserEntity entity = userDto.ToEntity();
+        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
+        UserDTO userWithHashedPassword = userDto with { Password = hashedPassword };
+        UserEntity entity = userWithHashedPassword.ToEntity();
         entity.Id = Guid.NewGuid();
 
         entity = await _userRepository.Add(entity);

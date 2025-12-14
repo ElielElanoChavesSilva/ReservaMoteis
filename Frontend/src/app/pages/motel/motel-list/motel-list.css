@@ -168,6 +168,38 @@
   text-align: center;
 }
 
+.suite-img-cell {
+  width: 100px;
+  text-align: center;
+  padding: 8px !important;
+}
+
+.suite-thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.suite-thumbnail:hover {
+  transform: scale(2.5);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  position: relative;
+}
+
+.no-image {
+  font-size: 1.5rem;
+  opacity: 0.5;
+  display: block;
+  text-align: center;
+}
+
 /* --- Nested Suites Section --- */
 .suites-row {
   background: #f8fafc;

@@ -14,7 +14,7 @@ namespace BookMotelsDomain.Entities
         [Required] public int ProfileId { get; set; }
 
         [ForeignKey(nameof(ProfileId))]
-        public ProfileEntity Profile { get; set; }
+        public ProfileEntity Profile { get; set; } = null!;
         public ICollection<ReserveEntity> Reserves { get; set; } = new List<ReserveEntity>();
     }
 }

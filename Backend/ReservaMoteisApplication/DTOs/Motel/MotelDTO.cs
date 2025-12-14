@@ -1,10 +1,9 @@
 ﻿namespace BookMotelsApplication.DTOs.Motel
 {
-    public class MotelDTO
-    {
-        public string Name { get; set; } = string.Empty;
-        public string Address { get; set; } = string.Empty;
-        public string Phone { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-    }
+    public record MotelDTO(
+        string Name,
+        string Address,
+        string Phone,
+        string Description
+    );
 }

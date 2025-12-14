@@ -22,7 +22,7 @@ namespace BookMotelsAPI.Controllers
         /// </summary>
         /// <returns>Uma lista de todas as suítes.</returns>
         /// <response code="200">Retorna a lista de suítes.</response>
-        /// <response code="401">Se o usuÃ¡rio nÃ£o estiver autenticado.</response>
+        /// <response code="401">Se o usuário não estiver autenticado.</response>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetSuiteDTO>>> FindAllAsync()
         {
@@ -30,13 +30,13 @@ namespace BookMotelsAPI.Controllers
         }
 
         /// <summary>
-        /// Recupera uma suÃ­te pelo seu ID.
+        /// Recupera uma suíte pelo seu ID.
         /// </summary>
-        /// <param name="id">O ID da suÃ­te a ser recuperada.</param>
-        /// <returns>A suÃ­te com o ID especificado.</returns>
-        /// <response code="200">Retorna a suÃ­te.</response>
-        /// <response code="401">Se o usuÃ¡rio nÃ£o estiver autenticado.</response>
-        /// <response code="404">Se nenhuma suÃ­te com o ID fornecido for encontrada.</response>
+        /// <param name="id">O ID da suíte a ser recuperada.</param>
+        /// <returns>A suíte com o ID especificado.</returns>
+        /// <response code="200">Retorna a suíte.</response>
+        /// <response code="401">Se o usuário não estiver autenticado.</response>
+        /// <response code="404">Se nenhuma suíte com o ID fornecido for encontrada.</response>
         [HttpGet("{id}")]
         public async Task<ActionResult<GetSuiteDTO>> FindById(long id)
         {
@@ -44,16 +44,16 @@ namespace BookMotelsAPI.Controllers
         }
 
         /// <summary>
-        /// Atualiza uma suÃ­te existente.
+        /// Atualiza uma suíte existente.
         /// </summary>
-        /// <param name="id">O ID da suÃ­te a ser atualizada.</param>
-        /// <param name="suiteDto">Os detalhes de atualizaÃ§Ã£o da suÃ­te.</param>
-        /// <returns>Nenhum conteÃºdo.</returns>
-        /// <response code="204">Se a suÃ­te foi atualizada com sucesso.</response>
-        /// <response code="400">Se os detalhes de atualizaÃ§Ã£o da suÃ­te forem invÃ¡lidos.</response>
-        /// <response code="401">Se o usuÃ¡rio nÃ£o estiver autenticado.</response>
-        /// <response code="403">Se o usuÃ¡rio autenticado nÃ£o for um Admin.</response>
-        /// <response code="404">Se nenhuma suÃ­te com o ID fornecido for encontrada.</response>
+        /// <param name="id">O ID da suíte a ser atualizada.</param>
+        /// <param name="suiteDto">Os detalhes de atualização da suíte.</param>
+        /// <returns>Nenhum conteúdo.</returns>
+        /// <response code="204">Se a suíte foi atualizada com sucesso.</response>
+        /// <response code="400">Se os detalhes de atualização da suíte forem inválidos.</response>
+        /// <response code="401">Se o usuário não estiver autenticado.</response>
+        /// <response code="403">Se o usuário autenticado não for um Admin.</response>
+        /// <response code="404">Se nenhuma suíte com o ID fornecido for encontrada.</response>
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(long id, SuiteDTO suiteDto)
@@ -63,14 +63,14 @@ namespace BookMotelsAPI.Controllers
         }
 
         /// <summary>
-        /// Exclui uma suÃ­te.
+        /// Exclui uma suíte.
         /// </summary>
-        /// <param name="id">O ID da suÃ­te a ser excluÃ­da.</param>
-        /// <returns>Nenhum conteÃºdo.</returns>
-        /// <response code="204">Se a suÃ­te foi excluÃ­da com sucesso.</response>
-        /// <response code="401">Se o usuÃ¡rio nÃ£o estiver autenticado.</response>
-        /// <response code="403">Se o usuÃ¡rio autenticado nÃ£o for um Admin.</response>
-        /// <response code="404">Se nenhuma suÃ­te com o ID fornecido for encontrada.</response>
+        /// <param name="id">O ID da suíte a ser excluída.</param>
+        /// <returns>Nenhum conteúdo.</returns>
+        /// <response code="204">Se a suíte foi excluída com sucesso.</response>
+        /// <response code="401">Se o usuário não estiver autenticado.</response>
+        /// <response code="403">Se o usuário autenticado não for um Admin.</response>
+        /// <response code="404">Se nenhuma suíte com o ID fornecido for encontrada.</response>
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(long id)

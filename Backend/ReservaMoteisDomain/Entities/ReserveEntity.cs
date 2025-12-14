@@ -19,8 +19,9 @@ namespace BookMotelsDomain.Entities
         [Required]
         public decimal TotalPrice { get; set; }
         [ForeignKey(nameof(UserId))]
-        public UserEntity User { get; set; }
+        public UserEntity User { get; set; } = null!;
+
         [ForeignKey(nameof(SuiteId))]
-        public SuiteEntity Suite { get; set; }
+        public SuiteEntity Suite { get; set; } = null!;
     }
 }

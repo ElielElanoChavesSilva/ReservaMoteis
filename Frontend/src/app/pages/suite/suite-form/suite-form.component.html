@@ -31,6 +31,14 @@
             placeholder="2">
         </div>
       </div>
+
+      <div class="form-group-suite">
+        <label for="suiteImage">Imagem da Suíte</label>
+        <input type="file" id="suiteImage" (change)="onFileSelected($event)" accept="image/*">
+        <div *ngIf="imagePreview" class="image-preview">
+          <img [src]="imagePreview" alt="Preview" class="preview-img">
+        </div>
+      </div>
     </div>
 
     <div class="form-actions-suite">

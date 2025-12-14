@@ -87,7 +87,7 @@ namespace BookMotelsTest.Services
         public async Task AddAsync_ShouldAddUser_WhenEmailIsNotRegistered()
         {
             // Arrange
-            var userDto = new UserDTO { Name = "Eliel Silva", Email = "eliel@example.com", Password = "eliel", ProfileId = 1 };
+            var userDto = new UserDTO("Eliel Silva", "eliel@example.com", "eliel", 1);
             _mockUserRepository.Setup(repo => repo.GetByEmailAsync(userDto.Email)).ReturnsAsync((UserEntity)null!);
             _mockUserRepository.Setup(repo => repo.Add(It.IsAny<UserEntity>())).ReturnsAsync((UserEntity entity) =>
             {
@@ -113,8 +113,8 @@ namespace BookMotelsTest.Services
         public async Task AddAsync_ShouldThrowConflictException_WhenEmailIsAlreadyRegistered()
         {
             // Arrange
-            var userDto = new UserDTO { Name = "Usuário Existente", Email = "existente@example.com", Password = "eliel", ProfileId = 1 };
-            var existingUserEntity = new UserEntity { Id = Guid.NewGuid(), Name = "Usuário Existente", Email = "existente@example.com", Profile = new ProfileEntity { Id = 1, Name = "Client" } };
+            var userDto = new UserDTO("UsuÃ¡rio Existente", "existente@example.com", "eliel", 1);
+            var existingUserEntity = new UserEntity { Id = Guid.NewGuid(), Name = "UsuÃ¡rio Existente", Email = "existente@example.com", Profile = new ProfileEntity { Id = 1, Name = "Client" } };
             _mockUserRepository.Setup(repo => repo.GetByEmailAsync(userDto.Email)).ReturnsAsync(existingUserEntity);
 
             // Act & Assert
@@ -128,7 +128,7 @@ namespace BookMotelsTest.Services
         {
             // Arrange
             var userId = Guid.NewGuid();
-            var userDto = new UpdateUserDTO { Name = "Updated" };
+            var userDto = new UpdateUserDTO("Updated", "", 0);
             _mockUserRepository.Setup(r => r.FindById(userId)).ReturnsAsync((UserEntity)null!);
 
             // Act & Assert
@@ -142,7 +142,7 @@ namespace BookMotelsTest.Services
         {
             // Arrange
             var userId = Guid.NewGuid();
-            var userDto = new UpdateUserDTO { Name = "Updated Name", Email = "updated@example.com", ProfileId = 2 };
+            var userDto = new UpdateUserDTO("Updated Name", "updated@example.com", 2);
             var existingUser = new UserEntity { Id = userId, Name = "Original Name", Email = "original@example.com", ProfileId = 1, Profile = new ProfileEntity { Id = 1, Name = "Client" } };
 
             _mockUserRepository.Setup(r => r.FindById(userId)).ReturnsAsync(existingUser);
@@ -183,7 +183,7 @@ namespace BookMotelsTest.Services
         {
             // Arrange
             var userId = Guid.NewGuid();
-            var userEntity = new UserEntity { Id = userId, Name = "Usuário pra deletar" };
+            var userEntity = new UserEntity { Id = userId, Name = "UsuÃ¡rio pra deletar" };
             _mockUserRepository.Setup(r => r.FindById(userId)).ReturnsAsync(userEntity);
             _mockUserRepository.Setup(r => r.Delete(userEntity)).Returns(Task.CompletedTask);
 

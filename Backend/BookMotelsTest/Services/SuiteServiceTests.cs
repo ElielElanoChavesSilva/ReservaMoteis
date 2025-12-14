@@ -128,7 +128,7 @@ namespace BookMotelsTest.Services
 
             var cachedSuites = new List<GetSuiteDTO>
             {
-                new GetSuiteDTO { Id = 1, Name = "Cached Suite" }
+                new(1, "Cached Suite", "", 0, 0, 0, null)
             };
             var cachedJson = JsonConvert.SerializeObject(cachedSuites);
 
@@ -188,7 +188,7 @@ namespace BookMotelsTest.Services
         {
             // Arrange
             long motelId = 99;
-            var suiteDto = new SuiteDTO { Name = "New Suite" };
+            var suiteDto = new SuiteDTO("New Suite", "", 0, 0, null);
             _mockMotelRepository.Setup(r => r.Exist(motelId)).ReturnsAsync(false);
 
             // Act & Assert
@@ -202,7 +202,7 @@ namespace BookMotelsTest.Services
         {
             // Arrange
             long motelId = 1;
-            var suiteDto = new SuiteDTO { Name = "New Suite", PricePerPeriod = 200, MaxOccupancy = 4 };
+            var suiteDto = new SuiteDTO("New Suite", "", 200, 4, null);
             var suiteEntity = new SuiteEntity { Id = 1, Name = "New Suite", PricePerPeriod = 200, MaxOccupancy = 4, MotelId = motelId };
 
             _mockMotelRepository.Setup(r => r.Exist(motelId)).ReturnsAsync(true);
@@ -228,7 +228,7 @@ namespace BookMotelsTest.Services
         {
             // Arrange
             long suiteId = 99;
-            var suiteDto = new SuiteDTO { Name = "Updated Suite" };
+            var suiteDto = new SuiteDTO("Updated Suite", "", 0, 0, null);
             _mockSuiteRepository.Setup(r => r.FindById(suiteId)).ReturnsAsync((SuiteEntity)null!);
 
             // Act & Assert
@@ -243,7 +243,7 @@ namespace BookMotelsTest.Services
             // Arrange
             long suiteId = 1;
             long motelId = 1;
-            var suiteDto = new SuiteDTO { Name = "Updated Suite", Description = "New Desc", PricePerPeriod = 250, MaxOccupancy = 5 };
+            var suiteDto = new SuiteDTO("Updated Suite", "New Desc", 250, 5, null);
             var existingSuite = new SuiteEntity
             {
                 Id = suiteId,

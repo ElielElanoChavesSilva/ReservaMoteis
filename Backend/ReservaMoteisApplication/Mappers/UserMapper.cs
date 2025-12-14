@@ -10,12 +10,12 @@ namespace BookMotelsApplication.Mappers
         public static GetUserDTO ToDTO(this UserEntity entity)
         {
             return new GetUserDTO
-            {
-                Id = entity.Id,
-                Name = entity.Name,
-                Email = entity.Email,
-                ProfileId = entity.ProfileId
-            };
+            (
+                Id : entity.Id,
+                Name : entity.Name,
+                Email : entity.Email,
+                ProfileId : entity.ProfileId
+            );
         }
 
         public static void ToEntity(this UpdateUserDTO userDto, UserEntity userEntity)

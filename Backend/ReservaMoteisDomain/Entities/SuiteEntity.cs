@@ -21,6 +21,7 @@ namespace BookMotelsDomain.Entities
         public long MotelId { get; set; }
 
         [ForeignKey(nameof(MotelId))]
-        public MotelEntity Motel { get; set; }
+        public MotelEntity? Motel { get; set; }
+        public byte[]? ImageUrl { get; set; }
     }
 }

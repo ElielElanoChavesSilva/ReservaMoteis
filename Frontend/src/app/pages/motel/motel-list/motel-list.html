@@ -63,6 +63,7 @@
                       <table class="suites-table">
                         <thead>
                           <tr>
+                            <th>Imagem</th>
                             <th>Nome</th>
                             <th>Descrição</th>
                             <th>Preço/Período</th>
@@ -72,6 +73,11 @@
                         </thead>
                         <tbody>
                           <tr *ngFor="let suite of availableSuites">
+                            <td class="suite-img-cell">
+                              <img *ngIf="suite.image" [src]="suite.image" alt="{{ suite.name }}"
+                                class="suite-thumbnail">
+                              <span *ngIf="!suite.image" class="no-image">🖼️</span>
+                            </td>
                             <td><strong>{{ suite.name }}</strong></td>
                             <td class="desc-cell">{{ suite.description }}</td>
                             <td class="price">{{ suite.pricePerPeriod | currency }}</td>

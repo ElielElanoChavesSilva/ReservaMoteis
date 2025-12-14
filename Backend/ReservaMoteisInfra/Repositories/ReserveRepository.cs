@@ -1,6 +1,6 @@
 ﻿using BookMotelsDomain.Entities;
 using BookMotelsDomain.Interfaces;
-using BookMotelsDomain.Models;
+using BookMotelsDomain.Projections;
 using BookMotelsInfra.Context;
 using BookMotelsInfra.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
@@ -20,13 +20,69 @@ namespace BookMotelsInfra.Repositories
                                r.CheckIn <= checkOut && r.CheckOut >= checkIn);
         }
 
-        public async Task<IEnumerable<ReserveEntity>> FindAllByUserAsync(Guid userId)
+        public async Task<IEnumerable<GetReserveProjection>> FindAllByUser(Guid userId)
         {
-            return await _context.Reserves
-                .Where(r => r.UserId == userId).ToListAsync();
+            var query = _context.Reserves
+                .Include(s => s.Suite)
+                .ThenInclude(m => m.Motel).
+                 Include(x => x.User).AsQueryable();
+
+            await query.Where(r => r.UserId == userId).ToListAsync();
+
+            return query.Select(x => new GetReserveProjection
+            {
+                Id = x.Id,
+                UserName = x.User.Name,
+                MotelName = x.Suite.Motel!.Name,
+                SuiteId = x.Suite.Id,
+                CheckIn = x.CheckIn,
+                CheckOut = x.CheckOut,
+                SuiteName = x.Suite.Name
+            });
         }
 
-        public async Task<IEnumerable<BillingReportModel>> FindBillingReport(long? motelId, int? year, int? month)
+        public Task<GetReserveProjection> FindByIdProjection(long id)
+        {
+            {
+                var query = _context.Reserves
+                    .Include(s => s.Suite)
+                    .ThenInclude(m => m.Motel)
+                    .Include(x => x.User)
+                    .Single(r => r.Id == id);
+
+                return Task.FromResult(new GetReserveProjection
+                {
+                    Id = query.Id,
+                    UserName = query.User.Name,
+                    MotelName = query.Suite.Motel!.Name,
+                    SuiteId = query.Suite.Id,
+                    CheckIn = query.CheckIn,
+                    CheckOut = query.CheckOut,
+                    SuiteName = query.Suite.Name
+                });
+            }
+        }
+
+        public async Task<IEnumerable<GetReserveProjection>> FindAllProjection()
+        {
+            var query = _context.Reserves
+                .Include(s => s.Suite)
+                .ThenInclude(m => m.Motel).
+                Include(x => x.User).AsQueryable();
+
+            return await query.Select(x => new GetReserveProjection
+            {
+                Id = x.Id,
+                UserName = x.User.Name,
+                MotelName = x.Suite.Motel!.Name,
+                SuiteId = x.Suite.Id,
+                CheckIn = x.CheckIn,
+                CheckOut = x.CheckOut,
+                SuiteName = x.Suite.Name
+            }).ToListAsync();
+        }
+
+        public async Task<IEnumerable<BillingReportProjection>> FindBillingReport(long? motelId, int? year, int? month)
         {
             var query = _context.Reserves
                 .Include(r => r.Suite)
@@ -45,19 +101,17 @@ namespace BookMotelsInfra.Repositories
             var report = await query
                 .GroupBy(r => new
                 {
-                    MotelId = r.Suite.MotelId,
-                    MotelName = r.Suite.Motel.Name,
-                    Year = r.CheckOut.Year,
-                    Month = r.CheckOut.Month
+                    r.Suite.MotelId,
+                    MotelName = r.Suite.Motel!.Name,
+                    r.CheckOut.Year,
+                    r.CheckOut.Month
                 })
-                .Select(g => new BillingReportModel
-                {
-                    MotelId = g.Key.MotelId,
-                    MotelName = g.Key.MotelName,
-                    Year = g.Key.Year,
-                    Month = g.Key.Month,
-                    TotalRevenue = (decimal)g.Sum(r => (double)r.TotalPrice)
-                })
+                .Select(g => new BillingReportProjection(
+                    g.Key.MotelId,
+                    g.Key.MotelName,
+                    g.Key.Year,
+                    g.Key.Month,
+                    (decimal)g.Sum(r => (double)r.TotalPrice)))
                 .ToListAsync();
 
             return report;

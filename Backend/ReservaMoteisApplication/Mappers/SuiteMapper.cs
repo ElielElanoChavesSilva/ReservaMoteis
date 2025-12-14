@@ -11,27 +11,22 @@ namespace BookMotelsApplication.Mappers
             return entities.Select(e => e.ToDTO());
         }
 
-
         public static GetSuiteDTO ToDTO(this SuiteEntity entity)
         {
             return new GetSuiteDTO
-            {
-                Id = entity.Id,
-                Name = entity.Name,
-                Description = entity.Description,
-                PricePerPeriod = entity.PricePerPeriod,
-                MaxOccupancy = entity.MaxOccupancy,
-                MotelId = entity.MotelId
-            };
+            (
+                Id: entity.Id,
+                Name: entity.Name,
+                Description: entity.Description,
+                PricePerPeriod: entity.PricePerPeriod,
+                MaxOccupancy: entity.MaxOccupancy,
+                MotelId: entity.MotelId,
+                ImageUrl: entity.ImageUrl
+            );
         }
         #endregion
 
         #region | ToEntity |
-        public static IEnumerable<SuiteEntity> ToEntity(this IEnumerable<SuiteDTO> dtos)
-        {
-            return dtos.Select(d => d.ToEntity());
-        }
-
         public static SuiteEntity ToEntity(this SuiteDTO dto)
         {
             return new SuiteEntity
@@ -40,6 +35,7 @@ namespace BookMotelsApplication.Mappers
                 Description = dto.Description,
                 PricePerPeriod = dto.PricePerPeriod,
                 MaxOccupancy = dto.MaxOccupancy,
+                ImageUrl = dto.ImageUrl
             };
         }
         #endregion

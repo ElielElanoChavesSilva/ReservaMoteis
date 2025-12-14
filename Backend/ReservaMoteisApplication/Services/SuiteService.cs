@@ -35,7 +35,7 @@ public class SuiteService : ISuiteService
     public async Task<IEnumerable<GetSuiteDTO>> FindAllAvailable(long motelId, string? name, DateTime? checkin, DateTime? checkout)
     {
         if (!await _motelRepository.Exist(motelId))
-            throw new NotFoundException("Su√≠te n√£o encontrada");
+            throw new NotFoundException("SuÌte n„o encontrada");
 
         var cacheKey = $"suites:available:{motelId}:{name}:{checkin:yyyyMMddHH}:{checkout:yyyyMMddHH}";
 
@@ -60,7 +60,7 @@ public class SuiteService : ISuiteService
     public async Task<GetSuiteDTO> FindByIdAsync(long id)
     {
         SuiteEntity suite = await _suiteRepository.FindById(id) ??
-                            throw new NotFoundException("Su√≠te n√£o encontrada");
+                            throw new NotFoundException("SuÌte n„o encontrada");
 
         return suite.ToDTO();
     }
@@ -68,13 +68,12 @@ public class SuiteService : ISuiteService
     public async Task<GetSuiteDTO> AddAsync(long motelId, SuiteDTO suiteDto)
     {
         if (!await _motelRepository.Exist(motelId))
-            throw new NotFoundException("Motel n√£o encontrado");
+            throw new NotFoundException("Motel n„o encontrado");
 
         SuiteEntity entity = suiteDto.ToEntity();
         entity.MotelId = motelId;
         entity = await _suiteRepository.Add(entity);
 
-        // Invalidate general cache for this motel's available suites
         string generalCacheKey = $"suites:available:{motelId}:::";
         await _cache.RemoveAsync(generalCacheKey);
 
@@ -84,7 +83,7 @@ public class SuiteService : ISuiteService
     public async Task UpdateAsync(long id, SuiteDTO suiteDto)
     {
         SuiteEntity existingSuite = await _suiteRepository.FindById(id) ??
-                                    throw new NotFoundException("Su√≠te n√£o encontrada");
+                                    throw new NotFoundException("SuÌte n„o encontrada");
 
         existingSuite.Name = suiteDto.Name;
         existingSuite.Description = suiteDto.Description;
@@ -93,7 +92,6 @@ public class SuiteService : ISuiteService
 
         await _suiteRepository.Update(existingSuite);
 
-        // Invalidate general cache for this motel's available suites
         string generalCacheKey = $"suites:available:{existingSuite.MotelId}:::";
         await _cache.RemoveAsync(generalCacheKey);
     }
@@ -101,11 +99,10 @@ public class SuiteService : ISuiteService
     public async Task DeleteAsync(long id)
     {
         SuiteEntity entity = await _suiteRepository.FindById(id) ??
-                             throw new NotFoundException("Su√≠te n√£o encontrada");
+                             throw new NotFoundException("SuÌte n„o encontrada");
 
         await _suiteRepository.Delete(entity);
 
-        // Invalidate general cache for this motel's available suites
         string generalCacheKey = $"suites:available:{entity.MotelId}:::";
         await _cache.RemoveAsync(generalCacheKey);
     }

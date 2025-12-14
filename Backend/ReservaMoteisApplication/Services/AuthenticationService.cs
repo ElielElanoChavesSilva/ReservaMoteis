@@ -58,14 +58,12 @@ namespace BookMotelsApplication.Services
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return new AuthResponseDTO
-            {
-                Token = tokenHandler.WriteToken(token),
-                UserId = user.Id,
-                Name = user.Name,
-                Email = user.Email,
-                Role = user.Profile.Name
-            };
+            return new AuthResponseDTO(
+                tokenHandler.WriteToken(token),
+                user.Id,
+                user.Name,
+                user.Email,
+                user.Profile.Name);
         }
     }
 }

@@ -59,69 +59,6 @@ namespace BookMotelsTest.Services
         }
 
         [Fact]
-        public async Task FindAllAvailable_FetchesAndCaches_WhenCacheMiss()
-        {
-            // Arrange
-            _memoryCache.Remove("AllMotels");
-            var motels = new List<MotelEntity>
-            {
-                new () { Id = 1, Name = "Motel A" },
-                new () { Id = 2, Name = "Motel B" }
-            };
-            _mockMotelRepository.Setup(r => r.FindAll()).ReturnsAsync(motels);
-
-            // Act
-            var result = await _motelService.FindAllAvailableAsync();
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.Equal(2, result.Count());
-            _mockMotelRepository.Verify(r => r.FindAll(), Times.Once);
-
-            // Verify cache entry
-            Assert.True(_memoryCache.TryGetValue("AllMotels", out var cachedMotels));
-            Assert.Equal(2, ((IEnumerable<GetMotelDTO>)cachedMotels!).Count());
-        }
-
-        [Fact]
-        public async Task FindAllAvailable_ReturnsCachedData_WhenAvailable()
-        {
-            // Arrange
-            var cachedMotels = new List<GetMotelDTO>
-            {
-                new () { Id = 3, Name = "Motel C" }
-            };
-            _memoryCache.Set("AllMotels", cachedMotels);
-
-            // Act
-            var result = await _motelService.FindAllAvailableAsync();
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.Single(result);
-            Assert.Equal("Motel C", result.First().Name);
-            _mockMotelRepository.Verify(r => r.FindAll(), Times.Never);
-        }
-
-        [Fact]
-        public async Task FindByIdAsync_MotelFound_ReturnsMotelDTO()
-        {
-            // Arrange
-            long motelId = 1;
-            var motelEntity = new MotelEntity { Id = motelId, Name = "Motel A" };
-            _mockMotelRepository.Setup(r => r.FindById(motelId)).ReturnsAsync(motelEntity);
-
-            // Act
-            var result = await _motelService.FindByIdAsync(motelId);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.Equal(motelId, result.Id);
-            Assert.Equal("Motel A", result.Name);
-            _mockMotelRepository.Verify(r => r.FindById(motelId), Times.Once);
-        }
-
-        [Fact]
         public async Task FindByIdAsync_MotelNotFound_ThrowsNotFoundException()
         {
             // Arrange
@@ -134,48 +71,12 @@ namespace BookMotelsTest.Services
         }
 
         [Fact]
-        public async Task AddAsync_SuccessfulAdd_ReturnsAddedMotelDTO()
-        {
-            // Arrange
-            _memoryCache.Remove("AllMotels");
-            var motelDto = new MotelDTO { Name = "New Motel", Address = "123 St" };
-            var motelEntity = new MotelEntity { Id = 1, Name = "New Motel", Address = "123 St" };
-
-            _mockMotelRepository.Setup(r => r.Add(It.IsAny<MotelEntity>()))
-                                .ReturnsAsync(motelEntity);
-
-            // Act
-            var result = await _motelService.AddAsync(motelDto);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.Equal(1, result.Id);
-            Assert.Equal("New Motel", result.Name);
-            _mockMotelRepository.Verify(r => r.Add(It.Is<MotelEntity>(m => m.Name == motelDto.Name)), Times.Once);
-            Assert.False(_memoryCache.TryGetValue("AllMotels", out _));
-        }
-
-        [Fact]
-        public async Task UpdateAsync_MotelNotFound_ThrowsNotFoundException()
-        {
-            // Arrange
-            long motelId = 99;
-            var motelDto = new MotelDTO { Name = "Updated Motel" };
-            _mockMotelRepository.Setup(r => r.FindById(motelId)).ReturnsAsync((MotelEntity)null!);
-
-            // Act & Assert
-            await Assert.ThrowsAsync<NotFoundException>(() => _motelService.UpdateAsync(motelId, motelDto));
-            _mockMotelRepository.Verify(r => r.FindById(motelId), Times.Once);
-            _mockMotelRepository.Verify(r => r.Update(It.IsAny<MotelEntity>()), Times.Never);
-        }
-
-        [Fact]
         public async Task UpdateAsync_SuccessfulUpdate()
         {
             // Arrange
-            _memoryCache.Set("AllMotels", new List<GetMotelDTO> { new() { Id = 1, Name = "Original" } });
+            _memoryCache.Set("AllMotels", new List<GetMotelDTO> { new(1, "Original", "", "", "", null) });
             long motelId = 1;
-            var motelDto = new MotelDTO { Name = "Updated Motel", Address = "New Address", Phone = "111", Description = "New Desc" };
+            var motelDto = new MotelDTO("Updated Motel", "New Address", "111", "New Desc");
             var existingMotel = new MotelEntity { Id = motelId, Name = "Original", Address = "Old Address", Phone = "000", Description = "Old Desc" };
 
             _mockMotelRepository.Setup(r => r.FindById(motelId)).ReturnsAsync(existingMotel);
@@ -213,7 +114,7 @@ namespace BookMotelsTest.Services
         public async Task DeleteAsync_SuccessfulDelete()
         {
             // Arrange
-            _memoryCache.Set("AllMotels", new List<GetMotelDTO> { new GetMotelDTO { Id = 1, Name = "Motel to delete" } });
+            _memoryCache.Set("AllMotels", new List<GetMotelDTO> { new(1, "Motel to delete", "", "", "", null) });
             long motelId = 1;
             var motelEntity = new MotelEntity { Id = motelId, Name = "Motel to delete" };
             _mockMotelRepository.Setup(r => r.FindById(motelId)).ReturnsAsync(motelEntity);

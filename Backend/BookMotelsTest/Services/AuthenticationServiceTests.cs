@@ -32,7 +32,7 @@ namespace BookMotelsTest.Services
         public async Task AuthenticateAsync_ValidCredentials_ReturnsAuthResponseDTO()
         {
             // Arrange
-            var loginDto = new LoginDTO { Email = "test@example.com", Password = "Password123" };
+            var loginDto = new LoginDTO("test@example.com", "Password123");
             var userEntity = new UserEntity
             {
                 Id = Guid.NewGuid(),
@@ -62,7 +62,7 @@ namespace BookMotelsTest.Services
         public async Task AuthenticateAsync_UserNotFound_ThrowsNotFoundException()
         {
             // Arrange
-            var loginDto = new LoginDTO { Email = "nonexistent@example.com", Password = "Password123" };
+            var loginDto = new LoginDTO("nonexistent@example.com", "Password123");
 
             _mockUserRepository.Setup(r => r.GetByEmailAsync(loginDto.Email))
                                .ReturnsAsync((UserEntity)null!);
@@ -75,7 +75,7 @@ namespace BookMotelsTest.Services
         public async Task AuthenticateAsync_InvalidPassword_ReturnsNull()
         {
             // Arrange
-            var loginDto = new LoginDTO { Email = "test@example.com", Password = "WrongPassword" };
+            var loginDto = new LoginDTO("test@example.com", "WrongPassword");
             var userEntity = new UserEntity
             {
                 Id = Guid.NewGuid(),

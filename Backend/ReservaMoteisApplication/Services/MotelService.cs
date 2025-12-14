@@ -25,19 +25,6 @@ namespace BookMotelsApplication.Services
             return motels.ToDTO();
         }
 
-        public async Task<IEnumerable<GetMotelDTO>> FindAllAvailableAsync()
-        {
-            if (_cache.TryGetValue(AllMotelsCacheKey, out IEnumerable<GetMotelDTO>? motels))
-                return motels!;
-
-            motels = (await _motelRepository.FindAll()).ToDTO();
-
-            var findAllAvailableAsync = motels as GetMotelDTO[] ?? motels.ToArray();
-            _cache.Set(AllMotelsCacheKey, findAllAvailableAsync, TimeSpan.FromMinutes(5));
-
-            return findAllAvailableAsync;
-        }
-
         public async Task<GetMotelDTO> FindByIdAsync(long id)
         {
             var motel = await _motelRepository.FindById(id) ??
@@ -49,7 +36,7 @@ namespace BookMotelsApplication.Services
         public async Task<GetMotelDTO> AddAsync(MotelDTO motelDto)
         {
             var entity = await _motelRepository.Add(motelDto.ToEntity());
-            _cache.Remove(AllMotelsCacheKey); // Invalidate cache on add
+            _cache.Remove(AllMotelsCacheKey);
 
             return entity.ToDTO();
         }
@@ -65,7 +52,7 @@ namespace BookMotelsApplication.Services
             existingMotel.Description = motelDto.Description;
 
             await _motelRepository.Update(existingMotel);
-            _cache.Remove(AllMotelsCacheKey); // Invalidate cache on update
+            _cache.Remove(AllMotelsCacheKey);
         }
 
         public async Task DeleteAsync(long id)
@@ -74,7 +61,7 @@ namespace BookMotelsApplication.Services
                                 throw new NotFoundException("Motel não encontrado");
 
             await _motelRepository.Delete(entity);
-            _cache.Remove(AllMotelsCacheKey); // Invalidate cache on delete
+            _cache.Remove(AllMotelsCacheKey);
         }
     }
 }

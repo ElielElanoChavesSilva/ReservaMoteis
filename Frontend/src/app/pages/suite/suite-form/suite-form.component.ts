@@ -20,23 +20,40 @@ export class SuiteFormComponent implements OnInit {
 
   suite: Suite = {};
   isEditMode: boolean = false;
+  selectedFile: File | undefined;
+  imagePreview: string | ArrayBuffer | null = null;
 
   constructor(
-    private suiteService: SuiteService, private snackBar: MatSnackBar,  private router: Router
+    private suiteService: SuiteService, private snackBar: MatSnackBar, private router: Router
   ) { }
 
   ngOnInit(): void {
     if (this.suiteToEdit) {
       this.isEditMode = true;
       this.suite = { ...this.suiteToEdit };
+      if (this.suite.image) {
+        this.imagePreview = this.suite.image;
+      }
     } else if (this.motelId) {
       this.suite.motelId = this.motelId;
     }
   }
 
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.selectedFile = input.files[0];
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+      };
+      reader.readAsDataURL(this.selectedFile);
+    }
+  }
+
   saveSuite(): void {
     if (this.motelId === undefined) {
-      console.error('Motel ID is required to save a suite.');
       this.snackBar.open('Erro: ID do motel é obrigatório!', 'Fechar', { duration: 3000 });
       return;
     }
@@ -47,12 +64,11 @@ export class SuiteFormComponent implements OnInit {
 
     if (this.isEditMode) {
       if (this.suite.id === undefined) {
-        console.error('Cannot update suite: ID is undefined');
         this.snackBar.open('Erro ao atualizar suíte: ID indefinido', 'Fechar', { duration: 3000 });
         return;
       }
 
-      this.suiteService.updateSuite(this.suite.id, this.suite).subscribe({
+      this.suiteService.updateSuite(this.suite.id, this.suite, this.selectedFile).subscribe({
         next: () => {
           this.suiteSaved.emit();
           this.router.navigate(['/motels']);
@@ -60,26 +76,26 @@ export class SuiteFormComponent implements OnInit {
 
         },
         error: (err) => {
-          console.error('Error updating suite', err);
           this.snackBar.open('Erro ao atualizar suíte!', 'Fechar', { duration: 3000 });
         }
       });
 
     } else {
-      this.suiteService.createSuite(this.motelId, this.suite).subscribe({
+      this.suiteService.createSuite(this.motelId, this.suite, this.selectedFile).subscribe({
         next: () => {
           this.suiteSaved.emit();
           this.snackBar.open('Suíte criada com sucesso!', 'Fechar', { duration: 3000 });
-            this.router.navigate(['/motels']);
+          this.router.navigate(['/motels']);
         },
         error: (err) => {
-          console.error('Error creating suite', err);
-          this.snackBar.open('Erro ao criar suíte!', 'Fechar', { duration: 3000 });
+          this.snackBar.open(err.error.message ?? 'Erro ao criar suíte!', 'Fechar', { duration: 3000 });
         }
       });
     }
   }
   cancel(): void {
     this.suiteCanceled.emit();
+    this.selectedFile = undefined;
+    this.imagePreview = null;
   }
 }

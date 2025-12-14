@@ -2,13 +2,12 @@ using BookMotelsApplication.DTOs.Suite;
 
 namespace BookMotelsApplication.DTOs.Motel
 {
-    public class GetMotelDTO
-    {
-        public long Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string Address { get; set; } = string.Empty;
-        public string Phone { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public ICollection<GetSuiteDTO>? Suites { get; set; } = new List<GetSuiteDTO>();
-    }
+    public record GetMotelDTO(
+        long Id,
+        string Name,
+        string Address,
+        string Phone,
+        string Description,
+        ICollection<GetSuiteDTO>? Suites
+    );
 }

@@ -16,17 +16,42 @@ export class SuiteService {
     return this.http.get<Suite[]>(`${this.baseMotelsUrl}/${motelId}/suites`);
   }
 
-  createSuite(motelId: number, suite: Suite): Observable<Suite> {
+  createSuite(motelId: number, suite: Suite, imageFile?: File): Observable<Suite> {
     const url = `${this.baseMotelsUrl}/${motelId}/suites`;
-    return this.http.post<Suite>(url, suite);
+    const formData = new FormData();
+
+    formData.append('name', suite.name || '');
+    formData.append('description', suite.description || '');
+    formData.append('pricePerPeriod', suite.pricePerPeriod?.toString() || '0');
+    formData.append('maxOccupancy', suite.maxOccupancy?.toString() || '0');
+    formData.append('motelId', motelId.toString());
+
+    if (imageFile) {
+      formData.append('image', imageFile);
+    }
+
+    return this.http.post<Suite>(url, formData);
   }
 
-  updateSuite(suiteId: number, suite: Suite): Observable<Suite> {
+  updateSuite(suiteId: number, suite: Suite, imageFile?: File): Observable<Suite> {
     const url = `${this.baseSuiteUrl}/suites/${suiteId}`;
-    return this.http.put<Suite>(url, suite);
+    const formData = new FormData();
+
+    formData.append('id', suiteId.toString());
+    formData.append('name', suite.name || '');
+    formData.append('description', suite.description || '');
+    formData.append('pricePerPeriod', suite.pricePerPeriod?.toString() || '0');
+    formData.append('maxOccupancy', suite.maxOccupancy?.toString() || '0');
+    formData.append('motelId', suite.motelId?.toString() || '');
+
+    if (imageFile) {
+      formData.append('image', imageFile);
+    }
+
+    return this.http.put<Suite>(url, formData);
   }
 
-  deleteSuite( suiteId: number): Observable<void> {
+  deleteSuite(suiteId: number): Observable<void> {
     const url = `${this.baseSuiteUrl}/${suiteId}`;
     return this.http.delete<void>(url);
   }
