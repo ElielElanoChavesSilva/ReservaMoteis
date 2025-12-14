@@ -1,7 +1,6 @@
 :host {
   display: block;
   background-color: #f4f6f9;
-  /* Neutral background matching list */
   min-height: 100vh;
   padding: 40px 20px;
   font-family: 'Poppins', 'Inter', sans-serif;
@@ -31,7 +30,6 @@
   margin: 0 auto;
 }
 
-/* --- Card Common Styles --- */
 .form-card {
   background: white;
   border-radius: 16px;
@@ -43,7 +41,6 @@
 .form-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-  /* Slight lift on hover */
 }
 
 .card-header {
@@ -69,7 +66,6 @@
   padding: 32px;
 }
 
-/* --- Form Elements --- */
 .form-group {
   margin-bottom: 24px;
 }
@@ -108,7 +104,6 @@
   color: #a0aec0;
 }
 
-/* --- Buttons --- */
 .form-actions {
   padding: 24px 32px;
   background: #f8fafc;
@@ -150,7 +145,6 @@
   background: #fef2f2;
 }
 
-/* Suite section specific overrides if needed (layout handled by grid) */
 .suite-section app-suite-form {
   display: block;
   height: 100%;

@@ -10,6 +10,7 @@ import { AdminLandingComponent } from './pages/admin-landing/admin-landing';
 import { SuiteFormComponent } from './pages/suite/suite-form/suite-form';
 import { RegisterComponent } from './pages/register/register';
 import { MotelFormComponent } from './pages/motel/motel-form/motel-form.component';
+import { PaymentComponent } from './pages/reserve/payment/payment.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -22,6 +23,7 @@ export const routes: Routes = [
   { path: 'suite/edit/:id', component: SuiteFormComponent, canActivate: [authGuard], data: { roles: ['Admin'] } },
 
   { path: 'reserves', component: ReserveListComponent, canActivate: [authGuard] },
+    { path: 'reserves/payment', component: PaymentComponent, canActivate: [authGuard] },
   { path: 'reserve/new', component: ReserveFormComponent, canActivate: [authGuard] },
   { path: 'reserve/edit/:id', component: ReserveFormComponent, canActivate: [authGuard] },
   { path: 'user/new', component: UserFormComponent, canActivate: [authGuard] },

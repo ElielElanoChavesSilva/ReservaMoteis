@@ -56,7 +56,6 @@ h2 {
   box-sizing: border-box;
 }
 
-/* Remove default outline and use custom focus styles */
 .form-group input:focus {
   outline: none;
   background: white;

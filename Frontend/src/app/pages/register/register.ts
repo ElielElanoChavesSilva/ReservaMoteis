@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router'; // Import RouterLink
-import { CreateUserDTO } from '../../models/user.model'; 
+import { Router, RouterLink } from '@angular/router';
+import { CreateUserDTO } from '../../models/user.model';
 import { AuthService } from '../../core/auth';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink], // Add RouterLink here
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './register.html',
   styleUrls: ['./register.css']
 })
@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
   user: CreateUserDTO = {
     name: '',
     email: '',
-    profileId: 0, // ProfileId will now be set by the input field
+    profileId: 0,
     password: ''
   };
   confirmPassword = '';
@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.authService.isAuthenticated$.subscribe(isAuthenticated => {

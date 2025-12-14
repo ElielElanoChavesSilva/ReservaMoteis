@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReserveService } from '../reserve';
 import { Reserve } from '../../../models/reserve.model';
+import { Suite } from '../../../models/suite.model';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -19,6 +20,7 @@ export class ReserveFormComponent implements OnInit {
   reserve: Reserve = {};
   isEditMode: boolean = false;
   suiteName: string | undefined;
+  suite: Suite | undefined;
 
   constructor(
     private reserveService: ReserveService,
@@ -70,6 +72,7 @@ export class ReserveFormComponent implements OnInit {
   loadSuiteName(suiteId: number): void {
     this.suiteService.getSuiteById(suiteId).subscribe({
       next: (suite) => {
+        this.suite = suite;
         this.suiteName = suite.name;
       },
       error: () => {
@@ -86,20 +89,29 @@ export class ReserveFormComponent implements OnInit {
       this.reserve.checkOut = new Date(this.reserve.checkOut).toISOString().split('T')[0] as any;
     }
 
-    const handleError = (err: any) => {
-      this.snackBar.open(err.error?.error || 'Ocorreu um erro ao salvar a reserva.', 'Fechar', { duration: 3000 });
-    };
+    if (!this.reserve.checkIn || !this.reserve.checkOut) {
+      this.snackBar.open('Preencha as datas de Check-in e Check-out.', 'Fechar', { duration: 3000 });
+      return;
+    }
 
-    if (this.isEditMode && this.reserve.id) {
-      this.reserveService.updateReserve(this.reserve.id, this.reserve).subscribe({
-        next: () => this.router.navigate(['/reserves']),
-        error: handleError
-      });
+    this.redirectPayment();
+  }
+
+  private redirectPayment(): void {
+    if (this.suite) {
+      this.router.navigate(['/reserves/payment'], { state: { reserve: this.reserve, suite: this.suite } });
     } else {
-      this.reserveService.addReserve(this.reserve).subscribe({
-        next: () => this.router.navigate(['/reserves']),
-        error: handleError
-      });
+      if (this.reserve.suiteId) {
+        this.suiteService.getSuiteById(this.reserve.suiteId).subscribe({
+          next: (s) => {
+            this.suite = s;
+            this.router.navigate(['/reserves/payment'], { state: { reserve: this.reserve, suite: this.suite } });
+          },
+          error: () => this.snackBar.open('Erro ao localizar dados da suíte.', 'Fechar', { duration: 3000 })
+        });
+      } else {
+        this.snackBar.open('Selecione uma suíte.', 'Fechar', { duration: 3000 });
+      }
     }
   }
 

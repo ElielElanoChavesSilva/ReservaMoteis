@@ -1,0 +1,41 @@
+<div class="page-container">
+  <div class="payment-card">
+    <div class="card-header">
+      <h2>Pagamento via Pix</h2>
+      <p class="subtitle">Escaneie o QR Code para finalizar sua reserva</p>
+    </div>
+
+    <div class="payment-details">
+      <div class="detail-row">
+        <span>Check-in:</span>
+        <span>{{ reserve.checkIn | date:'dd/MM/yyyy' }}</span>
+      </div>
+      <div class="detail-row">
+        <span>Check-out:</span>
+        <span>{{ reserve.checkOut | date:'dd/MM/yyyy' }}</span>
+      </div>
+      <div class="detail-row">
+        <span>Diárias:</span>
+        <span>{{ totalDays }}</span>
+      </div>
+      <div class="total-row">
+        <span>Total:</span>
+        <span>{{ totalPrice | currency:'BRL' }}</span>
+      </div>
+    </div>
+
+    <div class="qr-section">
+      <div class="qr-placeholder">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PagamentoMockadoReserva{{reserve.suiteId}}" alt="QR Code Pix" />
+      </div>
+      <p class="instruction">Abra seu app do banco e escaneie o código acima.</p>
+    </div>
+
+    <div class="actions">
+      <button class="btn-confirm" (click)="confirmPayment()" [disabled]="isLoading">
+        {{ isLoading ? 'Processando...' : 'Simular Pagamento Realizado' }}
+      </button>
+      <button class="btn-cancel" (click)="cancel()">Cancelar</button>
+    </div>
+  </div>
+</div>
