@@ -117,7 +117,7 @@ dotnet run --project ../ReservaMoteisAPI
 
 
 * O arquivo `appsettings.Development.json` já contém configurações padrão para SQLite e Redis.
-* Certifique-se de que o Redis esteja rodando localmente na porta **6379**.
+* Certifique-se de que o Redis esteja rodando localmente na porta **6379** e a API na **44310**.
 
 ### 3. Configure o Frontend
 
