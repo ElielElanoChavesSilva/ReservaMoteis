@@ -78,7 +78,7 @@ A cada `push` na branch `main`, o pipeline executa automaticamente:
 
 - Restore das dependências do backend (.NET)
 - Build do projeto
-- Execução de testes automatizados
+- Execução de testes unitários
 
 O workflow está definido em:
 .github/workflows/ci.yml
