@@ -29,6 +29,9 @@ export class PaymentComponent implements OnInit {
         if (nav?.extras?.state) {
             this.reserve = nav.extras.state['reserve'];
             this.suite = nav.extras.state['suite'];
+            if (nav.extras.state['totalPrice']) {
+                this.totalPrice = nav.extras.state['totalPrice'];
+            }
         }
     }
 
@@ -39,26 +42,6 @@ export class PaymentComponent implements OnInit {
             this.router.navigate(['/reserves']);
             return;
         }
-        this.calculateTotal();
-    }
-
-    calculateTotal(): void {
-        const checkInDate = new Date(this.reserve.checkIn!);
-        const checkOutDate = new Date(this.reserve.checkOut!);
-
-        // Calculate difference in time
-        const timeDiff = checkOutDate.getTime() - checkInDate.getTime();
-
-        // Calculate difference in days (ceil to ensure at least 1 day if same day or close)
-        // Assuming standard hotel logic: if check-out is same day, maybe 1 day? or 0? 
-        // Usually a nightly rate implies at least 1 night.
-        // If user selects same day for in/out, let's assume 1 day minimum or handle it.
-        let days = Math.ceil(timeDiff / (1000 * 3600 * 24));
-
-        if (days < 1) days = 1;
-
-        this.totalDays = days;
-        this.totalPrice = (this.suite.pricePerPeriod || 0) * days;
     }
 
     confirmPayment(): void {
@@ -66,17 +49,31 @@ export class PaymentComponent implements OnInit {
 
         // Simulate API delay
         setTimeout(() => {
-            this.reserveService.addReserve(this.reserve).subscribe({
-                next: () => {
-                    this.snackBar.open('Pagamento confirmado e reserva realizada com sucesso!', 'Fechar', { duration: 4000 });
-                    this.router.navigate(['/reserves']);
-                },
-                error: (err: any) => {
-                    console.error('Error saving reserve:', err);
-                    this.snackBar.open(err.error?.error || 'Erro ao salvar reserva.', 'Fechar', { duration: 3000 });
-                    this.isLoading = false;
-                }
-            });
+            if (this.reserve.id) {
+                this.reserveService.updateReserve(this.reserve.id, this.reserve).subscribe({
+                    next: () => {
+                        this.snackBar.open('Reserva atualizada com sucesso!', 'Fechar', { duration: 4000 });
+                        this.router.navigate(['/reserves']);
+                    },
+                    error: (err: any) => {
+                        console.error('Error updating reserve:', err);
+                        this.snackBar.open(err.error?.error || 'Erro ao atualizar reserva.', 'Fechar', { duration: 3000 });
+                        this.isLoading = false;
+                    }
+                });
+            } else {
+                this.reserveService.addReserve(this.reserve).subscribe({
+                    next: () => {
+                        this.snackBar.open('Pagamento confirmado e reserva realizada com sucesso!', 'Fechar', { duration: 4000 });
+                        this.router.navigate(['/reserves']);
+                    },
+                    error: (err: any) => {
+                        console.error('Error saving reserve:', err);
+                        this.snackBar.open(err.error?.error || 'Erro ao salvar reserva.', 'Fechar', { duration: 3000 });
+                        this.isLoading = false;
+                    }
+                });
+            }
         }, 1500);
     }
 

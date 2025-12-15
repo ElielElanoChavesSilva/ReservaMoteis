@@ -57,6 +57,7 @@ namespace BookMotelsInfra.Repositories
                     MotelName = query.Suite.Motel!.Name,
                     SuiteId = query.Suite.Id,
                     CheckIn = query.CheckIn,
+                    TotalPrice = query.TotalPrice,
                     CheckOut = query.CheckOut,
                     SuiteName = query.Suite.Name
                 });
@@ -74,6 +75,7 @@ namespace BookMotelsInfra.Repositories
             {
                 Id = x.Id,
                 UserName = x.User.Name,
+                TotalPrice = x.TotalPrice,
                 MotelName = x.Suite.Motel!.Name,
                 SuiteId = x.Suite.Id,
                 CheckIn = x.CheckIn,

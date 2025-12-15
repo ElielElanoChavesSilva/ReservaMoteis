@@ -9,9 +9,18 @@
       <div class="form-body">
         <div class="form-group" *ngIf="reserve.suiteId">
           <label class="info-label">Suíte Selecionada</label>
-          <div class="static-info">
-            {{ suiteName || 'Carregando...' }} <span class="id-badge">#{{ reserve.suiteId }}</span>
+
+          <div class="suite-info-card" *ngIf="suite">
+            <div class="suite-image-container" *ngIf="suiteImageUrl">
+              <img [src]="suiteImageUrl" alt="Imagem da Suíte">
+            </div>
+            <div class="suite-details">
+              <span class="suite-name">{{ suiteName }} - {{ suite.pricePerPeriod | currency:'BRL' }}/h <span
+                  class="id-badge">#{{ reserve.suiteId }}</span></span>
+            </div>
           </div>
+
+
         </div>
 
         <!-- Fallback if suiteId is somehow empty/editable manually (rare case in this flow but good for safety) -->
@@ -24,14 +33,23 @@
         <div class="row-inputs">
           <div class="form-group half">
             <label for="checkIn">Check-in</label>
-            <input type="date" id="checkIn" name="checkIn" [(ngModel)]="reserve.checkIn" required />
+            <input type="datetime-local" id="checkIn" name="checkIn" [(ngModel)]="reserve.checkIn"
+              (change)="calculateTotal()" required />
           </div>
 
           <div class="form-group half">
             <label for="checkOut">Check-out</label>
-            <input type="date" id="checkOut" name="checkOut" [(ngModel)]="reserve.checkOut" required />
+            <input type="datetime-local" id="checkOut" name="checkOut" [(ngModel)]="reserve.checkOut"
+              (change)="calculateTotal()" required />
           </div>
         </div>
+
+        <div class="total-price-section" *ngIf="totalPrice > 0">
+          <span class="label">Valor Total Estimado:</span>
+          <span class="value">{{ totalPrice | currency:'BRL' }}</span>
+        </div>
+
+
       </div>
 
       <div class="form-actions">

@@ -137,9 +137,10 @@ namespace BookMotelsTest.Services
             // Arrange
             Guid userId = Guid.NewGuid();
             var suiteId = 1L;
+            var totalPrice = 1;
             var checkIn = DateTime.UtcNow.Date.AddDays(1);
             var checkOut = DateTime.UtcNow.Date.AddDays(3);
-            var reserveDto = new ReserveDTO(suiteId, checkIn, checkOut);
+            var reserveDto = new ReserveDTO(suiteId, totalPrice, checkIn, checkOut);
             var suiteEntity = new SuiteEntity { Id = suiteId, PricePerPeriod = 100m };
 
             _mockReserveRepository.Setup(repo => repo.HasConflictingReservation(suiteId, checkIn, checkOut))
@@ -169,8 +170,10 @@ namespace BookMotelsTest.Services
         public async Task AddAsync_ShouldThrowConflictException_WhenConflictExists()
         {
             // Arrange
+
             Guid userId = Guid.NewGuid();
-            var reserveDto = new ReserveDTO(1, DateTime.Now.AddDays(1), DateTime.Now.AddDays(3));
+            var totalPrice = 1;
+            var reserveDto = new ReserveDTO(1, totalPrice, DateTime.Now.AddDays(1), DateTime.Now.AddDays(3));
 
             _mockReserveRepository.Setup(repo => repo.HasConflictingReservation(
                 reserveDto.SuiteId,
@@ -193,7 +196,8 @@ namespace BookMotelsTest.Services
         {
             // Arrange
             Guid userId = Guid.NewGuid();
-            var reserveDto = new ReserveDTO(1, DateTime.Now.AddDays(3), DateTime.Now.AddDays(1));
+            var totalPrice = 1;
+            var reserveDto = new ReserveDTO(1, totalPrice, DateTime.Now.AddDays(3), DateTime.Now.AddDays(1));
 
             // Act & Assert
             await Assert.ThrowsAsync<BadRequestException>(() => _reserveService.AddAsync(userId, reserveDto));
@@ -207,7 +211,8 @@ namespace BookMotelsTest.Services
         {
             // Arrange
             Guid userId = Guid.NewGuid();
-            var reserveDto = new ReserveDTO(99, DateTime.Now.AddDays(1), DateTime.Now.AddDays(3));
+            var totalPrice = 1;
+            var reserveDto = new ReserveDTO(99, totalPrice, DateTime.Now.AddDays(1), DateTime.Now.AddDays(3));
             _mockSuiteRepository.Setup(s => s.FindById(reserveDto.SuiteId)).ReturnsAsync(null as SuiteEntity);
 
             // Act & Assert
@@ -221,8 +226,9 @@ namespace BookMotelsTest.Services
         public async Task UpdateAsync_ReserveNotFound_ThrowsNotFoundException()
         {
             // Arrange
+            var totalPrice = 1;
             long reserveId = 99;
-            var reserveDto = new ReserveDTO(1, DateTime.Now, DateTime.Now.AddDays(1));
+            var reserveDto = new ReserveDTO(1, totalPrice, DateTime.Now, DateTime.Now.AddDays(1));
             _mockReserveRepository.Setup(r => r.FindById(reserveId)).ReturnsAsync((ReserveEntity)null!);
 
             // Act & Assert
@@ -236,7 +242,8 @@ namespace BookMotelsTest.Services
         {
             // Arrange
             long reserveId = 1;
-            var reserveDto = new ReserveDTO(2, DateTime.Now.AddDays(5), DateTime.Now.AddDays(7));
+            var totalPrice = 1;
+            var reserveDto = new ReserveDTO(2, totalPrice, DateTime.Now.AddDays(5), DateTime.Now.AddDays(7));
             var existingReserve = new ReserveEntity { Id = reserveId, UserId = Guid.NewGuid(), SuiteId = 1, CheckIn = DateTime.Now, CheckOut = DateTime.Now.AddDays(1) };
 
             _mockReserveRepository.Setup(r => r.FindById(reserveId)).ReturnsAsync(existingReserve);
@@ -311,7 +318,7 @@ namespace BookMotelsTest.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(2, result.Count());
+            Assert.Equal(2, result.Count);
             Assert.Equal(
                 expectedReport.Select(e => new { e.MotelId, e.MotelName, e.Year, e.Month, e.TotalRevenue }),
                 result.Select(r => new { r.MotelId, r.MotelName, r.Year, r.Month, r.TotalRevenue }));

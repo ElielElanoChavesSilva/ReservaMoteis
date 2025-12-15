@@ -27,6 +27,7 @@ namespace BookMotelsApplication.Mappers
                 Id = projection.Id,
                 UserName = projection.UserName,
                 MotelName = projection.MotelName,
+                TotalPrice = projection.TotalPrice,
                 SuiteName = projection.SuiteName,
                 SuiteId = projection.SuiteId,
                 CheckIn = projection.CheckIn,
@@ -38,6 +39,7 @@ namespace BookMotelsApplication.Mappers
             return new GetReserveByUserDTO
             {
                 Id = entity.Id,
+                TotalPrice = entity.TotalPrice,
                 SuiteId = entity.SuiteId,
                 CheckIn = entity.CheckIn,
                 CheckOut = entity.CheckOut

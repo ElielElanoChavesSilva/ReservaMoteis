@@ -4,6 +4,7 @@ export interface Reserve {
   suiteId?: number;
   checkIn?: Date;
   checkOut?: Date;
+  totalPrice?: number;
   suiteName?: string;
   motelName?: string;
 }

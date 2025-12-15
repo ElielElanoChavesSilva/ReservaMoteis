@@ -54,9 +54,6 @@ namespace BookMotelsApplication.Services
 
             ReserveEntity entity = reserveDto.ToEntity();
 
-            double totalHours = (reserveDto.CheckOut - reserveDto.CheckIn).TotalHours;
-
-            entity.TotalPrice = suite.PricePerPeriod * (decimal)totalHours;
             entity.UserId = userId;
             entity = await _reserveRepository.Add(entity);
             GetReserveByUserDTO dto = entity.ToDTO();
@@ -81,14 +78,15 @@ namespace BookMotelsApplication.Services
 
         public async Task UpdateAsync(long id, ReserveDTO reserveDto)
         {
-            var existingReserve = await _reserveRepository.FindById(id) ??
+            var entity = await _reserveRepository.FindById(id) ??
                                   throw new NotFoundException("Reserva não encontrada");
 
-            existingReserve.SuiteId = reserveDto.SuiteId;
-            existingReserve.CheckIn = reserveDto.CheckIn;
-            existingReserve.CheckOut = reserveDto.CheckOut;
+            entity.SuiteId = reserveDto.SuiteId;
+            entity.CheckIn = reserveDto.CheckIn;
+            entity.CheckOut = reserveDto.CheckOut;
+            entity.TotalPrice = reserveDto.TotalPrice;
 
-            await _reserveRepository.Update(existingReserve);
+            await _reserveRepository.Update(entity);
         }
 
         public async Task<IEnumerable<BillingReportDTO>> FindBillingReportAsync(long? motelId, int? year, int? month)

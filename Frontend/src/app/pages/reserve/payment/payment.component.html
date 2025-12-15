@@ -8,16 +8,13 @@
     <div class="payment-details">
       <div class="detail-row">
         <span>Check-in:</span>
-        <span>{{ reserve.checkIn | date:'dd/MM/yyyy' }}</span>
+        <span>{{ reserve.checkIn | date:'dd/MM/yyyy HH:mm' }}</span>
       </div>
       <div class="detail-row">
         <span>Check-out:</span>
-        <span>{{ reserve.checkOut | date:'dd/MM/yyyy' }}</span>
+        <span>{{ reserve.checkOut | date:'dd/MM/yyyy HH:mm' }}</span>
       </div>
-      <div class="detail-row">
-        <span>Diárias:</span>
-        <span>{{ totalDays }}</span>
-      </div>
+
       <div class="total-row">
         <span>Total:</span>
         <span>{{ totalPrice | currency:'BRL' }}</span>
@@ -26,7 +23,9 @@
 
     <div class="qr-section">
       <div class="qr-placeholder">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PagamentoMockadoReserva{{reserve.suiteId}}" alt="QR Code Pix" />
+        <img
+          src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PagamentoMockadoReserva{{reserve.suiteId}}"
+          alt="QR Code Pix" />
       </div>
       <p class="instruction">Abra seu app do banco e escaneie o código acima.</p>
     </div>

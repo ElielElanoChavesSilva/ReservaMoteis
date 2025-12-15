@@ -140,6 +140,12 @@
   background: #fef2f2;
 }
 
+.col-price {
+  width: 15%;
+  font-weight: 600;
+  color: #047857;
+}
+
 /* --- Empty State --- */
 .empty-state {
   text-align: center;

@@ -23,6 +23,7 @@
               <th class="col-motel">Motel</th>
               <th class="col-date">Check-in</th>
               <th class="col-date">Check-out</th>
+              <th class="col-price">Valor Total</th>
               <th class="col-actions">Ações</th>
             </tr>
           </thead>
@@ -33,6 +34,7 @@
               <td class="col-motel">{{ reserve.motelName }}</td>
               <td class="col-date">{{ reserve.checkIn | date:'dd/MM/yyyy HH:mm' }}</td>
               <td class="col-date">{{ reserve.checkOut | date:'dd/MM/yyyy HH:mm' }}</td>
+              <td class="col-price">{{ reserve.totalPrice | currency:'BRL' }}</td>
               <td class="col-actions">
                 <div class="action-buttons">
                   <button class="btn-icon btn-edit" [routerLink]="['/reserve/edit', reserve.id]" title="Editar Reserva">
