@@ -70,6 +70,19 @@ A aplicação segue **Clean Architecture**, separando regras de negócio da infr
 
 * Docker & Docker Compose
 
+## 🔄 Integração Contínua (GitHub Actions)
+
+Este projeto utiliza **GitHub Actions** para Integração Contínua (CI).
+
+A cada `push` na branch `main`, o pipeline executa automaticamente:
+
+- Restore das dependências do backend (.NET)
+- Build do projeto
+- Execução de testes automatizados
+
+O workflow está definido em:
+.github/workflows/ci.yml
+
 ---
 
 ## ⚙️ Setup do Projeto
