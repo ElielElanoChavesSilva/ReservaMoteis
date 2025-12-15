@@ -22,9 +22,6 @@
             (click)="closeMenu()">Faturamento</a>
         </li>
 
-        <!-- Divider for mobile logic visualization if needed, but flex handles it -->
-
-        <!-- Auth Links -->
         <li class="nav-item user-greeting" *ngIf="isAuthenticated$ | async">
           <span class="nav-text">Olá, {{ currentUserName$ | async }}!</span>
         </li>

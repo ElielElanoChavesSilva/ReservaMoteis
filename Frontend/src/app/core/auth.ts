@@ -4,11 +4,11 @@ import { BehaviorSubject, Observable, tap, map } from 'rxjs';
 import { AuthResponse, Login } from '../models/auth.model';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { jwtDecode } from 'jwt-decode'; // Import jwtDecode
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
-})export class AuthService {
+}) export class AuthService {
   private authTokenKey = 'token';
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
   isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
@@ -41,6 +41,9 @@ import { jwtDecode } from 'jwt-decode'; // Import jwtDecode
         this.currentUserRoleSubject.next(userRole);
 
         const userName =
+          decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'] ||
+          decodedToken['unique_name'] ||
+          decodedToken['Name'] ||
           decodedToken['name'] ||
           decodedToken['given_name'] ||
           decodedToken['preferred_username'] ||
@@ -81,7 +84,7 @@ import { jwtDecode } from 'jwt-decode'; // Import jwtDecode
     localStorage.removeItem(this.authTokenKey);
     this.isAuthenticatedSubject.next(false);
     this.currentUserRoleSubject.next(null);
-    this.currentUserNameSubject.next(null); 
+    this.currentUserNameSubject.next(null);
     this.router.navigate(['/login']);
   }
 

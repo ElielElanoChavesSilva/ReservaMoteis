@@ -35,6 +35,7 @@ namespace BookMotelsInfra.Repositories
                 UserName = x.User.Name,
                 MotelName = x.Suite.Motel!.Name,
                 SuiteId = x.Suite.Id,
+                TotalPrice = x.TotalPrice,
                 CheckIn = x.CheckIn,
                 CheckOut = x.CheckOut,
                 SuiteName = x.Suite.Name
