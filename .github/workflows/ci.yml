@@ -1,13 +1,29 @@
-name: CI - Hello World
+name: CI - Build and Test (.NET)
 
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  hello:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Print message
-        run: echo "GitHub Actions está funcionando 🚀"
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore backend/ReservaMoteis.sln
+
+      - name: Build
+        run: dotnet build backend/ReservaMoteis.sln --configuration Release
+
+      - name: Run tests
+        run: dotnet test backend/ReservaMoteis.sln --verbosity normal
